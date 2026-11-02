@@ -1,0 +1,19 @@
+'use strict';
+// Music is a licensed instrumental recording. All SFX are sampled Foley, never oscillators.
+const Sound=(()=>{
+let context,master,musicGain,sfxGain,compressor,lowpass,musicSource,started=false,muted=false,ducked=false,musicVolume=.38,sfxVolume=.45,active=0,buffers={},lastPlayed={};
+const music=new Audio('audio/music.mp3');music.id='background-music';music.hidden=true;document.body.append(music);music.loop=true;music.preload='auto';music.volume=musicVolume;
+const names=['hit','hurt','shoot','pickup','level','explosion','dash','wind','lightning','confirm','heal','storm','victory'];
+const loaded=new Map();function status(t){const e=document.getElementById('audio-status');if(e)e.textContent=t;}
+async function init(){if(context)return;context=new(window.AudioContext||window.webkitAudioContext)();master=context.createGain();master.gain.value=.8;compressor=context.createDynamicsCompressor();compressor.threshold.value=-15;compressor.knee.value=20;compressor.ratio.value=4;compressor.attack.value=.006;compressor.release.value=.18;master.connect(compressor);compressor.connect(context.destination);musicGain=context.createGain();sfxGain=context.createGain();musicGain.gain.value=musicVolume*.62;sfxGain.gain.value=sfxVolume;musicSource=context.createMediaElementSource(music);musicSource.connect(musicGain);musicGain.connect(master);lowpass=context.createBiquadFilter();lowpass.type='lowpass';lowpass.frequency.value=4200;lowpass.Q.value=.4;sfxGain.connect(lowpass);lowpass.connect(master);music.volume=1;
+await Promise.all(names.map(async n=>{try{let r=await fetch('audio/'+n+'.ogg');if(!r.ok)throw new Error('HTTP '+r.status);let b=await context.decodeAudioData(await r.arrayBuffer());buffers[n]=b;loaded.set(n,true);}catch(e){loaded.set(n,false);}}));if([...loaded.values()].some(v=>!v))status('部分音效未加载，音乐仍可播放。');}
+async function start(){try{await init();await context.resume();music.currentTime=0;await music.play();started=true;duck(false);status('');}catch(e){status('点击音频按钮即可开启音乐。');document.getElementById('audio-unlock')?.classList.remove('hidden');}}
+function play(name,volume=.3,rate=1,minInterval=.08){if(!started||muted||!context||context.state!=='running'||!buffers[name]||active>=14)return;let now=context.currentTime;if(now-(lastPlayed[name]??-99)<minInterval)return;lastPlayed[name]=now;let src=context.createBufferSource(),gain=context.createGain();src.buffer=buffers[name];src.playbackRate.value=rate;let maxVolume=['level','victory','heal'].includes(name)?.3:1;gain.gain.value=volume*maxVolume;src.connect(gain);gain.connect(sfxGain);active++;src.onended=()=>{active--;src.disconnect();gain.disconnect();};src.start(); // Restrict ringing tails, and fade them rather than stopping abruptly.
+let duration=Math.min(src.buffer.duration/rate,['level','victory'].includes(name)?1.4:['pickup','shoot','hit'].includes(name)?.22:.75);gain.gain.setValueAtTime(volume*maxVolume,now);gain.gain.setTargetAtTime(.001,now+duration*.6,.06);src.stop(now+duration+.22);}
+function duck(on){ducked=on;if(musicGain&&context)musicGain.gain.setTargetAtTime(muted?0:musicVolume*(on?.18:.62),context.currentTime,.3);}
+function volumes(m,s){musicVolume=m;sfxVolume=s;if(musicGain&&context)musicGain.gain.setTargetAtTime(muted?0:m*(ducked?.18:.62),context.currentTime,.1);if(sfxGain&&context)sfxGain.gain.setTargetAtTime(s,context.currentTime,.1);}
+function toggle(){muted=!muted;if(master&&context)master.gain.setTargetAtTime(muted?0:.8,context.currentTime,.12);return muted;}
+async function unlock(){try{await init();await context.resume();await music.play();started=true;document.getElementById('audio-unlock')?.classList.add('hidden');status('');}catch(e){status('音乐播放暂不可用，可继续游戏。');}}
+function diagnostics(){return{started,muted,musicPaused:music.paused,musicReady:music.readyState,samples:loaded.size,failed:[...loaded].filter(([,v])=>!v).map(([n])=>n)};}
+return{start,play,duck,volumes,toggle,unlock,diagnostics};
+})();

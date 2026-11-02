@@ -1,0 +1,18 @@
+MUSIC
+“Master of the Feast” — Kevin MacLeod (incompetech.com)
+Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400019
+Audio source: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Master%20of%20the%20Feast.mp3
+Licensed under Creative Commons: By Attribution 4.0
+https://creativecommons.org/licenses/by/4.0/
+Original recording retained. Playback volume adjusted and looping enabled.
+
+SOUND EFFECTS
+Kenney Impact Sounds — Kenney (https://kenney.nl)
+https://kenney.nl/assets/impact-sounds
+Creative Commons CC0 1.0 Universal
+https://creativecommons.org/publicdomain/zero/1.0/
+Playback gain, rate, low-pass filtering and tail duration adjusted in Web Audio.
+
+All visual artwork in this game is original procedural Canvas artwork.
+No image-generation service or extracted game sprites were used.
+Visual/gameplay reference: Rakuworld by SETO. This is an independent browser prototype, not an official Rakuworld release.
