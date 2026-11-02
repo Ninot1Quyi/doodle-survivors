@@ -1,0 +1,36 @@
+{
+  "phase": "before",
+  "note": "CPU-only VM; no raster/GPU measurement",
+  "rounds": [
+    {
+      "ms": 51623,
+      "msPerFrame": 86.038,
+      "canvasCalls": 6007193,
+      "domWrites": 1567,
+      "enemies": 226,
+      "bullets": 4,
+      "particles": 35,
+      "fx": 366
+    },
+    {
+      "ms": 46652.8,
+      "msPerFrame": 77.755,
+      "canvasCalls": 6007193,
+      "domWrites": 1567,
+      "enemies": 226,
+      "bullets": 4,
+      "particles": 35,
+      "fx": 366
+    },
+    {
+      "ms": 64491.4,
+      "msPerFrame": 107.486,
+      "canvasCalls": 6007193,
+      "domWrites": 1567,
+      "enemies": 226,
+      "bullets": 4,
+      "particles": 35,
+      "fx": 366
+    }
+  ]
+}
