@@ -1,8 +1,5 @@
-const fs=require('fs'),vm=require('vm'),assert=require('assert');
-const painter=new Proxy({createPattern:()=>({})},{get:(t,k)=>k in t?t[k]:()=>{},set:(t,k,v)=>(t[k]=v,true)});
-const nodes=new Map();function node(){return{style:{setProperty(){}},classList:{add(){},remove(){},toggle(){}},firstElementChild:{style:{},textContent:''},getContext:()=>painter,getBoundingClientRect:()=>({width:1350,height:800}),toDataURL:()=>'',focus(){},replaceChildren(){},append(){},addEventListener(){},setAttribute(){},querySelector:()=>node()};}
-const sandbox={console,Math,Set,Map,EDITION:'adventure',document:{querySelectorAll:()=>[],getElementById:id=>{if(!nodes.has(id))nodes.set(id,node());return nodes.get(id);},createElement:()=>node(),querySelector:()=>node(),body:node(),addEventListener(){}},window:{addEventListener(){}},devicePixelRatio:1,ResizeObserver:class{observe(){}},requestAnimationFrame(){},setTimeout(){},clearTimeout(){},HTMLInputElement:class{},Art:new Proxy({sprites:{},url:()=>'',ground:{}},{get:(t,k)=>k in t?t[k]:()=>{}}),Sound:{start(){},play(){},duck(){},volumes(){},toggle(){},unlock(){}}};
-vm.createContext(sandbox);vm.runInContext(fs.readFileSync(__dirname+'/dist/items.js','utf8'),sandbox);vm.runInContext(fs.readFileSync(__dirname+'/dist/expansion.js','utf8'),sandbox);vm.runInContext(fs.readFileSync(__dirname+'/dist/game.js','utf8'),sandbox);const run=s=>vm.runInContext(s,sandbox);
+const assert=require('assert');
+const {run}=require('./scripts/test-harness.cjs');
 run('start()');assert.equal(run('state'),'playing');assert.equal(run('game.enemies.length'),45);assert.equal(run('Object.keys(game.weapons).filter(k=>game.weapons[k]>0).length'),4);assert.equal(run('game.allies'),undefined);
 run("keys.add('d');update(.1);keys.clear()");assert(run('game.hero.x')>0);run('dash()');let cd=run('game.hero.dashCd');run('dash()');assert.equal(run('game.hero.dashCd'),cd);
 run('pause()');let t=run('game.t');run('update(1)');assert.equal(run('game.t'),t);run('pause()');

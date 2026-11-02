@@ -1,0 +1,683 @@
+{
+  "version": 1,
+  "status": "design proposal, not implementation or balance evidence",
+  "units": "seconds, world pixels, base damage at level I; evolved damage at V",
+  "bases": [
+    {
+      "id": "saber",
+      "name": "折纸佩剑",
+      "pattern": "sweep",
+      "cooldown": 1.1,
+      "damage": 28,
+      "targeting": "nearest-facing",
+      "behavior": "面向最近敌人扫过 120° 扇区；不是发射子弹。",
+      "levels": "每级 +10 伤害、+10° 扇区，V 级第二段反向斩。",
+      "visual": "纸片新月沿弧线撕开，末端纸屑。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "lance",
+      "name": "长页骑枪",
+      "pattern": "thrust",
+      "cooldown": 1.8,
+      "damage": 42,
+      "targeting": "nearest-line",
+      "behavior": "伸出 190px 窄枪线，贯穿同线敌人，随后收回。",
+      "levels": "每级 +13 伤害、+22px 长度；保持窄线身份。",
+      "visual": "三段伸缩纸枪，枪尖命中星。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "marble",
+      "name": "玻璃弹珠",
+      "pattern": "ricochet",
+      "cooldown": 1.6,
+      "damage": 20,
+      "targeting": "nearest-chain",
+      "behavior": "命中后折向 180px 内另一目标，最多弹跳 4 次。",
+      "levels": "每级 +6 伤害，每两级 +1 弹跳；单目标重复冷却 .25s。",
+      "visual": "圆珠撞击压扁，跳跃轨迹短折线。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "yoyo",
+      "name": "星形悠悠球",
+      "pattern": "tether-return",
+      "cooldown": 2.4,
+      "damage": 27,
+      "targeting": "movement-direction",
+      "behavior": "伸出到 220px 后回收；去程和回程分别命中一次，线本身无伤害。",
+      "levels": "每级 +8 伤害、+18px 距离；V 级回收可拖拽小怪。",
+      "visual": "可见绳、远端停顿、回收加速。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "rocket",
+      "name": "纸筒火箭",
+      "pattern": "homing-splash",
+      "cooldown": 3.2,
+      "damage": 62,
+      "targeting": "highest-hp-nearby",
+      "behavior": "先向上发射，再转向高生命敌人；爆炸半径 70px。",
+      "levels": "每级 +18 伤害、+8px 半径；III 级二枚错峰发射。",
+      "visual": "有转弯轨迹的纸筒、锥形蜡笔尾焰。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "firecracker",
+      "name": "小串鞭炮",
+      "pattern": "delayed-chain",
+      "cooldown": 3.6,
+      "damage": 24,
+      "targeting": "predicted-path",
+      "behavior": "沿敌群前进方向放下 5 节鞭炮，每 .14s 依次爆炸。",
+      "levels": "每级 +7 伤害；III/V 级各增加一节。",
+      "visual": "引线燃烧、逐节纸爆花；不是同时多火球。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "ruler",
+      "name": "光线直尺",
+      "pattern": "charged-beam",
+      "cooldown": 3.1,
+      "damage": 18,
+      "targeting": "nearest-lock",
+      "behavior": ".55s 蓄力后沿固定方向持续 .65s 刻出窄光线，每 .15s 一跳伤害。",
+      "levels": "每级 +5 每跳伤害、+45px 长度；不追踪转向。",
+      "visual": "尺刻度亮起、干刷直线、命中横向短划。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "prism",
+      "name": "彩纸棱镜",
+      "pattern": "split-at-node",
+      "cooldown": 2.8,
+      "damage": 22,
+      "targeting": "placed-node",
+      "behavior": "在前方 85px 放置棱镜，入射光在该点折成三条短射线。",
+      "levels": "每级 +6 伤害和角度覆盖；V 级节点缓慢转动。",
+      "visual": "三角卡纸清晰可见，分光必须从节点发生。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "turret",
+      "name": "纸盒哨塔",
+      "pattern": "stationary-summon",
+      "cooldown": 6.0,
+      "damage": 18,
+      "targeting": "turret-nearest",
+      "behavior": "在玩家当前位置留下持续 8s 的纸盒炮塔，射速 .7s；最多 2 个。",
+      "levels": "每级 +5 伤害，III 级穿透 +1，V 级部署时冲击。",
+      "visual": "落地展开盒盖，枪管朝目标摆动。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "foxspirit",
+      "name": "狐狸伙伴",
+      "pattern": "mobile-summon",
+      "cooldown": 7.0,
+      "damage": 30,
+      "targeting": "companion-pounce",
+      "behavior": "狐狸跟随玩家，在 220px 内跃扑敌人，1.5s 攻击一次，最多 2 只。",
+      "levels": "每级 +8 伤害，IV 级扑击附击退；伙伴不吃玩家护盾。",
+      "visual": "跟随、蓄蹲、跃扑、落地四阶段。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "mine",
+      "name": "糖纸地雷",
+      "pattern": "proximity-trap",
+      "cooldown": 3.2,
+      "damage": 75,
+      "targeting": "behind-player",
+      "behavior": "放在脚后，.4s 后武装，敌人靠近 45px 才爆炸；存在 12s，最多 6 枚。",
+      "levels": "每级 +20 伤害、+8px 爆炸半径。",
+      "visual": "展开糖纸、微弱闪烁、触发向外碎纸。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "stamp",
+      "name": "橡皮印章",
+      "pattern": "delayed-target-area",
+      "cooldown": 3.0,
+      "damage": 68,
+      "targeting": "dense-cluster",
+      "behavior": "在最密敌群盖出印记，.8s 后印章砸下，只结算一次。",
+      "levels": "每级 +18 伤害，III/V 级扩大落印。",
+      "visual": "先有虚线方框，再下压盖章和墨迹。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "whip",
+      "name": "彩带长鞭",
+      "pattern": "segmented-sweep",
+      "cooldown": 1.8,
+      "damage": 32,
+      "targeting": "nearest-facing",
+      "behavior": "三节鞭身依次扫过，从内向外形成曲线，近端与远端不同时间到达。",
+      "levels": "每级 +9 伤害和 +20px 长度。",
+      "visual": "分节卡纸尾带，干刷弧线，末端鞭梢星爆。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "thread",
+      "name": "缝星针线",
+      "pattern": "target-link",
+      "cooldown": 3.5,
+      "damage": 12,
+      "targeting": "two-separated-targets",
+      "behavior": "在两个目标之间绷起 2s 针线，穿过线段的敌人每 .3s 受伤。",
+      "levels": "每级 +4 每跳伤害，III 级连接第三目标形成折线。",
+      "visual": "针头停在节点，虚线针脚逐段点亮。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "roller",
+      "name": "彩虹滚筒",
+      "pattern": "movement-trail",
+      "cooldown": 0.45,
+      "damage": 10,
+      "targeting": "player-trail",
+      "behavior": "移动时在身后涂出宽 46px、持续 3s 的颜料轨迹，静止时不产生。",
+      "levels": "每级 +3 每跳伤害、+5px 宽度；V 级轨迹减速。",
+      "visual": "滚筒与断续干刷漆道，不画发光圆池。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "chalk",
+      "name": "粉笔路障",
+      "pattern": "blocking-line",
+      "cooldown": 5.2,
+      "damage": 20,
+      "targeting": "perpendicular-facing",
+      "behavior": "在玩家前方画一条存在 3s 的粉笔线，普通怪碰线减速并反弹轻推。",
+      "levels": "每级 +6 触碰伤害、+25px 长度；Boss 仅减速 10%。",
+      "visual": "粉笔虚线逐笔出现、碰撞处粉尘。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "camera",
+      "name": "纸壳相机",
+      "pattern": "cone-stun",
+      "cooldown": 4.8,
+      "damage": 36,
+      "targeting": "nearest-facing",
+      "behavior": "向前方 100° 扇区闪光，普通敌人停顿 .7s；Boss 仅 .15s。",
+      "levels": "每级 +10 伤害，V 级额外留下一张短暂伤害底片。",
+      "visual": "扇形米白纸光，不全屏白闪；小照片缓慢飘落。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "music",
+      "name": "八分音符",
+      "pattern": "propagating-wave",
+      "cooldown": 2.5,
+      "damage": 24,
+      "targeting": "nearest-facing",
+      "behavior": "弧形声波向外传播，越过敌人后继续扩张到 300px。",
+      "levels": "每级 +7 伤害，III/V 级增加后续波；每波每敌一次。",
+      "visual": "粗蜡笔弧线和少量漂浮音符。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "meteor",
+      "name": "流星邮票",
+      "pattern": "falling-strike",
+      "cooldown": 4.4,
+      "damage": 95,
+      "targeting": "far-dense-cluster",
+      "behavior": "选远处敌群，.7s 预告后从天空斜落一颗流星，中心与外圈伤害不同。",
+      "levels": "每级 +25 伤害，III/V 级各加一枚错峰落星。",
+      "visual": "邮票形陨星、斜线尾迹、纸坑。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "compass",
+      "name": "寻星罗盘",
+      "pattern": "mark-and-burst",
+      "cooldown": 4.0,
+      "damage": 38,
+      "targeting": "highest-hp",
+      "behavior": "给高生命敌人标记 2s；被其他武器命中累计 5 次或到期时引爆。",
+      "levels": "每级 +12 终结伤害和 +1 蓄能上限；加成有上限。",
+      "visual": "刻度标记逐格填满，完成时画出星座。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "magnetArm",
+      "name": "马蹄磁臂",
+      "pattern": "pull-cone",
+      "cooldown": 4.0,
+      "damage": 16,
+      "targeting": "nearest-facing",
+      "behavior": "吸引前方扇区小怪 .8s，结束时向外推出；Boss 拉力 15%。",
+      "levels": "每级 +5 每跳伤害、+12px 距离。",
+      "visual": "双磁极交替、弯曲铅笔磁力线。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "gear",
+      "name": "纸齿轮",
+      "pattern": "orbit-contact",
+      "cooldown": 0.0,
+      "damage": 19,
+      "targeting": "player-orbit",
+      "behavior": "一枚慢速近身齿轮，每 .35s 对接触目标造成伤害，周期切换内外半径。",
+      "levels": "每级 +6 伤害，III/V 级各增加齿轮；最多 3。",
+      "visual": "轮齿旋转，轨道半径跳档时机械卡扣声。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "umbrella",
+      "name": "雨滴纸伞",
+      "pattern": "overhead-rain",
+      "cooldown": 4.8,
+      "damage": 15,
+      "targeting": "player-ahead-area",
+      "behavior": "前方悬停一把伞 3s，雨滴垂直落入矩形区域，附短减速。",
+      "levels": "每级 +4 每滴伤害和雨区宽度；滴数以密度上限控制。",
+      "visual": "真实伞沿与下落短笔划，地面小纸涟漪。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "kite",
+      "name": "星尾风筝",
+      "pattern": "tether-orbit",
+      "cooldown": 4.2,
+      "damage": 23,
+      "targeting": "player-tether",
+      "behavior": "风筝以宽椭圆绕玩家移动 4s；伤害来自风筝与玩家间绷紧的线。",
+      "levels": "每级 +7 伤害和 +10px 轨道半径。",
+      "visual": "风筝、尾巴、细线始终连着玩家。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "leaf",
+      "name": "枫叶飞镖",
+      "pattern": "curve-boomerang",
+      "cooldown": 2.4,
+      "damage": 25,
+      "targeting": "nearest-curved",
+      "behavior": "三枚叶片沿弧形飞出再回到玩家；转弯点减速扩大命中窗口。",
+      "levels": "每级 +7 伤害，V 级回程留下短暂枫叶路。",
+      "visual": "橙红叶片翻面，弧线用稀疏笔痕。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "shield",
+      "name": "书封圆盾",
+      "pattern": "reactive-parry",
+      "cooldown": 3.2,
+      "damage": 48,
+      "targeting": "front-guard",
+      "behavior": "前方护盾持续 .8s，拦下第一枚敌弹后发出定向反击；没拦下则结束时小推击。",
+      "levels": "每级 +13 反击伤害，III 级多挡一枚，V 级反击穿透。",
+      "visual": "盾面受击凹陷与弹回，反击有单一大剪纸波。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "portal",
+      "name": "折页传送门",
+      "pattern": "paired-warp",
+      "cooldown": 5.5,
+      "damage": 35,
+      "targeting": "far-pair",
+      "behavior": "一对门相距 230px；普通怪进入入口被移到出口并受伤，随后短免疫重复传送。",
+      "levels": "每级 +10 伤害与门宽；Boss 不传送，只受线段伤害。",
+      "visual": "两扇有铰链的纸门、目标以折叠而非淡出穿越。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    },
+    {
+      "id": "void",
+      "name": "橡皮黑洞",
+      "pattern": "pull-collapse",
+      "cooldown": 6.5,
+      "damage": 18,
+      "targeting": "dense-cluster",
+      "behavior": "橡皮擦开一个洞，吸引 2s 后收缩爆发；拉力、持续伤害、终结伤害三阶段。",
+      "levels": "每级 +5 每跳伤害与 +15 终结伤害；Boss 拉力 10%。",
+      "visual": "白纸被擦出粗糙洞边，碎纸向内旋转。",
+      "maxLevel": 5,
+      "damageMeaning": "每次命中；持续技能则按正文规定的 tick",
+      "recommendedRange": 240
+    }
+  ],
+  "evolutions": [
+    {
+      "id": "paladin",
+      "name": "折纸骑士",
+      "ingredients": [
+        "saber",
+        "lance"
+      ],
+      "pattern": "giant-guardian",
+      "cooldown": 7.0,
+      "damage": 180,
+      "behavior": "召唤一位大型纸骑士，而不是同时挥剑和刺枪；骑士先冲锋 280px，再转身横扫并留下 1s 护卫区。",
+      "levelChanges": "1 个实体；冲锋与斩击各每敌一次；VI 冲锋带冲击线，VII 斩后反击，VIII 出现第二段护卫推波。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "pinball",
+      "name": "星际弹珠台",
+      "ingredients": [
+        "marble",
+        "yoyo"
+      ],
+      "pattern": "bounded-ricochet-arena",
+      "cooldown": 6.0,
+      "damage": 70,
+      "behavior": "地上折出三角弹珠台；一枚巨珠在三条边间反弹 5s，每次撞边改变方向并喷出短纸屑。",
+      "levelChanges": "1 个场地、1 主球；每敌命中间隔 .18s；VI 多一枚球，VII 边缘短电弧，VIII 场地结束汇聚爆破。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "festival",
+      "name": "纸上烟火节",
+      "ingredients": [
+        "rocket",
+        "firecracker"
+      ],
+      "pattern": "launch-bloom-fall",
+      "cooldown": 6.5,
+      "damage": 150,
+      "behavior": "一枚大型礼花筒升空，顶点绽成完整花形弹幕，花瓣再落地形成错峰小爆花。",
+      "levelChanges": "最多 18 花瓣；VI 双花冠，VII 落地留纸焰，VIII 双层绽放；不是多枚追踪火箭。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "rainbowLaser",
+      "name": "七色万花筒",
+      "ingredients": [
+        "ruler",
+        "prism"
+      ],
+      "pattern": "rotating-light-fan",
+      "cooldown": 6.0,
+      "damage": 30,
+      "behavior": "展开一面大型万花筒，发出三束缓慢旋转的干刷宽光；敌人穿越光束持续受伤。",
+      "levelChanges": "3 光束、2.5s，每敌 .18s 一跳；VI 光束分叉一次，VII 旋转换向，VIII 首尾发出整面扇形折光。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "clockwork",
+      "name": "发条纸偶剧团",
+      "ingredients": [
+        "turret",
+        "foxspirit"
+      ],
+      "pattern": "mobile-formation",
+      "cooldown": 7.0,
+      "damage": 65,
+      "behavior": "生成一辆会行走的纸偶战车，两个纸偶侧翼护航；战车冲锋后停下齐射，整个阵型随玩家迁移。",
+      "levelChanges": "最多 3 召唤体；VI 齐射变交叉，VII 冲锋留下齿印，VIII 阵型围拢后向四面散开。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "printingPress",
+      "name": "巨型印刷机",
+      "ingredients": [
+        "mine",
+        "stamp"
+      ],
+      "pattern": "rolling-crush-machine",
+      "cooldown": 7.0,
+      "damage": 165,
+      "behavior": "巨型印刷滚轴从玩家前方一路压过去，地上留下三张会延迟爆开的印刷页。",
+      "levelChanges": "1 滚轴、3 印页；VI 更宽，VII 印页会折起夹击，VIII 末端整卷撕裂。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "loom",
+      "name": "星河织布机",
+      "ingredients": [
+        "whip",
+        "thread"
+      ],
+      "pattern": "woven-net",
+      "cooldown": 6.0,
+      "damage": 28,
+      "behavior": "四个织梭围成矩形，先织横线再织竖线，形成可见格网；敌人穿线触发伤害与束缚。",
+      "levelChanges": "最多 8 线段，持续 3s，每敌 .25s；VI 斜纹，VII 格点爆星，VIII 格网收缩为绳结。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "livingMural",
+      "name": "醒来的壁画",
+      "ingredients": [
+        "roller",
+        "chalk"
+      ],
+      "pattern": "traveling-paint-creature",
+      "cooldown": 7.0,
+      "damage": 105,
+      "behavior": "地面先画出一条完整鲸鱼壁画，鲸鱼从纸上“站起”游向敌群，撞击后铺开宽色带。",
+      "levelChanges": "1 个大型运动实体；VI 两次摆尾，VII 色带减速，VIII 壁画结束从尾端喷出纸浪。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "spotlight",
+      "name": "星光纸剧场",
+      "ingredients": [
+        "camera",
+        "music"
+      ],
+      "pattern": "moving-stage-cone",
+      "cooldown": 6.5,
+      "damage": 24,
+      "behavior": "舞台幕布展开，聚光灯锁定最密敌群缓慢扫动；节拍每 .4s 造成伤害，每四拍短暂定格。",
+      "levelChanges": "1 光锥 + 节拍，不全屏闪；VI 第二灯，VII 第四拍推击，VIII 终场帷幕横扫。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "orrery",
+      "name": "口袋天象仪",
+      "ingredients": [
+        "meteor",
+        "compass"
+      ],
+      "pattern": "orbit-then-eclipse",
+      "cooldown": 7.0,
+      "damage": 100,
+      "behavior": "三颗纸星球围绕选中星核转动，轨道逐渐收紧，最后发生日蚀爆发。",
+      "levelChanges": "3 星体 + 1 星核；VI 内外轨道，VII 星核标记增伤，VIII 日蚀后发出星座射线。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "scrapColossus",
+      "name": "废纸巨人",
+      "ingredients": [
+        "magnetArm",
+        "gear"
+      ],
+      "pattern": "assemble-slam",
+      "cooldown": 7.5,
+      "damage": 210,
+      "behavior": "碎纸先被磁力拉起，拼成一个巨人；巨人抓向前方，将普通怪聚到掌心后捶地。",
+      "levelChanges": "1 巨人；Boss 不抓取；VI 双掌夹击，VII 踏地冲击，VIII 解体为一圈大纸块。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "skyWhale",
+      "name": "乘风纸鲸",
+      "ingredients": [
+        "umbrella",
+        "kite"
+      ],
+      "pattern": "aerial-pass-rain",
+      "cooldown": 7.0,
+      "damage": 55,
+      "behavior": "一只巨型风筝鲸从画面一侧飞过，鲸影先划过地面，沿路径落下成排纸雨与一道尾浪。",
+      "levelChanges": "1 鲸 + 最多 20 雨束；VI 第二次低空掠过，VII 尾浪回卷，VIII 落下鲸形大剪影。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "autumnGuardian",
+      "name": "秋叶守护灵",
+      "ingredients": [
+        "leaf",
+        "shield"
+      ],
+      "pattern": "shield-to-flock",
+      "cooldown": 6.5,
+      "damage": 85,
+      "behavior": "一圈枫叶先形成护罩，吸收至多 3 枚弹幕后变成一群飞鸟冲向敌群；无敌弹时按时自动释放。",
+      "levelChanges": "最多 12 叶鸟；VI 鸟群分流，VII 回收叶片再护一次，VIII 最后聚成大鸟穿场。",
+      "startLevel": 5,
+      "maxLevel": 8
+    },
+    {
+      "id": "paperCosmos",
+      "name": "折叠小宇宙",
+      "ingredients": [
+        "portal",
+        "void"
+      ],
+      "pattern": "fold-space-singularity",
+      "cooldown": 8.0,
+      "damage": 260,
+      "behavior": "四页纸向中心折叠，把区域里的小怪逐段拉向中心；闭合短暂停顿，再摊开释放四道宇宙裂缝。",
+      "levelChanges": "4 页 + 4 裂缝；Boss 只承伤；VI 折叠范围扩大，VII 闭合期间持续撕裂，VIII 摊开二次对角裂缝。",
+      "startLevel": 5,
+      "maxLevel": 8
+    }
+  ],
+  "eliteAffixes": [
+    {
+      "id": "bulwark",
+      "name": "纸盾精英",
+      "behavior": "前方 100° 纸盾减伤 65%，背后正常；每 4s 抬盾冲撞",
+      "telegraph": "纸盾明确朝向，冲撞前 .65s 地面短箭头",
+      "counter": "绕背或击退打断",
+      "cap": "每群最多 2"
+    },
+    {
+      "id": "bloom",
+      "name": "孢子精英",
+      "behavior": "受伤累积后 .9s 预告，爆出 6 向慢孢子；死亡同样预告一次",
+      "telegraph": "身体膨大并变成虚线轮廓",
+      "counter": "击杀后离开尸体",
+      "cap": "同时孢子弹最多 30"
+    },
+    {
+      "id": "conductor",
+      "name": "号角精英",
+      "behavior": "每 5s 吹号给予周围普通怪 3s 加速；自身停留 .8s",
+      "telegraph": "声波圈与号角抬起",
+      "counter": "优先击杀或控制打断",
+      "cap": "同类增益不叠加"
+    },
+    {
+      "id": "phase",
+      "name": "折页精英",
+      "behavior": "每 4s 先留下纸页轮廓，再侧移 120px；并非长期无敌",
+      "telegraph": "起点与终点提前 .6s 描边",
+      "counter": "瞄准落点",
+      "cap": "移动阶段 .2s 短不可选中，Boss 不套用"
+    },
+    {
+      "id": "binder",
+      "name": "胶带精英",
+      "behavior": "贴下 2 条交叉胶带，玩家穿过减速 25% 持续 1s",
+      "telegraph": ".8s 贴胶带动作，地面带纹始终可见",
+      "counter": "从带间空隙走位",
+      "cap": "每精英最多 2 条，存在 5s"
+    },
+    {
+      "id": "mirrorhide",
+      "name": "锡纸精英",
+      "behavior": "每 6s 亮面朝前 1.2s，反射至多 2 枚玩家弹体，反射弹伤害固定低值",
+      "telegraph": "亮面抬起有 .7s 闪边",
+      "counter": "侧击或近战，不把所有伤害反射",
+      "cap": "只反射可视弹体；激光/持续区不反射"
+    },
+    {
+      "id": "burrow",
+      "name": "订书针精英",
+      "behavior": "下潜后沿地面虚线冲向玩家旧位置，再从纸面翻起",
+      "telegraph": "地面虚线与终点小纸堆，至少 1s",
+      "counter": "保持横向移动，落点后输出",
+      "cap": "下潜最多 1.2s；不在玩家脚下即刻伤害"
+    },
+    {
+      "id": "treasurer",
+      "name": "金币精英",
+      "behavior": "背着金币袋绕玩家逃跑，周期洒出诱饵金币与可辨认墨滴",
+      "telegraph": "真金币金色星印，墨滴紫色破角；不做不可辨伪装",
+      "counter": "追击风险换奖励",
+      "cap": "死亡保证金币，不能无限刷重复掉落"
+    }
+  ],
+  "performanceRules": [
+    "Resolve geometric attacks as analytic shapes; do not create hundreds of invisible bullets.",
+    "Batch collision queries by spatial cells; shared tick 10-15 Hz for lingering zones.",
+    "At most 8 active weapon slots, 12 summons, 32 persistent regions, 160 meaningful player projectiles; visuals adapt separately.",
+    "Each evolved weapon owns one coherent state machine, not concurrent activation of both parents."
+  ]
+}
