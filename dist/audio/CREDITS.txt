@@ -12,6 +12,10 @@ https://kenney.nl/assets/impact-sounds
 Creative Commons CC0 1.0 Universal
 https://creativecommons.org/publicdomain/zero/1.0/
 Playback gain, rate, low-pass filtering and tail duration adjusted in Web Audio.
+The expanded edition layers these same CC0 recordings into weapon, fusion,
+world-event and boss cues. Samples are onset-normalized at runtime, with
+priority/polyphony limiting and gentle dynamics compression. No synthesized
+oscillator sound effects or microphone recordings are used.
 
 All visual artwork in this game is original procedural Canvas artwork.
 No image-generation service or extracted game sprites were used.
