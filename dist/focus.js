@@ -1,14 +1,15 @@
 'use strict';
 // True object-level defocus, baked once. Characters, enemies and projectiles stay sharp.
 // Only background scenery is eligible; runtime uses one cached drawImage, no filter.
-const FOCUS_LIMITS=Object.freeze({sources:10,variants:20,pixels:2500000});
-const focusSources=['tree','pillar','arch','rock','stump','bigMushroom','paperHouse'];
+// One physical pixel per art unit keeps both biome and original caches within 12 MB.
+const FOCUS_LIMITS=Object.freeze({sources:20,variants:40,pixels:3000000});
+const focusSources=['tree','pillar','arch','rock','stump','bigMushroom','paperHouse','biome_mushroomArch','biome_whale','biome_glassPalace','biome_clockTower','biome_bookBridge','biome_duneFlower','biome_kiteMill','biome_kiteTree','biome_moonRose'];
 const focusVariants=new Map();
 let focusEnabled=true,focusReady=false,focusPixels=0,focusVariantCount=0,focusFallback=false;
-function focusBake(source,blur){let ratio=source.img.width/source.w||2,pad=Math.ceil(blur*ratio*3)+2,width=source.img.width+pad*2,height=source.img.height+pad*2;if(focusVariantCount>=FOCUS_LIMITS.variants||focusPixels+width*height>FOCUS_LIMITS.pixels)return null;let image=document.createElement('canvas');image.width=width;image.height=height;let g=image.getContext('2d');if(!g)return null;
- if('filter' in g){g.filter=`blur(${blur*ratio}px)`;g.drawImage(source.img,pad,pad);g.filter='none';}
+function focusBake(source,blur){let ratio=1,pad=Math.ceil(blur*ratio*3)+2,width=Math.ceil(source.w*ratio)+pad*2,height=Math.ceil(source.h*ratio)+pad*2;if(focusVariantCount>=FOCUS_LIMITS.variants||focusPixels+width*height>FOCUS_LIMITS.pixels)return null;let image=document.createElement('canvas');image.width=width;image.height=height;let g=image.getContext('2d');if(!g)return null;
+ if('filter' in g){g.filter=`blur(${blur*ratio}px)`;g.drawImage(source.img,pad,pad,source.w*ratio,source.h*ratio);g.filter='none';}
  else { // A fixed nine-tap softening fallback for browsers without canvas filters.
-  focusFallback=true;g.globalCompositeOperation='lighter';g.globalAlpha=1/9;let step=blur*ratio*.85;for(let y=-1;y<=1;y++)for(let x=-1;x<=1;x++)g.drawImage(source.img,pad+x*step,pad+y*step);g.globalAlpha=1;g.globalCompositeOperation='source-over';
+  focusFallback=true;g.globalCompositeOperation='lighter';g.globalAlpha=1/9;let step=blur*ratio*.85;for(let y=-1;y<=1;y++)for(let x=-1;x<=1;x++)g.drawImage(source.img,pad+x*step,pad+y*step,source.w*ratio,source.h*ratio);g.globalAlpha=1;g.globalCompositeOperation='source-over';
  }
  focusVariantCount++;focusPixels+=width*height;return{img:image,w:width/ratio,h:height/ratio,pad:pad/ratio};
 }
