@@ -1,0 +1,254 @@
+[
+  {
+    "weapon": "pencil",
+    "damage": 7192
+  },
+  {
+    "weapon": "book",
+    "damage": 14290
+  },
+  {
+    "weapon": "lightning",
+    "damage": 7620
+  },
+  {
+    "weapon": "tornado",
+    "damage": 12158
+  },
+  {
+    "weapon": "fire",
+    "damage": 26288
+  },
+  {
+    "weapon": "scissors",
+    "damage": 10780
+  },
+  {
+    "weapon": "ink",
+    "damage": 4831
+  },
+  {
+    "weapon": "rose",
+    "damage": 14989
+  },
+  {
+    "weapon": "star",
+    "damage": 5289
+  },
+  {
+    "weapon": "plane",
+    "damage": 5314
+  },
+  {
+    "weapon": "bubble",
+    "damage": 2580
+  },
+  {
+    "weapon": "bell",
+    "damage": 9772
+  },
+  {
+    "weapon": "ribbon",
+    "damage": 4139
+  },
+  {
+    "weapon": "frost",
+    "damage": 4664
+  },
+  {
+    "weapon": "comet",
+    "damage": 15298
+  },
+  {
+    "weapon": "garden",
+    "damage": 23138
+  },
+  {
+    "weapon": "aurora",
+    "damage": 4558
+  },
+  {
+    "weapon": "tempest",
+    "damage": 17005
+  },
+  {
+    "weapon": "nova",
+    "damage": 9176
+  },
+  {
+    "weapon": "dragon",
+    "damage": 6237
+  },
+  {
+    "weapon": "mirror",
+    "damage": 23023
+  },
+  {
+    "weapon": "saber",
+    "damage": 5460
+  },
+  {
+    "weapon": "lance",
+    "damage": 2850
+  },
+  {
+    "weapon": "marble",
+    "damage": 1519
+  },
+  {
+    "weapon": "yoyo",
+    "damage": 3220
+  },
+  {
+    "weapon": "rocket",
+    "damage": 5070
+  },
+  {
+    "weapon": "firecracker",
+    "damage": 5200
+  },
+  {
+    "weapon": "ruler",
+    "damage": 1775
+  },
+  {
+    "weapon": "prism",
+    "damage": 2229
+  },
+  {
+    "weapon": "turret",
+    "damage": 1650
+  },
+  {
+    "weapon": "foxspirit",
+    "damage": 635
+  },
+  {
+    "weapon": "mine",
+    "damage": 5540
+  },
+  {
+    "weapon": "stamp",
+    "damage": 4040
+  },
+  {
+    "weapon": "whip",
+    "damage": 4259
+  },
+  {
+    "weapon": "thread",
+    "damage": 8234
+  },
+  {
+    "weapon": "roller",
+    "damage": 3836
+  },
+  {
+    "weapon": "chalk",
+    "damage": 30
+  },
+  {
+    "weapon": "camera",
+    "damage": 1360
+  },
+  {
+    "weapon": "music",
+    "damage": 1986
+  },
+  {
+    "weapon": "meteor",
+    "damage": 8100
+  },
+  {
+    "weapon": "compass",
+    "damage": 720
+  },
+  {
+    "weapon": "magnetArm",
+    "damage": 13010
+  },
+  {
+    "weapon": "gear",
+    "damage": 5000
+  },
+  {
+    "weapon": "umbrella",
+    "damage": 7364
+  },
+  {
+    "weapon": "kite",
+    "damage": 2485
+  },
+  {
+    "weapon": "leaf",
+    "damage": 2630
+  },
+  {
+    "weapon": "shield",
+    "damage": 3675
+  },
+  {
+    "weapon": "portal",
+    "damage": 940
+  },
+  {
+    "weapon": "void",
+    "damage": 6827
+  },
+  {
+    "weapon": "paladin",
+    "damage": 5163
+  },
+  {
+    "weapon": "pinball",
+    "damage": 13437
+  },
+  {
+    "weapon": "festival",
+    "damage": 6405
+  },
+  {
+    "weapon": "rainbowLaser",
+    "damage": 6698
+  },
+  {
+    "weapon": "clockwork",
+    "damage": 2538
+  },
+  {
+    "weapon": "printingPress",
+    "damage": 8679
+  },
+  {
+    "weapon": "loom",
+    "damage": 8003
+  },
+  {
+    "weapon": "livingMural",
+    "damage": 12560
+  },
+  {
+    "weapon": "spotlight",
+    "damage": 12027
+  },
+  {
+    "weapon": "orrery",
+    "damage": 12455
+  },
+  {
+    "weapon": "scrapColossus",
+    "damage": 29082
+  },
+  {
+    "weapon": "skyWhale",
+    "damage": 3838
+  },
+  {
+    "weapon": "autumnGuardian",
+    "damage": 10119
+  },
+  {
+    "weapon": "paperCosmos",
+    "damage": 17798
+  }
+]

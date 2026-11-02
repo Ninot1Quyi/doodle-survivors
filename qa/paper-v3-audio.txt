@@ -1,0 +1,29 @@
+Input #0, matroska,webm, from '/Users/quyi/NinotQuyi/doodle-survivors/qa/paper.webm':
+  Metadata:
+    encoder         : Chrome
+  Duration: N/A, start: 0.000000, bitrate: N/A
+  Stream #0:0(eng): Video: vp9 (Profile 0), yuv420p(pc, bt709/bt709/iec61966-2-1), 1280x800, SAR 1:1 DAR 8:5, 29.97 fps, 29.97 tbr, 1k tbn (default)
+      Metadata:
+        alpha_mode      : 1
+  Stream #0:1(eng): Audio: opus, 48000 Hz, stereo, fltp (default)
+[Parsed_volumedetect_0 @ 0x13590ac40] n_samples: 0
+Stream mapping:
+  Stream #0:1 -> #0:0 (opus (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf61.7.100
+  Stream #0:0(eng): Audio: pcm_s16le, 48000 Hz, stereo, s16, 1536 kb/s (default)
+      Metadata:
+        encoder         : Lavc61.19.100 pcm_s16le
+[Parsed_volumedetect_0 @ 0x134f042b0] n_samples: 3070080
+[Parsed_volumedetect_0 @ 0x134f042b0] mean_volume: -27.2 dB
+[Parsed_volumedetect_0 @ 0x134f042b0] max_volume: -5.8 dB
+[Parsed_volumedetect_0 @ 0x134f042b0] histogram_5db: 53
+[Parsed_volumedetect_0 @ 0x134f042b0] histogram_6db: 192
+[Parsed_volumedetect_0 @ 0x134f042b0] histogram_7db: 401
+[Parsed_volumedetect_0 @ 0x134f042b0] histogram_8db: 854
+[Parsed_volumedetect_0 @ 0x134f042b0] histogram_9db: 1400
+[Parsed_volumedetect_0 @ 0x134f042b0] histogram_10db: 3241
+[out#0/null @ 0x135908580] video:0KiB audio:5996KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:00:32.01 bitrate=N/A speed= 795x    

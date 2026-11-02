@@ -74,7 +74,7 @@ const PaperBiomes=(()=>{
  for(let i=0;i<layouts[type].length;i++){let [name,px,py,scale]=layouts[type][i];m.props.push({x:x+px*mirror,y:y+py,name,scale,biomeProp:true,occluder:Art.sprites[name]?.h*scale>155});}
  for(let i=0;i<3;i++){let angle=(hash(cx+i,cy)%628)/100;m.animals.push({x:x-230+i*220,y:y+130+(i%2)*160,name:themes[type].animal,phase:angle,type,scale:.6+i*.06});}cache.set(key,m);return m;
  }
- function refresh(cx,cy){init();let xx=cell(cx),yy=cell(cy),key=xx+','+yy;if(key===lastKey)return;lastKey=key;active=[];props=[];fauna=[];for(let y=yy-1;y<=yy+1;y++)for(let x=xx-1;x<=xx+1;x++){let c=chunk(x,y);active.push(c);props.push(...c.props);fauna.push(...c.animals);}for(let [k,c]of cache)if(Math.abs(c.cx-xx)>2||Math.abs(c.cy-yy)>2)cache.delete(k);}
+ function refresh(cx,cy){init();let xx=cell(cx),yy=cell(cy),radius=typeof viewW==='number'?Math.max(1,Math.min(3,Math.ceil(Math.max(viewW,viewH)/SIZE/2))):1,key=xx+','+yy+','+radius;if(key===lastKey)return;lastKey=key;active=[];props=[];fauna=[];for(let y=yy-radius;y<=yy+radius;y++)for(let x=xx-radius;x<=xx+radius;x++){let c=chunk(x,y);active.push(c);props.push(...c.props);fauna.push(...c.animals);}for(let [k,c]of cache)if(Math.abs(c.cx-xx)>radius+1||Math.abs(c.cy-yy)>radius+1)cache.delete(k);}
  function renderGround(){if(!ready)return;for(let c of active){if(typeof visible==='function'&&!visible(c.x,c.y,SIZE*.8))continue;ctx.drawImage(grounds.get(c.type),c.x-SIZE/2,c.y-SIZE/2,SIZE,SIZE);}}
  function getProps(){return props;}
  function renderFauna(){const t=typeof realTime==='number'?realTime:0;for(let a of fauna){let flying=[1,2,3].includes(a.type),x=a.x+Math.sin(t*(flying?.2:.07)+a.phase)*(flying?85:30),y=a.y+Math.cos(t*.11+a.phase)*24;if(typeof visible==='function'&&!visible(x,y,85))continue;let bob=flying?Math.sin(t*3+a.phase)*5:Math.abs(Math.sin(t*2+a.phase))*1.4;Art.shadow(ctx,x,y,16,5);Art.image(ctx,a.name,x,y-bob,a.scale,Math.cos(t*.2+a.phase)<0?-1:1,flying?Math.sin(t*2+a.phase)*.08:0,.92);}}
@@ -89,3 +89,5 @@ function renderBiomeFauna(){PaperBiomes.renderFauna();}
 function biomeAt(x,y){return PaperBiomes.biomeAt(x,y);}
 
 initBiomes();
+
+function biomeSpeed(x,y){if(biomeAt(x,y).key!=='whale')return 1;let lx=((x+480)%960+960)%960-480,ly=((y+480)%960+960)%960-480;return (lx/380)**2+((ly+15)/340)**2<1&&Math.abs(ly-55)>65?.86:1;}

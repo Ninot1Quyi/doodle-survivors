@@ -92,7 +92,7 @@ function updateAdvancedEncounters(dt){if(!game.creatureSeen)initEnemyExpansion()
  if(game.finalBossKind&&!game.bossKilled&&game.enemies.some(e=>e.finalBoss&&e.hp<=0))game.bossKilled=true;
 }
 function renderEnemyVariant(e){if(e.hp<=0)return;const v=ELITE_VARIANTS[e.variant],q=e.intent;ctx.save();
- if(v){ctx.strokeStyle=v.color;ctx.lineWidth=2.2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(e.x,e.y+2,e.r+9,(e.r+9)*.55,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.font='bold 11px "Noto Serif SC",serif';ctx.textAlign='center';ctx.strokeStyle='#fff1db';ctx.lineWidth=3;ctx.strokeText(v.name,e.x,e.y-e.r*2-12);ctx.fillStyle='#776178';ctx.fillText(v.name,e.x,e.y-e.r*2-12);}
+ if(v){ctx.strokeStyle=v.color;ctx.lineWidth=2.2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(e.x,e.y+2,e.r+9,(e.r+9)*.55,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.font='bold 11px "PaperHand","Kaiti SC",serif';ctx.textAlign='center';ctx.strokeStyle='#fff1db';ctx.lineWidth=3;ctx.strokeText(v.name,e.x,e.y-e.r*2-12);ctx.fillStyle='#776178';ctx.fillText(v.name,e.x,e.y-e.r*2-12);}
  if(q){let u=1-q.left/q.max;ctx.strokeStyle=q.color;ctx.fillStyle=q.color;ctx.lineWidth=1.6;ctx.globalAlpha=.75;ctx.setLineDash([5,4]);
  if(['leap','stomp','paint','cloud','serpent','clock'].includes(q.type)){ctx.beginPath();ctx.ellipse(q.x,q.y,q.r,q.r*.72,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.beginPath();ctx.ellipse(q.x,q.y,Math.max(1,q.r*u),Math.max(1,q.r*.72*u),0,0,Math.PI*2);ctx.stroke();}
  else if(['charge','fan','sniper'].includes(q.type)){let reach=q.type==='charge'?170:120;ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(e.x+Math.cos(q.a)*reach,e.y+Math.sin(q.a)*reach);ctx.stroke();}
