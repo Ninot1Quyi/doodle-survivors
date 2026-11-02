@@ -33,7 +33,7 @@ const Sound=(()=>{
     wind:{layers:[['wind',1,1]],priority:0,boost:.9,tail:.6},
     dash:{layers:[['dash',1,1]],priority:2,boost:1.15,tail:.4}
   };
-  const aliases={comet:'star',nova:'star',garden:'rose',aurora:'bell',tempest:'wind',dragon:'explosion',mirror:'bell',crown:'star',candle:'shoot',clover:'event',bossTell:'boss',boss_tell:'boss',chest:'event'};
+  const aliases={frost:'bell',comet:'star',nova:'star',garden:'rose',aurora:'bell',tempest:'wind',dragon:'explosion',mirror:'bell',crown:'star',candle:'shoot',clover:'event',bossTell:'boss',boss_tell:'boss',chest:'event'};
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   function status(text){const e=document.getElementById('audio-status');if(e)e.textContent=text;}
   function syncSliders(){for(const [name,value]of [['music',musicVolume],['sfx',sfxVolume]]){const slider=document.getElementById(name+'-volume'),label=document.getElementById(name+'-value');if(slider)slider.value=Math.round(value*100);if(label)label.value=Math.round(value*100)+'%';}}

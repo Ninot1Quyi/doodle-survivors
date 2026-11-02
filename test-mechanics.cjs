@@ -1,8 +1,8 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
 const painter=new Proxy({createPattern:()=>({})},{get:(t,k)=>k in t?t[k]:()=>{},set:(t,k,v)=>(t[k]=v,true)});
 const nodes=new Map();function node(){return{style:{setProperty(){}},classList:{add(){},remove(){},toggle(){}},firstElementChild:{style:{},textContent:''},getContext:()=>painter,getBoundingClientRect:()=>({width:1350,height:800}),toDataURL:()=>'',focus(){},replaceChildren(){},append(){},addEventListener(){},setAttribute(){},querySelector:()=>node()};}
-const sandbox={console,Math,Set,Map,document:{getElementById:id=>{if(!nodes.has(id))nodes.set(id,node());return nodes.get(id);},createElement:()=>node(),querySelector:()=>node(),body:node(),addEventListener(){}},window:{addEventListener(){}},devicePixelRatio:1,ResizeObserver:class{observe(){}},requestAnimationFrame(){},setTimeout(){},clearTimeout(){},HTMLInputElement:class{},Art:new Proxy({sprites:{},url:()=>'',ground:{}},{get:(t,k)=>k in t?t[k]:()=>{}}),Sound:{start(){},play(){},duck(){},volumes(){},toggle(){},unlock(){}}};
-vm.createContext(sandbox);vm.runInContext(fs.readFileSync(__dirname+'/dist/expansion.js','utf8'),sandbox);vm.runInContext(fs.readFileSync(__dirname+'/dist/game.js','utf8'),sandbox);const run=s=>vm.runInContext(s,sandbox);
+const sandbox={console,Math,Set,Map,EDITION:'adventure',document:{querySelectorAll:()=>[],getElementById:id=>{if(!nodes.has(id))nodes.set(id,node());return nodes.get(id);},createElement:()=>node(),querySelector:()=>node(),body:node(),addEventListener(){}},window:{addEventListener(){}},devicePixelRatio:1,ResizeObserver:class{observe(){}},requestAnimationFrame(){},setTimeout(){},clearTimeout(){},HTMLInputElement:class{},Art:new Proxy({sprites:{},url:()=>'',ground:{}},{get:(t,k)=>k in t?t[k]:()=>{}}),Sound:{start(){},play(){},duck(){},volumes(){},toggle(){},unlock(){}}};
+vm.createContext(sandbox);vm.runInContext(fs.readFileSync(__dirname+'/dist/items.js','utf8'),sandbox);vm.runInContext(fs.readFileSync(__dirname+'/dist/expansion.js','utf8'),sandbox);vm.runInContext(fs.readFileSync(__dirname+'/dist/game.js','utf8'),sandbox);const run=s=>vm.runInContext(s,sandbox);
 run('start()');assert.equal(run('state'),'playing');assert.equal(run('game.enemies.length'),45);assert.equal(run('Object.keys(game.weapons).filter(k=>game.weapons[k]>0).length'),4);assert.equal(run('game.allies'),undefined);
 run("keys.add('d');update(.1);keys.clear()");assert(run('game.hero.x')>0);run('dash()');let cd=run('game.hero.dashCd');run('dash()');assert.equal(run('game.hero.dashCd'),cd);
 run('pause()');let t=run('game.t');run('update(1)');assert.equal(run('game.t'),t);run('pause()');
@@ -21,6 +21,19 @@ run('game.enemies=[];game.spawnClock=100;game.xp=game.need;update(.016)');assert
 run('game.hero.storm=100;storm()');assert.equal(run('game.hero.storm'),0);run('storm()');assert.equal(run('game.hero.storm'),0);
 for(const at of [90,210,330]){run(`start();game.t=${at};update(.016)`);assert(run('game.enemies.some(e=>e.boss)'));}
 run('start();game.enemies=[];game.spawnClock=100;game.t=360;game.bossKilled=false;update(.02)');assert.notEqual(run('state'),'ended');run('game.bossKilled=true;update(.02)');assert.equal(run('state'),'ended');
+// Pickup effects, finite timers, shield charges and repeat-proof parcel loot.
+run("start();game.hero.hp=40;useItem('heal')");assert.equal(run('game.hero.hp'),85);
+run("useItem('cookie')");assert.equal(run('game.hero.hp'),110);assert(run('game.xp')>=8);
+run("game.gems=[{x:5000,y:5000}];useItem('magnet')");assert(run('game.gems[0].attracted'));
+run("useItem('umbrella');game.hero.inv=0;playerHurt(50,0,0)");assert.equal(run('game.hero.hp'),110);assert.equal(run('game.shieldCharges'),2);
+run("game.hero.inv=0;playerHurt(50,0,0);game.hero.inv=0;playerHurt(50,0,0)");assert.equal(run('game.shieldCharges'),0);assert.equal(run('game.buffs.shield'),0);
+for(let kind of ['feather','hourglass','rainbow','honey','snowglobe'])run(`useItem('${kind}')`);
+assert(run('game.buffs.speed===12&&game.buffs.slow===12&&game.buffs.power===12&&game.buffs.regen===15&&game.buffs.freeze===5'));
+run("game.hero.storm=10;useItem('firefly')");assert.equal(run('game.hero.storm'),55);
+let maxhp=run('game.hero.maxHp');run("useItem('needle')");assert.equal(run('game.hero.maxHp'),maxhp+10);
+let rerolls=run('game.rerolls');run("useItem('ticket')");assert.equal(run('game.rerolls'),rerolls+1);assert(run('game.luckyNext'));
+run("useItem('scroll');worldCaches=[];updateItems(16)");assert(run('Object.values(game.buffs).every(v=>v===0)'));
+run("start();game.hero.x=60;game.hero.y=320;updateItems(.1)");let loot=run('game.pickups.length');assert.equal(loot,2);run('updateItems(.1)');assert.equal(run('game.pickups.length'),loot);
 // Every new weapon must create attack objects and reduce enemy health when simulated.
 const newWeapons=run('Object.keys(EXTRA_WEAPONS).filter(k=>!EXTRA_WEAPONS[k].passive)');
 for(const k of newWeapons){run(`start();game.enemies=[];game.spawnClock=999;for(let key in game.weapons)game.weapons[key]=0;game.weapons.${k}=5;game.clocks.${k}=0;for(let i=0;i<12;i++)spawnEnemy('snail',Math.cos(i)*100,70+Math.sin(i)*80);`);const health=run('game.enemies.reduce((s,e)=>s+e.hp,0)');run("for(let i=0;i<90;i++){game.hero.inv=100;game.need=999999;update(1/60)}");assert(run('game.enemies.reduce((s,e)=>s+e.hp,0)')<health,k+' must deal damage');}
