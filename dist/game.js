@@ -7,7 +7,7 @@ function hudText(id,value){value=String(value);if(hudValues.get(id)!==value){hud
 let renderScale=1.5,renderDirty=true,lastRenderedState='',lastRenderAt=0;
 const perfStats={frames:0,workMs:0,frameMs:16.7,resolution:1.5};
 const clockNow=()=>typeof performance!=='undefined'?performance.now():Date.now();
-let W=1200,H=800,DPR=1,zoom=1,viewW=1200,viewH=800,state='menu',runMode='action',game,cam={x:0,y:0},keys=new Set(),mouse={x:0,y:0,active:false},joy={x:0,y:0},last=0,realTime=0,bannerTimer,settingsReturn='menu',hudClock=0;
+let W=1200,H=800,DPR=1,zoom=1,viewW=1200,viewH=800,state='menu',runMode='growth',game,cam={x:0,y:0},keys=new Set(),mouse={x:0,y:0,active:false},joy={x:0,y:0},last=0,realTime=0,bannerTimer,settingsReturn='menu',hudClock=0;
 const WORLD=3200,HALF=WORLD/2;
 const collisionCells=new Map(),collisionBuckets=[],collisionCandidates=[],renderList=[];
 const cellKey=(x,y)=>((x&65535)<<16)^(y&65535);
