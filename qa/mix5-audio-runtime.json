@@ -1,0 +1,41 @@
+{
+  "result": {
+    "type": "object",
+    "value": {
+      "diagnostics": {
+        "activeVoices": 11,
+        "contextState": "running",
+        "crossfading": false,
+        "failed": [],
+        "loopTransitions": 0,
+        "musicLoopEnd": 220.7,
+        "musicPaused": false,
+        "musicReady": 4,
+        "musicTrack": "Master of the Feast",
+        "musicVolume": 0.38,
+        "muted": false,
+        "outputPeak": 0.3864092230796814,
+        "outputRms": 0.16919632851048227,
+        "played": {
+          "heavyhit": 4,
+          "hit": 12,
+          "impactCrush": 13,
+          "impactPencil": 23,
+          "lightning": 4,
+          "parry": 1,
+          "pencilShot": 20,
+          "pickup": 20,
+          "wind": 2
+        },
+        "samples": 34,
+        "sfxLowpass": 11200,
+        "sfxVolume": 0.56,
+        "started": true
+      },
+      "durationMs": 8015.5,
+      "frames": 387,
+      "maxPeak": 0.47397059202194214,
+      "maxVoices": 15
+    }
+  }
+}

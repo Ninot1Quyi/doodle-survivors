@@ -41,10 +41,7 @@ function renderEnemyTelegraphs(){
   if(!q)continue;let u=clamp(1-q.left/q.max,0,1);
   if(q.spots.length){for(let s of q.spots)warningCircle(s.x,s.y,s.r,clamp(1-(q.left+s.delay)/(q.max+s.delay),0,1));}
   else if(q.type==='charge')warningLane(e.x,e.y,q.a,q.range,e.r,u,true);
-  else if(['fan','sniper','radial','spiral'].includes(q.type)){
-   const radial=q.type==='radial'||q.type==='spiral',n=q.n,reach=Math.min(480,q.speed*2.4),half=q.type==='sniper'?7:8;
-   for(let i=0;i<n;i++){let a=radial?q.a+i*TAU/n:q.a+(i-(n-1)/2)*.22;warningLane(e.x,e.y-(e.boss?24:18),a,reach,half,u);}
-  }
+
  }
  for(let h of game.hazards)if(!h.done&&h.life>0)warningCircle(h.x,h.y,h.r,clamp(1-h.life/h.max,0,1));
 }

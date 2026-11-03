@@ -1,16 +1,16 @@
 'use strict';
 const impactPalette=['#f2b865','#bc93d6','#e58c85','#82b9d5'];
-function hitFeedback(e,crit,damage,cause='confetti',sx=e.x-1,sy=e.y,knock=0){
+function hitFeedback(e,crit,damage,cause='confetti',sx=e.x-1,sy=e.y,knock=0,style={}){
  if(!visible(e.x,e.y,100))return;
  e.hitPulse=.18;
  const heavy=crit||damage>=70||knock>=140;
  if(game.t>=(game.nextImpactAt||0)&&game.fx.length<190){
   game.nextImpactAt=game.t+(heavy?.025:.04);
-  const r=heavy?34+Math.min(20,damage*.06):22;
-  game.fx.push({type:'inkhit',x:e.x,y:e.y-e.r*.35,life:heavy?.32:.22,max:heavy?.32:.22,r,seed:e.id+game.t,color:({burn:'#e9af75',freeze:'#a7cbdc',petals:'#cea3bb',soak:'#a7bdd3',erase:'#c7b5d9',crumple:'#d4b69c'}[cause]||impactPalette[e.id%4]),crit:heavy,cause,angle:Math.atan2(e.y-sy,e.x-sx)});
+  const pencil=style.weapon==='pencil',r=pencil?(crit?22:16):heavy?30+Math.min(16,damage*.05):20;
+  game.fx.push({type:'inkhit',x:e.x,y:e.y-e.r*.35,life:heavy?.32:.22,max:heavy?.32:.22,r,seed:e.id+game.t,weapon:style.weapon,color:style.color||({burn:'#e9af75',freeze:'#a7cbdc',petals:'#cea3bb',soak:'#a7bdd3',erase:'#c7b5d9',crumple:'#d4b69c'}[cause]||impactPalette[e.id%4]),crit:heavy,cause,angle:Math.atan2(e.y-sy,e.x-sx)});
   particleBurst(e.x,e.y-e.r*.3,reducedEffects?2:heavy?9:3,impactPalette[e.id%4],heavy?230:130);
  }
- if(heavy&&game.impactCooldown<=0){game.hitStop=reducedEffects?.008:.045;game.impactCooldown=.18;game.shake=Math.max(game.shake,reducedEffects?.6:Math.min(6,3+damage*.015));Sound.play('heavyhit',.32,.9,.16);}
+ if(heavy&&game.impactCooldown<=0){game.hitStop=reducedEffects?.008:.045;game.impactCooldown=.18;game.shake=Math.max(game.shake,reducedEffects?.6:Math.min(6,3+damage*.015));if(!crit)Sound.play('heavyhit',.29,1,.2);}
 }
 function impactStar(x,y,r,angle,color,points=7){
  ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.beginPath();
@@ -22,12 +22,12 @@ function renderImpact(f){
  const u=clamp(1-f.life/f.max,0,1),burst=f.type==='explosion',clash=f.type==='clash',intensity=reducedEffects?.55:1;
  let r=f.r*(.55+Math.min(1,u*3)*.7)*intensity;
  ctx.save();ctx.globalAlpha=Math.min(1,(1-u)*2);
+ if(!burst&&!clash&&f.weapon==='book'){renderBookContact(f,r,u);ctx.restore();return true;}
+ if(!burst&&!clash&&f.weapon==='pencil'){renderPigmentContact(f,r,u);ctx.restore();return true;}
+ if(!burst&&!clash&&['saber','lance','scissors','gear','leaf','thread','whip','plane','paladin'].includes(f.weapon)){renderCutContact(f,r,u);ctx.restore();return true;}
  if(!burst&&!clash&&renderMaterialImpact(f,r,u)){ctx.restore();return true;}
  if(burst){
-  r=Math.min(205,f.r)*(.3+Math.sqrt(u)*.85);
-  for(let i=0;i<7;i++){let a=i*TAU/7+(f.angle||0),x=f.x+Math.cos(a)*r*.58,y=f.y+Math.sin(a)*r*.58;impactStar(x,y,r*.34,a,f.color,5);}
-  ctx.globalAlpha=(1-u)*.8;Art.ellipse(ctx,f.x,f.y,r,r,null,'#b27ca6',6*(1-u)+1);Art.ellipse(ctx,f.x,f.y,r*.82,r*.82,null,'#fff0c9',3);
-  impactStar(f.x,f.y,r*.47,(f.angle||0)+.2,'#ffe8ae',8);
+  r=Math.min(205,f.r)*(.3+Math.sqrt(u)*.85);renderPolishedExplosion(f,r,u);
  }else{
   const a=f.angle??f.seed??0;
   impactStar(f.x+3,f.y+3,r,a,'#846079',clash?4:7);

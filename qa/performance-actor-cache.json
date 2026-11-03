@@ -1,0 +1,73 @@
+{
+  "note": "Independent controlled browser QA. High-HP enemies; not ordinary gameplay or phone evidence.",
+  "results": [
+    {
+      "cache": {
+        "limit": 1800000,
+        "pixels": 294416,
+        "shadows": 41
+      },
+      "cached": false,
+      "canvasPixels": 1440000,
+      "enemies": 236,
+      "frames": 180,
+      "intervalMedian": 16.800000000046566,
+      "intervalP95": 33.90000000002328,
+      "wallMs": 4460.5,
+      "workMean": 7.97166666727927,
+      "workMedian": 8,
+      "workP95": 10.700000002980232
+    },
+    {
+      "cache": {
+        "limit": 1800000,
+        "pixels": 389792,
+        "shadows": 44
+      },
+      "cached": true,
+      "canvasPixels": 1440000,
+      "enemies": 236,
+      "frames": 180,
+      "intervalMedian": 16.70000000006985,
+      "intervalP95": 33.90000000002328,
+      "wallMs": 4105.5,
+      "workMean": 8.572222222636144,
+      "workMedian": 8.399999991059303,
+      "workP95": 11.899999991059303
+    },
+    {
+      "cache": {
+        "limit": 1800000,
+        "pixels": 389792,
+        "shadows": 44
+      },
+      "cached": true,
+      "canvasPixels": 1440000,
+      "enemies": 236,
+      "frames": 180,
+      "intervalMedian": 16.70000000006985,
+      "intervalP95": 33.5,
+      "wallMs": 4203,
+      "workMean": 8.344999999801319,
+      "workMedian": 8.399999991059303,
+      "workP95": 11.5
+    },
+    {
+      "cache": {
+        "limit": 1800000,
+        "pixels": 389792,
+        "shadows": 44
+      },
+      "cached": false,
+      "canvasPixels": 1440000,
+      "enemies": 236,
+      "frames": 180,
+      "intervalMedian": 16.70000000006985,
+      "intervalP95": 33.40000000002328,
+      "wallMs": 4023.400000005961,
+      "workMean": 7.698333333763811,
+      "workMedian": 7.799999997019768,
+      "workP95": 10.199999988079073
+    }
+  ]
+}

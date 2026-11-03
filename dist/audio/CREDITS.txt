@@ -1,22 +1,28 @@
-MUSIC
+BACKGROUND MUSIC
 “Master of the Feast” — Kevin MacLeod (incompetech.com)
 Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400019
 Audio source: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Master%20of%20the%20Feast.mp3
 Licensed under Creative Commons: By Attribution 4.0
 https://creativecommons.org/licenses/by/4.0/
-Original recording retained. Playback volume adjusted and looping enabled.
+Original recording retained. Original playing volume restored. Runtime
+crossfades before the quiet outro tail, with a 220.7-second transition endpoint.
 
 SOUND EFFECTS
 Kenney Impact Sounds — Kenney (https://kenney.nl)
 https://kenney.nl/assets/impact-sounds
 Creative Commons CC0 1.0 Universal
 https://creativecommons.org/publicdomain/zero/1.0/
-Playback gain, rate, low-pass filtering and tail duration adjusted in Web Audio.
-The expanded edition layers these same CC0 recordings into weapon, fusion,
-world-event and boss cues. Samples are onset-normalized at runtime, with
-priority/polyphony limiting and gentle dynamics compression. No synthesized
-oscillator sound effects or microphone recordings are used.
+The 13 original game samples are retained. 21 additional short Foley variants
+are extracted from the same licensed pack: wood, plate, glass, metal, generic,
+punch and plank recordings, three versions each. Changes: onset trim,
+high-pass/EQ, tiny fade-in, short fade-out and peak normalization.
+MIX-PROVENANCE.json records every original filename, SHA-256 and filter.
+The runtime layers recordings with round-robin variants, small pitch changes,
+priority/polyphony limits, separate SFX compression and a final bus limiter.
+No oscillator sound effects or microphone recordings are used.
 
+VISUALS
 All visual artwork in this game is original procedural Canvas artwork.
 No image-generation service or extracted game sprites were used.
-Visual/gameplay reference: Rakuworld by SETO. This is an independent browser prototype, not an official Rakuworld release.
+Visual/gameplay reference: Rakuworld by SETO. This is an independent browser
+prototype, not an official Rakuworld release.

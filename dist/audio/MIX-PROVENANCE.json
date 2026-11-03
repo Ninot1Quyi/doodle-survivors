@@ -1,0 +1,195 @@
+{
+  "source": "https://kenney.nl/assets/impact-sounds",
+  "license": "CC0-1.0",
+  "samples": [
+    {
+      "output": "wood0.ogg",
+      "original": "impactWood_light_000.ogg",
+      "source_sha256": "eb45e35b4bed784d3f120de4afec4b0d6ac09d9e143cce8cfcb7d739e1b1f3c3",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 190.0,
+      "filters": "highpass=f=170,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1550:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "wood1.ogg",
+      "original": "impactWood_light_001.ogg",
+      "source_sha256": "4b76bf3ccc8e60d19188f3165b778a7817786faa6887c55d9049bcbeef3b425f",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 190.0,
+      "filters": "highpass=f=170,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1550:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "wood2.ogg",
+      "original": "impactWood_light_002.ogg",
+      "source_sha256": "b183cf7a5bd783817e0e4b82af34ac6658fa1927049089dadc8b15c2ecc771dc",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 190.0,
+      "filters": "highpass=f=170,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1550:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "snap0.ogg",
+      "original": "impactPlate_light_000.ogg",
+      "source_sha256": "6e797cf8a5bfc52d7ed5eb47c227974c1cf2a674954fec5b539cea7d62c7282c",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 160.0,
+      "filters": "highpass=f=300,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1250:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "snap1.ogg",
+      "original": "impactPlate_light_001.ogg",
+      "source_sha256": "947915c2eb6ac57ee08fd3a48b297fd108d69abc72076e79882c21cad0eef56e",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 160.0,
+      "filters": "highpass=f=300,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1250:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "snap2.ogg",
+      "original": "impactPlate_light_002.ogg",
+      "source_sha256": "8ac5869ea434cf0d364872774efe70b2d666a4f02ba35ddfc1e051d336721be8",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 160.0,
+      "filters": "highpass=f=300,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1250:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "glass0.ogg",
+      "original": "impactGlass_light_000.ogg",
+      "source_sha256": "d750cf88097d0c3e69920e6e14496e1444e1a9da01aa4cca8f5ec8cb44c57b4f",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 230.8,
+      "filters": "highpass=f=420,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1958:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "glass1.ogg",
+      "original": "impactGlass_light_001.ogg",
+      "source_sha256": "05e513fbd42829060eb37855f8c3866722ec5c39a8937c9bfde518cc609effa2",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 206.7,
+      "filters": "highpass=f=420,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1717:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "glass2.ogg",
+      "original": "impactGlass_light_002.ogg",
+      "source_sha256": "710db7451bb7857b9140dfe6afe4621ea2188ad65eda3919c569d1bb285b933d",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 206.7,
+      "filters": "highpass=f=420,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1717:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "metal0.ogg",
+      "original": "impactMetal_light_000.ogg",
+      "source_sha256": "33b5e6e37c6e9d54e07bf5a89b12c76e879f40c1ea83cdd82714df1d6f9fec6d",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 210.0,
+      "filters": "highpass=f=300,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1750:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "metal1.ogg",
+      "original": "impactMetal_light_001.ogg",
+      "source_sha256": "fba69c467ddd85da7b1d82e259f936b876d9ba6a3d6f1b24bdd10468e46bfe08",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 210.0,
+      "filters": "highpass=f=300,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1750:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "metal2.ogg",
+      "original": "impactMetal_light_002.ogg",
+      "source_sha256": "25a96f90a9a1f88a531e824e126f0519504625e5635e65a72e4f31611428db29",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 210.0,
+      "filters": "highpass=f=300,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1750:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "soft0.ogg",
+      "original": "impactGeneric_light_000.ogg",
+      "source_sha256": "f0e982611e97512fee5f777986b67e8b435434b601f94992ec044f7e89fb5acb",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 161.1,
+      "filters": "highpass=f=220,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1261:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "soft1.ogg",
+      "original": "impactGeneric_light_001.ogg",
+      "source_sha256": "c3cd1c073d186ae8fa35788ba94de581f1826e7427a7bb26490b2695fac18efa",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 114.6,
+      "filters": "highpass=f=220,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.0796:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "soft2.ogg",
+      "original": "impactGeneric_light_002.ogg",
+      "source_sha256": "d0bf60905b59ff630ffe01eb0edeeacd2504eaa8fb6523aeef7d2458b78264d3",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 161.1,
+      "filters": "highpass=f=220,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1261:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "body0.ogg",
+      "original": "impactPunch_medium_000.ogg",
+      "source_sha256": "486988aa2d6440ffc4c62a0e8ccf3c23673ba84424bd4723378d451b7255eb5c",
+      "onset_trim_ms": 0.12,
+      "duration_ms": 200.0,
+      "filters": "highpass=f=130,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1650:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "body1.ogg",
+      "original": "impactPunch_medium_001.ogg",
+      "source_sha256": "e71d23abcc3f10d9d6bc9615b2a431fff70b12333a5fcdd9964457564ace4349",
+      "onset_trim_ms": 0.23,
+      "duration_ms": 200.0,
+      "filters": "highpass=f=130,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1650:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "body2.ogg",
+      "original": "impactPunch_medium_002.ogg",
+      "source_sha256": "6492f9ccbc8d24dcef607bb1b48790b7870961474561f7fe5601e1c73a3018ef",
+      "onset_trim_ms": 0.35,
+      "duration_ms": 200.0,
+      "filters": "highpass=f=130,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1650:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "paper0.ogg",
+      "original": "impactPlank_medium_000.ogg",
+      "source_sha256": "8403cd7a043f0391574c88c55dd205743725b5363d2407f6de145f201690b68f",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 180.0,
+      "filters": "highpass=f=240,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1450:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "paper1.ogg",
+      "original": "impactPlank_medium_001.ogg",
+      "source_sha256": "d7c304319f8beac616231b62041fa8da74045b62d7155965516efb9b19303df4",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 180.0,
+      "filters": "highpass=f=240,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1450:d=0.035",
+      "normalization_peak": 0.55
+    },
+    {
+      "output": "paper2.ogg",
+      "original": "impactPlank_medium_002.ogg",
+      "source_sha256": "f6a14da45994229676b4f29e6a35f504b5c2ec2b8166fb1a3b1aa004bc6911ef",
+      "onset_trim_ms": 0.0,
+      "duration_ms": 180.0,
+      "filters": "highpass=f=240,equalizer=f=2600:t=q:w=1.1:g=2.5,lowpass=f=10500,afade=t=in:d=0.0005,afade=t=out:st=0.1450:d=0.035",
+      "normalization_peak": 0.55
+    }
+  ]
+}

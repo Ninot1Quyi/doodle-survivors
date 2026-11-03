@@ -1,0 +1,13 @@
+[
+  {
+    "time": 123,
+    "kills": 756,
+    "hp": 120,
+    "level": 18,
+    "bosses": 1,
+    "fusions": [
+      "comet"
+    ],
+    "state": "playing"
+  }
+]

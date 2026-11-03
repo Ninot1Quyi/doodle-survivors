@@ -1,0 +1,24 @@
+{
+  "result": {
+    "type": "object",
+    "value": {
+      "activeVoices": 0,
+      "contextState": "uninitialized",
+      "crossfading": false,
+      "failed": [],
+      "loopTransitions": 0,
+      "musicLoopEnd": 220.7,
+      "musicPaused": true,
+      "musicReady": 4,
+      "musicTrack": "Master of the Feast",
+      "musicVolume": 0.38,
+      "muted": false,
+      "outputPeak": 0,
+      "outputRms": 0,
+      "played": {},
+      "samples": 0,
+      "sfxVolume": 0.56,
+      "started": false
+    }
+  }
+}

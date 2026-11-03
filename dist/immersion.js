@@ -13,15 +13,26 @@ function drawCenteredSprite(name,x,y,scale,angle=0,alpha=1){
  ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.globalAlpha=alpha;
  ctx.drawImage(s.img,-s.w*scale/2,-s.h*scale/2,s.w*scale,s.h*scale);ctx.restore();
 }
+function renderLoosePage(x,y,size,angle,fold,alpha=1){
+ ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.globalAlpha*=alpha;
+ const w=size,h=size*.72,curve=Math.sin(fold)*h*.45;
+ ctx.beginPath();ctx.moveTo(-w,-h);ctx.quadraticCurveTo(0,-h+curve,w,-h*.8);ctx.lineTo(w*.82,h);ctx.quadraticCurveTo(0,h+curve,-w*.9,h*.8);ctx.closePath();ctx.fillStyle='#eee0bc';ctx.fill();ctx.strokeStyle='#947a9c';ctx.lineWidth=.9;ctx.stroke();
+ ctx.beginPath();ctx.moveTo(w,-h*.8);ctx.lineTo(w*.5,-h*.4);ctx.lineTo(w*.82,h);ctx.closePath();ctx.fillStyle='#b4a0c7';ctx.fill();
+ ctx.beginPath();ctx.moveTo(-w*.9,-h*.9);ctx.quadraticCurveTo(0,-h*.9+curve,w*.52,-h*.7);ctx.lineTo(w*.45,-h*.3);ctx.quadraticCurveTo(-w*.1,-h*.5+curve,-w*.85,-h*.5);ctx.closePath();ctx.fillStyle='#fff3d6';ctx.fill();
+ // Tiny ink marks belong to the sheet face, never to an orbit guide line.
+ for(let j=0;j<2;j++){ctx.fillStyle='#a58ca6';ctx.fillRect(-w*.55,-h*.2+j*h*.45,w*(j?.7:1),Math.max(.7,size*.065));}
+ ctx.restore();
+}
 function renderOrbitBook(b){
- ctx.save();ctx.beginPath();ctx.ellipse(b.cx,b.cy,b.rx,b.ry,0,b.a-.8,b.a);ctx.strokeStyle='#ab7eba75';ctx.lineWidth=8;ctx.stroke();ctx.strokeStyle='#fff1c5';ctx.lineWidth=2;ctx.stroke();ctx.restore();
+ const n=reducedEffects?3:5;
+ for(let j=n;j>=1;j--){let age=j/n,a=b.a-.11-j*.105,drift=Math.sin(game.t*4+j+b.a)*3*age,x=b.cx+Math.cos(a)*(b.rx+age*7),y=b.cy+Math.sin(a)*(b.ry+age*4)-age*5+drift,tangent=Math.atan2(Math.cos(a)*b.ry,-Math.sin(a)*b.rx);renderLoosePage(x,y,7.5-age*3,tangent+Math.sin(game.t*5+j)*.3,game.t*7+j,.68*(1-age*.72));}
  const flap=Math.sin(game.t*9+b.a),s=.65+Math.sin(b.a)*.06;
  drawCenteredSprite('book',b.x,b.y,s,Math.sin(b.a)*.28);
  ctx.save();ctx.translate(b.x,b.y);ctx.rotate(Math.sin(b.a)*.28);ctx.scale(1,.8+flap*.13);
  Art.path(ctx,'M0 10Q-9 -9 -19 -12L-17 6Q-6 1 0 10M0 10Q9 -9 19 -12L17 6Q6 1 0 10','#fff6da','#b9a0bc',.9);
  ctx.restore();
- for(let j=1;j<4;j++){let a=b.a-j*.2;drawCenteredSprite('star',b.cx+Math.cos(a)*b.rx,b.cy+Math.sin(a)*b.ry,.12-j*.02,a,.55-j*.12);}
 }
+const actorPoseKinds=new Map();
 function actorPose(e,hero=false){
  const phase=hero?e.walk*Math.PI/4:e.frame*Math.PI/4+e.phase,t=game.t;
  let lift=0,sx=1,sy=1,tilt=0;
@@ -32,8 +43,9 @@ function actorPose(e,hero=false){
   if(!e.moving){sx+=Math.sin(t*2.6)*.015;sy-=Math.sin(t*2.6)*.018;}
   if(e.dash>0){sx=1.12;sy=.88;tilt=e.facing*.17;}
  }else{
-  const flying=['bat','jelly','ghost','moth','lantern','cloud'].some(k=>e.kind.includes(k));
-  const squishy=['slime','imp','mushroom','frog','rabbit','fox','puff'].some(k=>e.kind.includes(k));
+  let category=actorPoseKinds.get(e.kind);
+  if(category===undefined){category=/bat|jelly|ghost|moth|lantern|cloud/.test(e.kind)?1:/slime|imp|mushroom|frog|rabbit|fox|puff/.test(e.kind)?2:0;actorPoseKinds.set(e.kind,category);}
+  const flying=category===1,squishy=category===2;
   const hop=Math.max(0,Math.sin(phase));
   if(flying){lift=7+Math.sin(t*4+e.phase)*6;sx=1+Math.sin(phase)*.025;sy=1-Math.sin(phase)*.03;tilt=Math.sin(t*3+e.phase)*.09;}
   else if(squishy){lift=hop*(e.boss?3:9);sx=1+Math.cos(phase*2)*.075;sy=1-Math.cos(phase*2)*.085;tilt=Math.cos(phase)*.07;}
