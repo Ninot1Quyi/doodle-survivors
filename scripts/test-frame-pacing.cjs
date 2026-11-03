@@ -1,5 +1,5 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
-const source=fs.readFileSync(__dirname+'/../dist/game.js','utf8');
+const source=fs.readFileSync(__dirname+'/../public/game.js','utf8');
 const start=source.indexOf("const frameSchedule={");
 const end=source.indexOf('function frame(now)',start);
 assert(start>=0&&end>start,'load the production scheduler rather than a test copy');

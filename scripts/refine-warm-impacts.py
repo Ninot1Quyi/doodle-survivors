@@ -2,7 +2,7 @@
 import argparse,array,hashlib,json,math,subprocess,zipfile
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--impact-zip',required=True);p.add_argument('--ffmpeg',required=True);a=p.parse_args()
-root=Path(__file__).resolve().parent.parent;out=root/'dist/audio';z=zipfile.ZipFile(a.impact_zip);sr=48000
+root=Path(__file__).resolve().parent.parent;out=root/'public/audio';z=zipfile.ZipFile(a.impact_zip);sr=48000
 
 def ff(raw,args):return subprocess.run([a.ffmpeg,'-v','error',*args],input=raw,stdout=subprocess.PIPE,check=True).stdout
 

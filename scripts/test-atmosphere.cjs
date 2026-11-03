@@ -5,7 +5,7 @@ const painter=new Proxy({createRadialGradient:()=>gradient,measureText:s=>({widt
 function node(){let n={style:{},append(){},getContext:()=>painter};Object.defineProperty(n,'id',{set(value){nodes.set(value,n);}});return n;}
 nodes.set('atmosphere-settings',node());
 const sandbox={Math,Number,Object,document:{createElement:node,getElementById:id=>nodes.get(id)},localStorage:{getItem:k=>stored[k]??null,setItem:(k,v)=>stored[k]=v},matchMedia:()=>({matches:false}),ctx:painter,W:1280,H:720};
-vm.createContext(sandbox);vm.runInContext(fs.readFileSync(__dirname+'/../dist/atmosphere.js','utf8'),sandbox);const run=s=>vm.runInContext(s,sandbox);
+vm.createContext(sandbox);vm.runInContext(fs.readFileSync(__dirname+'/../public/atmosphere.js','utf8'),sandbox);const run=s=>vm.runInContext(s,sandbox);
 run('initAtmosphere();setupAtmosphereUI()');assert.equal(run('weatherSpeed()'),1);assert.equal(run('atmosphere.rain.length'),48);
 run('updateAtmosphere(55)');assert.equal(run('weatherSpeed()'),.97);run('updateAtmosphere(70)');assert.equal(run('weatherSpeed()'),.96);
 // The effect never allocates more rain particles across weather cycles.

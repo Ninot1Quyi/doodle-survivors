@@ -2,7 +2,7 @@
 import argparse, array, hashlib, json, math, subprocess, zipfile
 from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--impact-zip',required=True);p.add_argument('--ffmpeg',required=True);args=p.parse_args()
-out=Path(__file__).resolve().parent.parent/'dist/audio';z=zipfile.ZipFile(args.impact_zip)
+out=Path(__file__).resolve().parent.parent/'public/audio';z=zipfile.ZipFile(args.impact_zip)
 sources={
  'wood':('impactWood_light',170,.19),
  'snap':('impactPlate_light',300,.16),

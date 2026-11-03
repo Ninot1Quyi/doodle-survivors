@@ -1,11 +1,11 @@
 # 星纸漫游 · Paper Stargazer
 
-A single-player, hand-drawn paper survival game. Original Canvas 2D artwork, vanilla JavaScript, sampled Foley and licensed instrumental music. No build step or application dependencies.
+A single-player, hand-drawn paper survival game. Original Canvas 2D artwork, vanilla JavaScript, sampled Foley and licensed instrumental music. The Canvas game runs without a build; shared play statistics use a Vinext Worker and Cloudflare D1.
 
-## Play locally
+## Play locally (game only; global statistics unavailable)
 
 ```sh
-python3 -m http.server 4174 --directory dist
+python3 -m http.server 4174 --directory public
 ```
 
 - Adventure edition: `http://localhost:4174/?edition=adventure`
@@ -25,25 +25,25 @@ Six authored regions have distinct large landmarks, plants and passive fantasy a
 
 ## Source layout
 
-- `dist/art.js`: original sprites, animation frames, scenery, textures.
-- `dist/game.js`: game loop, collisions, combat, particles and controls.
-- `dist/expansion.js`: weapons/fusions, bosses, infinite chunks, events, journal.
-- `dist/combat.js`, `dist/combat-content.js`: 28 new attack behaviors and 21 evolved patterns.
-- `dist/enemies.js`, `dist/creature-art.js`: differentiated AI, telegraphs, elite traits and original creatures.
-- `dist/biomes.js`: large cached landscape regions and fantasy fauna.
-- `dist/death-art.js`, `dist/impact.js`, `dist/atmosphere.js`, `dist/focus.js`: bounded visual feedback.
-- `dist/economy.js`: run coins and a functional world shop.
-- `dist/more-items.js`, `dist/arsenal-art.js`: extra pickup behaviors and original icons.
-- `dist/fonts/`: offline OFL-licensed PaperHand font subset and reproducible build inputs.
-- `dist/items.js`: collectible effects, timed buffs, supply parcels and item journal.
-- `dist/audio.js`: sampled mixer, browser activation, priority voices, capture diagnostics.
-- `dist/edition.js`, `dist/paper.js`: independent visual edition selector and paper treatment.
-- `dist/style.css`, `dist/index.html`: immersive responsive UI.
-- `dist/audio/CREDITS.txt`: music and sound licenses.
+- `public/art.js`: original sprites, animation frames, scenery, textures.
+- `public/game.js`: game loop, collisions, combat, particles and controls.
+- `public/expansion.js`: weapons/fusions, bosses, infinite chunks, events, journal.
+- `public/combat.js`, `public/combat-content.js`: 28 new attack behaviors and 21 evolved patterns.
+- `public/enemies.js`, `public/creature-art.js`: differentiated AI, telegraphs, elite traits and original creatures.
+- `public/biomes.js`: large cached landscape regions and fantasy fauna.
+- `public/death-art.js`, `public/impact.js`, `public/atmosphere.js`, `public/focus.js`: bounded visual feedback.
+- `public/economy.js`: run coins and a functional world shop.
+- `public/more-items.js`, `public/arsenal-art.js`: extra pickup behaviors and original icons.
+- `public/fonts/`: offline OFL-licensed PaperHand font subset and reproducible build inputs.
+- `public/items.js`: collectible effects, timed buffs, supply parcels and item journal.
+- `public/audio.js`: sampled mixer, browser activation, priority voices, capture diagnostics.
+- `public/edition.js`, `public/paper.js`: independent visual edition selector and paper treatment.
+- `public/style.css`, `public/index.html`: immersive responsive UI.
+- `public/audio/CREDITS.txt`: music and sound licenses.
 
 ## Git and rollback
 
-This is the permanent local Git repository at `/Users/quyi/NinotQuyi/doodle-survivors`. Sites source synchronization preserves its commit history remotely. No separate GitHub repository has been created.
+Public source: https://github.com/Ninot1Quyi/doodle-survivors . Sites deployment configuration belongs to this checkout; remove its project binding when deploying your own copy.
 
 Tags: `original-2026-11-03`, `adventure-v1`, `paper-v2` (when the second edition is finalized). Use `git log --oneline --decorate` to see checkpoints. To inspect an earlier version without losing current work, create a branch from its tag in a separate checkout. Do not hard-reset active work.
 
@@ -66,3 +66,12 @@ See `docs/CHANGELOG.md` and `docs/QA.md` for scope and findings.
 ## Credits
 
 Visual inspiration: the paper-world combat presentation of Rakuworld by SETO, and the user's request for a little-prince-like traveler. This independent game does not use the original game's code, extracted assets or branding. All visual assets are drawn procedurally; no image-generation tools were used. Audio source licenses remain in the distribution and in the in-game sound settings.
+
+## Shared statistics backend
+
+Node.js >=22.13.0 is required. Run `npm ci`, `npm run build`, apply the SQL migrations locally, then `npm start`. The complete commands and counting rules are in `docs/GLOBAL_STATS.md`. `public/` is authored game source; `dist/` is now generated deployment output.
+
+```sh
+node scripts/test-global-stats.mjs
+node scripts/test-impact-audio.cjs
+```

@@ -4,7 +4,7 @@ from pathlib import Path
 import os
 root=Path(__file__).resolve().parents[1]
 class Handler(SimpleHTTPRequestHandler):
- def __init__(self,*a,**kw): super().__init__(*a,directory=str(root/'dist'),**kw)
+ def __init__(self,*a,**kw): super().__init__(*a,directory=str(root/'public'),**kw)
  def do_POST(self):
   if self.path not in ['/__qa/adventure.webm','/__qa/paper.webm','/__qa/adventure.png','/__qa/paper.png','/__qa/journal.png']:
    self.send_error(404);return

@@ -12,7 +12,7 @@ def stats(a):
 def render(layers,volume,boost,tail,mastered=False):
  result=array.array('f',[0])*round(sr*.35)
  for key,mix,rate in layers:
-  data=decode(root/'dist/audio'/key);peak=max(map(abs,data));end=data[:round(sr*.22)];rms=math.sqrt(sum(v*v for v in end)/len(end));gain=1 if mastered else min(3.5,max(.4,min(.75/max(peak,.001),.16/max(rms,.005))));duration=min(len(data)/sr/rate,tail);attack=.0008;decayStart=max(.006,duration*.28);decayEnd=max(.025,duration+.035)
+  data=decode(root/'public/audio'/key);peak=max(map(abs,data));end=data[:round(sr*.22)];rms=math.sqrt(sum(v*v for v in end)/len(end));gain=1 if mastered else min(3.5,max(.4,min(.75/max(peak,.001),.16/max(rms,.005))));duration=min(len(data)/sr/rate,tail);attack=.0008;decayStart=max(.006,duration*.28);decayEnd=max(.025,duration+.035)
   for i in range(min(len(result),round(sr*(duration+.045)))):
    pos=i*rate;k=int(pos)
    if k+1>=len(data):break
@@ -24,6 +24,6 @@ for i in range(3):
  old=render([(f'snap{i}.ogg',.85,1.12),(f'wood{i}.ogg',.65,1.08),(f'body{i}.ogg',.48,1.04)],.36,1.05,.14)
  new=render([(f'warmHit{i}.ogg',1,1.04)],.4,1,.145,True)
  rows.append({'variant':i,'oldLayeredPencil':stats(old),'newPremixedPencil':stats(new)})
-report={'note':'Deterministic offline cue rendering before WebAudio SFX bus/compression. Ratios measure energy after a 4 kHz two-pole high-pass; not a perceptual listening rating.','rows':rows,'newSamples':json.loads((root/'dist/audio/WARM-IMPACT-PROVENANCE.json').read_text())['samples']}
+report={'note':'Deterministic offline cue rendering before WebAudio SFX bus/compression. Ratios measure energy after a 4 kHz two-pole high-pass; not a perceptual listening rating.','rows':rows,'newSamples':json.loads((root/'public/audio/WARM-IMPACT-PROVENANCE.json').read_text())['samples']}
 (root/'qa/warm-impact-spectrum.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(rows,indent=2))
