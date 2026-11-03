@@ -2,6 +2,7 @@
 function updateBookOrbit(){
  const p=game.hero,lv=game.weapons.book,n=lv?lv+1:0;
  game.orbit.length=n;
+ const soundCycle=Math.floor(game.t*(2+lv*.15)/Math.PI);if(n&&state==='playing'&&soundCycle!==game.bookSoundCycle){game.bookSoundCycle=soundCycle;Sound.play('book',.22,1,.5);}
  for(let i=0;i<n;i++){
   const a=game.t*(2+lv*.15)+i*TAU/n,b=game.orbit[i]||(game.orbit[i]={});
   Object.assign(b,{a,rx:76+lv*8,ry:48+lv*6,cx:p.x,cy:p.y-31});

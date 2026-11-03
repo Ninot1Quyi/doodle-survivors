@@ -3,31 +3,31 @@
   "commit": "3bca1fc0a0e00f6627f4c8bee60ef07778ab1820",
   "license": "OFL-1.1",
   "family": "PaperHand",
-  "requested_characters": 1041,
+  "requested_characters": 1079,
   "files": [
     {
       "file": "PaperHand-Regular.ttf",
-      "bytes": 456792,
-      "sha256": "27b7d2e0238410d79a2cda2eead858b80755c71ec5cc9fece669c0d77065a5f9",
+      "bytes": 473620,
+      "sha256": "bd03e4ab0d57a9ee40aabca1b61f81d59ea92da62fe087b23ca410d1266d2fc1",
       "source": "https://raw.githubusercontent.com/lxgw/LxgwWenKai-Lite/3bca1fc0a0e00f6627f4c8bee60ef07778ab1820/fonts/TTF/LXGWWenKaiLite-Regular.ttf",
       "source_sha256": "f799a538a3355877e597a0ae04050e897932c9ae7689eb9227c2953c5dd549ea",
-      "glyphs": 1244
+      "glyphs": 1282
     },
     {
       "file": "PaperHand-Regular.woff2",
-      "bytes": 231760,
-      "sha256": "77755508ca56705052d3edf461b72d9e986b28050365bd209d24cb340a731122",
+      "bytes": 240208,
+      "sha256": "fe11e513ee24d6a434da51a1961170c727a403cc140b76583550e38b3ae00d27",
       "source": "https://raw.githubusercontent.com/lxgw/LxgwWenKai-Lite/3bca1fc0a0e00f6627f4c8bee60ef07778ab1820/fonts/TTF/LXGWWenKaiLite-Regular.ttf",
       "source_sha256": "f799a538a3355877e597a0ae04050e897932c9ae7689eb9227c2953c5dd549ea",
-      "glyphs": 1244
+      "glyphs": 1282
     },
     {
       "file": "PaperHand-Medium.woff2",
-      "bytes": 232740,
-      "sha256": "3b91f24c0ecaaf379292dc2591a9819ebb25bb139fe3026af77662b56b39ebc4",
+      "bytes": 241392,
+      "sha256": "dc427972ca799149a53ae5e3757602b486c559590475b96d1e89c132eca12873",
       "source": "https://raw.githubusercontent.com/lxgw/LxgwWenKai-Lite/3bca1fc0a0e00f6627f4c8bee60ef07778ab1820/fonts/TTF/LXGWWenKaiLite-Medium.ttf",
       "source_sha256": "9282063131640c9558a102560cf6d6f8ecc4bb441e74f2bcff032ce4786238d0",
-      "glyphs": 1244
+      "glyphs": 1282
     }
   ],
   "original_ui_symbols": [

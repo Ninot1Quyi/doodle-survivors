@@ -57,9 +57,9 @@ function rewardRecommendation(choices,rarities=upgradeRarity){
 function closeRewardSession(){rewardSession=null;}
 function beginRewardSession(chest){
  initRewardArt();
- rewardSession={chest,age:0,remaining:REWARD_AUTO_SECONDS,locked:chest,burst:false,particles:[],recommended:0,lastSecond:-1,stops:0};
- const overlay=$('upgrades');overlay.classList.toggle('treasure-mode',chest);overlay.classList.toggle('opening-chest',chest);overlay.classList.remove('rewards-ready','chest-open');overlay.classList.toggle('reduced-rewards',reducedEffects);$('reward-time-fill').style.transform='scaleX(1)';
- $('chest-stage').classList.toggle('hidden',!chest);$('skip-chest').onclick=()=>{if(rewardSession?.locked){rewardSession.age=reducedEffects?1.05:3.65;updateRewardSession(0);}};$('reward-subtitle').textContent=chest?'宝藏正在苏醒…':'选择一个灵感，继续你的冒险。';
+ rewardSession={chest,age:0,remaining:REWARD_AUTO_SECONDS,locked:chest,burst:false,particles:[],recommended:0,lastSecond:-1,stops:0,nextTick:.82,tickIndex:0,jackpot:null};
+ const overlay=$('upgrades');overlay.classList.toggle('treasure-mode',chest);overlay.classList.toggle('opening-chest',chest);overlay.classList.remove('rewards-ready','chest-open','jackpot-won');overlay.classList.toggle('reduced-rewards',reducedEffects);$('reward-time-fill').style.transform='scaleX(1)';
+ $('chest-stage').classList.toggle('hidden',!chest);$('skip-chest').onclick=()=>{if(rewardSession?.locked){rewardSession.skip=true;rewardSession.age=reducedEffects?1.05:3.65;updateRewardSession(0);}};$('reward-subtitle').textContent=chest?'宝藏正在苏醒…':'选择一个灵感，继续你的冒险。';
  $('reward-status').textContent=chest?'开启宝箱…':'3 秒后自动选择推荐';
  Sound.play(chest?'chestRise':'level',chest?.65:.5,1,.1);
 }
@@ -75,7 +75,7 @@ function prepareRewardChoices(){
  if(!rewardSession.locked){$('reward-status').textContent='3 秒后自动选择推荐 · 1 / 2 / 3 可立即选择';$('upgrades').classList.add('rewards-ready');cards[rec.index]?.focus();}
 }
 function rewardBurst(){
- const session=rewardSession;if(!session)return;session.burst=true;Sound.play('chestBurst',.8,1,.1);
+ const session=rewardSession;if(!session)return;session.burst=true;if(!session.jackpot)Sound.play('chestBurst',.48,1,.1);
  const count=reducedEffects?32:100;
  for(let i=0;i<count;i++){const side=i%2?-1:1;session.particles.push({x:side<0?.18:.82,y:.66,vx:-side*(.12+Math.random()*.5),vy:-.35-Math.random()*.7,angle:Math.random()*6,spin:(Math.random()-.5)*9,size:4+Math.random()*8,ribbon:i%4===0,color:['#ffcd65','#e693b9','#a5c9ec','#b8d4a6','#e6b0ed'][i%5],life:3.6+Math.random()});}
 }
@@ -86,15 +86,41 @@ function drawRewardConfetti(dt){
  for(const p of session.particles){p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=.42*dt;p.vx*=Math.exp(-dt*.5);p.angle+=p.spin*dt;p.life-=dt;g.save();g.translate(p.x*c.width,p.y*c.height);g.rotate(p.angle);g.globalAlpha=Math.min(1,p.life);g.fillStyle=p.color;g.strokeStyle=p.color;if(p.ribbon){g.lineWidth=3;g.beginPath();g.moveTo(0,0);g.bezierCurveTo(16,-16,-12,-28,6,-48);g.stroke();}else{g.scale(1,.35+Math.abs(Math.sin(p.angle))*.65);g.fillRect(-p.size/2,-p.size/2,p.size,p.size*.65);}g.restore();}
  session.particles=session.particles.filter(p=>p.life>0&&p.y<1.2);
 }
+// Three matching reel results grant ONE three-level award, without a choice click.
+function chestTripleKey(){
+ const key=upgradeChoices[0];
+ return upgradeChoices.length===3&&upgradeChoices.every(k=>k===key)&&weaponData[key]&&!game.consumed.has(key)&&game.weapons[key]<weaponData[key].max?key:null;
+}
+function awardChestTriple(s){
+ const key=chestTripleKey();if(!key||s.jackpot)return false;
+ const before=game.weapons[key]||0,gain=Math.min(3,weaponData[key].max-before);
+ s.jackpot={key,before,gain,after:before+gain,remaining:2.2};s.locked=false;
+ game.weapons[key]=before+gain;game.clocks[key]=.1;game.luckyNext=false;
+ if(key==='heart'){game.hero.maxHp+=25*gain;game.hero.hp=Math.min(game.hero.maxHp,game.hero.hp+50*gain);}
+ updateWeaponUI();updateHUD();
+ $('upgrades').classList.remove('opening-chest');$('upgrades').classList.add('jackpot-won');
+ document.querySelector('.up-top h2').textContent='三连大奖！';$('upgrade-level').textContent='JACKPOT';
+ $('reward-subtitle').textContent=weaponData[key].name+' · Lv.'+before+' → Lv.'+(before+gain);
+ $('reward-status').textContent=gain===3?'三个相同！已直接连升三级':'三个相同！已升至满级（+'+gain+'）';
+ $('reroll').disabled=true;document.querySelectorAll('#choices .choice').forEach(c=>c.disabled=true);
+ Sound.play('jackpot',.65,1,.1);return true;
+}
+function finishChestTriple(){
+ if(!rewardSession?.jackpot)return;
+ const j=rewardSession.jackpot;closeRewardSession();state='playing';$('upgrades').classList.add('hidden');Sound.duck(false);canvas.focus();
+ banner('三连大奖 · '+weaponData[j.key].name+' +'+j.gain+' 级！');
+}
 function updateRewardSession(dt){
  const s=rewardSession;if(!s||state!=='upgrade'||document.hidden)return;
  s.age+=dt;
+ if(s.jackpot){s.jackpot.remaining=Math.max(0,s.jackpot.remaining-dt);$('reward-time-fill').style.transform=`scaleX(${s.jackpot.remaining/2.2})`;drawChestCinema();drawRewardConfetti(dt);if(s.jackpot.remaining<=0)finishChestTriple();return;}
  if(s.locked){
   if(s.age>=.55)$('upgrades').classList.add('chest-open');
   const stops=reducedEffects?[.65,.75,.85]:[1.8,2.35,2.9];
-  while(s.stops<3&&s.age>=stops[s.stops]){Sound.play('reelStop',.4,1+s.stops*.12,.05);s.stops++;}
-  if(s.age>.8&&s.age<2.9&&!reducedEffects)Sound.play('reelTick',.17,1,.095);
-  if(s.age>=(reducedEffects?.9:3.05)&&!s.burst)rewardBurst();
+  while(s.stops<3&&s.age>=stops[s.stops]){if(!s.skip)Sound.play('reelStop'+s.stops,.40,1,.02);s.stops++;}
+  if(s.age>=s.nextTick&&s.age<2.87&&!reducedEffects&&!s.skip){Sound.play('reelTick',.16,.94+(s.tickIndex%4)*.035,.055);s.tickIndex++;s.nextTick=s.age+.065+.16*Math.pow((s.age-.8)/2.1,2);}
+  if(s.age>=(reducedEffects?.9:3.05)&&!s.burst){if(chestTripleKey()){awardChestTriple(s);const j=s.jackpot;rewardBurst();s.jackpot=j;}else rewardBurst();}
+  if(s.jackpot){drawChestCinema();drawRewardConfetti(dt);return;}
   if(s.age>=(reducedEffects?1.05:3.65)){s.locked=false;$('upgrades').classList.remove('opening-chest');$('reward-subtitle').textContent='带上一份灵感，继续你的旅程';prepareRewardChoices();Sound.play('chestReveal',.55,1,.1);}
  }
  else {s.remaining=Math.max(0,s.remaining-dt);const sec=Math.ceil(s.remaining);if(sec!==s.lastSecond){s.lastSecond=sec;$('reward-status').textContent=`${sec} 秒后自动选择推荐 · 1 / 2 / 3 可立即选择`;}$('reward-time-fill').style.transform=`scaleX(${s.remaining/REWARD_AUTO_SECONDS})`;if(s.remaining<=0){chooseUpgrade(s.recommended);return;}}
