@@ -1,4 +1,4 @@
-PAPER STARGAZER — MUSIC AND SOUND CREDITS (stage14, 2026-11-03)
+PAPER STARGAZER — MUSIC AND SOUND CREDITS (soft15, 2026-11-03)
 
 REGIONAL MUSIC
 All six region tracks are by Kevin MacLeod (incompetech.com), CC BY 4.0.
@@ -26,8 +26,6 @@ Dustyroom — Free Casual Game Sounds: https://dustyroom.com/free-casual-game-so
 rubberduck — 80 CC0 RPG SFX: https://opengameart.org/content/80-cc0-rpg-sfx
 artisticdude — Swishes Sound Pack: https://opengameart.org/content/swishes-sound-pack
 StarNinjas — 20 Sword Sound Effects: https://opengameart.org/content/20-sword-sound-effects-attacks-and-clashes
-TinyWorlds — Break Pumpkin: https://opengameart.org/content/break-pumpkin
-Independent.nu (submitted by qubodup) — 5 Break, Crunch Impacts: https://opengameart.org/content/5-break-crunch-impacts
 faxcorp — Electricity Game Sound Pack: https://opengameart.org/content/electricity-game-sound-pack
 Joseph SARDIN / BigSoundBank — Complete whip #1: https://bigsoundbank.com/complete-whip-1-s2961.html
 Joseph SARDIN / BigSoundBank — Complete whip #2: https://bigsoundbank.com/complete-whip-2-s2962.html
@@ -45,16 +43,20 @@ hashes and exact processing: WEAPON-AUDIO-PROVENANCE.json; weapons/CREDITS.md.
 
 Firecracker/festival use the real fireworks excerpt 1.14–1.54 s, gain 0.6, mono,
 boundary fades and OGG encoding. Three independent BigSoundBank whip takes are
-used instead of re-labeling a knife clip. Blade cuts, organic breaks and the
-held electrical loop are documented in COMBAT-AUDIO-PROVENANCE.json and
-COMBAT-CREDITS.md. Paper, ink, fire, electric, crush and frost contact samples
-have short excerpts/EQ/gain/fades; see contacts/PROVENANCE.json and contacts/CREDITS.txt.
+used instead of re-labeling a knife clip. Cuts now use artisticdude recorded air swishes; defeats use Dustyroom short
+rounded pops rather than pumpkin/crunch. The retained electrical loop is
+unchanged. See COMBAT-AUDIO-PROVENANCE.json and COMBAT-CREDITS.md. Contacts
+use Kenney generic/light-glass taps and Dustyroom short pops, with linear EQ,
+gain and cosine edge fades; see contacts/PROVENANCE.json and contacts/CREDITS.txt.
 Weapon launches and contacts have separate voice budgets; sustained beam loops
 follow the active attack lifetime. This source notice does not claim human
 listening acceptance from decoding, waveform or automated game checks.
 
-Reward/collection cues: Kenney Music Jingles jingles_PIZZI07 and Digital Audio
-highUp/pepSound3, gain/fades; REWARD-AUDIO-PROVENANCE.json. Chest reels use
+Reward/collection cues: Kenney Music Jingles jingles_PIZZI10 (short rising
+upgrade phrase), jingles_PIZZI08 (upward gift phrase and a single upper-note
+pickup excerpt), linear EQ/gain/cosine fades; REWARD-AUDIO-PROVENANCE.json.
+PIZZI07, highUp and pepSound3 are no longer the inspiration/gift/soft-pickup
+files. This does not remove unrelated weapon/chest uses of their source pack. Chest reels use
 separate authored slot/reveal/jackpot cues from Kenney and Dustyroom; provenance
 is in WEAPON-AUDIO-PROVENANCE.json.
 

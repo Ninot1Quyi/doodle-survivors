@@ -21,7 +21,7 @@ ESC 暂停页保留返回主菜单；封面保留模式、开始、手帐、版�
 
 ## 素材与授权
 
-Kenney、Dustyroom、rubberduck、artisticdude、StarNinjas、TinyWorlds、Independent.nu / qubodup、faxcorp、Joseph SARDIN / BigSoundBank、Rudmer_Rotteveel 的采样均按对应 CC0 来源记录保留；音乐单独采用 CC BY 4.0，字体单独采用 OFL。完整作者／来源链接、许可和修改范围见 [第三方署名](../THIRD_PARTY_NOTICES.md)。
+Kenney、Dustyroom、rubberduck、artisticdude、StarNinjas、faxcorp、Joseph SARDIN / BigSoundBank、Rudmer_Rotteveel 的采样均按对应 CC0 来源记录保留；音乐单独采用 CC BY 4.0，字体单独采用 OFL。完整作者／来源链接、许可和修改范围见 [第三方署名](../THIRD_PARTY_NOTICES.md)。
 
 逐文件记录：
 
@@ -40,3 +40,7 @@ Kenney、Dustyroom、rubberduck、artisticdude、StarNinjas、TinyWorlds、Indep
 - 浏览器解码、录音和频谱检查可验证资源、触发、时序及输出；不能据此宣称用户主观听感已通过。历史 `qa/voices12-*` 不等于当前版本验收。
 
 浏览器复测脚本可设置 `PLAYWRIGHT_MODULE` 指向已安装的 Playwright，`CHROME_PATH` 指向 Chrome 可执行文件；统计接口在隔离 QA 中使用替身，避免测试污染线上总量，不需要麦克风权限。
+
+## soft15 音色统一
+
+升级、礼盒与拾取统一为短拨弦乐句；接触改用轻物件触碰、圆润弹性短音和掠风，替换旧的撕纸、碎裂和电噪声纹理。运行时所有音效使用统一的高频与起音处理，仍保留武器独立音色、持续光束和逐敌人接触节奏。参见 [AUDIO_STYLE15.md](AUDIO_STYLE15.md)。

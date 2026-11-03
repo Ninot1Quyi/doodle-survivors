@@ -1,7 +1,8 @@
 'use strict';
 // Recorded music and designer-authored CC0 samples. No runtime oscillators.
 const Sound=(()=>{
-  let context,master,musicGain,sfxGain,compressor,lowpass,analyser,capture,musicSource,musicEQ,musicLow,trackGains,combatGain,combatLow;
+  const sampleRevision='20261103-soft15';
+  let context,master,musicGain,sfxGain,compressor,lowpass,analyser,capture,musicSource,musicEQ,musicLow,trackGains,combatGain,combatLow,sfxTone;
   let started=false,muted=false,ducked=false,musicVolume=.38,sfxVolume=.56,loading,fadeTimer=null,crossfading=false,loopTransitions=0,activeTrack=0,musicGeneration=0;
   let pendingImpact=null,impactFlushTimer=null,lastImpactAt=-99;const impactStats={merged:0,budgetSkipped:0,emitted:0};
   const sustained=new Map();let contactNextAt=0,contactSerial=0;const contactCounts={emitted:0,limited:0};let biomeKey='mushroom',candidateBiome='mushroom',biomeDwell=0,lastBiomeSwitch=-99;const musicPositions={};
@@ -18,10 +19,10 @@ const Sound=(()=>{
     reelStop0:{layers:[['slotStop',1,1]],priority:5,group:'reward',boost:.72,tail:.23},
     reelStop1:{layers:[['slotStop',1,1.12246]],priority:5,group:'reward',boost:.77,tail:.23},
     reelStop2:{layers:[['slotStop',1,1.33484]],priority:5,group:'reward',boost:.84,tail:.23},
-    chestRise:{layers:[['slotRise',1,1]],priority:4,group:'reward',boost:.62,tail:.7},
+    chestRise:{layers:[['giftPickup',1,1]],priority:4,group:'reward',boost:.62,tail:.7},
     chestBurst:{layers:[['slotBurst',1,1]],priority:5,group:'reward',boost:.8,tail:.55},
     chestReveal:{layers:[['slotReveal',1,1]],priority:5,group:'reward',boost:.9,tail:.8},
-    jackpot:{layers:[['slotJackpot',1,1],['slotReveal',.6,1.18,.92]],priority:6,group:'reward',boost:.95,tail:2.2},
+    jackpot:{layers:[['slotJackpot',1,1]],priority:6,group:'reward',boost:.95,tail:2.2},
     heavyhit:{layers:[['defeat$',1,1]],priority:3,group:'impact',rank:2,boost:1,tail:.215},
     impactDefeat:{layers:[['defeat$',1,1]],priority:3,group:'impact',rank:3,boost:1,tail:.24},
     parry:{layers:[['warmParry$',.8,1]],priority:2,group:'impact',rank:2,boost:.9,tail:.15},
@@ -36,17 +37,17 @@ const Sound=(()=>{
     impactFire:{layers:[['cut$',1,.96]],priority:2,group:'impact',rank:1,boost:1,tail:.16},
     shoot:{layers:[['warmShot$',1,1]],priority:0,group:'shot',boost:.65,tail:.095},
     pickup:{layers:[['softPickup',1,1]],priority:2,group:'pickup',boost:.55,tail:.24},
-    hurt:{layers:[['hurt',1,.84],['hit',.35,.75,.045]],priority:4,boost:1.45,tail:.42},
-    fusion:{layers:[['level',.75,.8],['victory',.6,1,.20],['pickup',.6,1.2,.43]],priority:5,boost:1.25,tail:1.4},
-    event:{layers:[['heal',.8,.9],['pickup',.55,1,.15]],priority:3,boost:1.15,tail:.85},
-    boss:{layers:[['storm',.7,.7],['hurt',.55,.6,.18]],priority:5,boost:1.1,tail:1.2},
-    level:{layers:[['inspiration',1,1]],priority:4,boost:.8,tail:1.6},
+    hurt:{layers:[['contacts/crush1',1,.88]],priority:4,group:'feedback',boost:.9,tail:.20},
+    fusion:{layers:[['inspiration',1,1]],priority:5,group:'reward',boost:.8,tail:1.25},
+    event:{layers:[['giftPickup',1,1]],priority:3,group:'reward',boost:.72,tail:.7},
+    boss:{layers:[['weapons/portal',1,.9]],priority:5,group:'boss',boost:.48,tail:.85},
+    level:{layers:[['inspiration',1,1]],priority:4,group:'reward',boost:.72,tail:1.1},
     gift:{layers:[['giftPickup',1,1]],priority:4,group:'reward',boost:.75,tail:.8},
-    victory:{layers:[['victory',1,.9]],priority:5,boost:1,tail:1.4},
-    heal:{layers:[['heal',1,1]],priority:3,boost:1.1,tail:.8},
-    confirm:{layers:[['confirm',1,1]],priority:3,boost:1.2,tail:.3},
+    victory:{layers:[['inspiration',1,1]],priority:5,group:'reward',boost:.85,tail:1.25},
+    heal:{layers:[['giftPickup',1,1]],priority:3,group:'reward',boost:.7,tail:.65},
+    confirm:{layers:[['softPickup',1,1]],priority:3,group:'reward',boost:.7,tail:.22},
     explosion:{layers:[['defeat$',1,.85]],priority:1,group:'cast',boost:1,tail:.25},
-    storm:{layers:[['storm',1,1]],priority:4,boost:.9,tail:.9},
+    storm:{layers:[['weapons/tornado',1,.95]],priority:4,group:'cast',boost:.65,tail:.65},
     wind:{layers:[['cut$',.8,.72]],priority:0,group:'cast',boost:.85,tail:.21},
     dash:{layers:[['cut$',.9,1]],priority:2,group:'cast',boost:1,tail:.18}
   };
@@ -61,8 +62,8 @@ const Sound=(()=>{
     if(context)return;
     const AudioContext=window.AudioContext||window.webkitAudioContext;
     if(!AudioContext)throw new Error('Web Audio unavailable');
-    context=new AudioContext();master=context.createGain();master.gain.value=muted?0:.82;
-    compressor=context.createDynamicsCompressor();compressor.threshold.value=-5;compressor.knee.value=5;compressor.ratio.value=12;compressor.attack.value=.001;compressor.release.value=.09;
+    context=new AudioContext();master=context.createGain();master.gain.value=muted?0:.78;
+    compressor=context.createDynamicsCompressor();compressor.threshold.value=-8;compressor.knee.value=8;compressor.ratio.value=8;compressor.attack.value=.003;compressor.release.value=.12;
     analyser=context.createAnalyser();analyser.fftSize=512;analyser.smoothingTimeConstant=.7;
     master.connect(compressor);compressor.connect(analyser);analyser.connect(context.destination);
     capture=context.createMediaStreamDestination();analyser.connect(capture);
@@ -72,21 +73,22 @@ const Sound=(()=>{
     musicGain.connect(musicEQ);musicEQ.connect(musicLow);musicLow.connect(master);
     trackGains=musicPlayers.map((audio,i)=>{const source=context.createMediaElementSource(audio),gain=context.createGain();gain.gain.value=i?0:1;source.connect(gain);gain.connect(musicGain);audio.volume=1;return gain;});
     sfxGain=context.createGain();sfxGain.gain.value=sfxVolume;
-    const highpass=context.createBiquadFilter();highpass.type='highpass';highpass.frequency.value=105;highpass.Q.value=.45;
-    lowpass=context.createBiquadFilter();lowpass.type='lowpass';lowpass.frequency.value=11200;lowpass.Q.value=.45;
-    const sfxCompressor=context.createDynamicsCompressor();sfxCompressor.threshold.value=-17;sfxCompressor.knee.value=10;sfxCompressor.ratio.value=3;sfxCompressor.attack.value=.008;sfxCompressor.release.value=.075;
-    combatGain=context.createGain();combatGain.gain.value=.52;combatLow=context.createBiquadFilter();combatLow.type='lowpass';combatLow.frequency.value=8500;combatLow.Q.value=.45;combatGain.connect(combatLow);combatLow.connect(sfxGain);
-    sfxGain.connect(highpass);highpass.connect(lowpass);lowpass.connect(sfxCompressor);sfxCompressor.connect(master);
+    const highpass=context.createBiquadFilter();highpass.type='highpass';highpass.frequency.value=150;highpass.Q.value=.45;
+    lowpass=context.createBiquadFilter();lowpass.type='lowpass';lowpass.frequency.value=9200;lowpass.Q.value=.45;
+    const sfxCompressor=context.createDynamicsCompressor();sfxCompressor.threshold.value=-18;sfxCompressor.knee.value=12;sfxCompressor.ratio.value=2.2;sfxCompressor.attack.value=.012;sfxCompressor.release.value=.12;
+    combatGain=context.createGain();combatGain.gain.value=.56;combatLow=context.createBiquadFilter();combatLow.type='lowpass';combatLow.frequency.value=5200;combatLow.Q.value=.45;combatGain.connect(combatLow);combatLow.connect(sfxGain);
+    sfxTone=context.createBiquadFilter();sfxTone.type='highshelf';sfxTone.frequency.value=3500;sfxTone.gain.value=-4;
+    sfxGain.connect(highpass);highpass.connect(sfxTone);sfxTone.connect(lowpass);lowpass.connect(sfxCompressor);sfxCompressor.connect(master);
     loading=Promise.all(names.map(async name=>{
       try{
-        const response=await fetch('audio/'+name+'.ogg');if(!response.ok)throw new Error('HTTP '+response.status);
+        const response=await fetch('audio/'+name+'.ogg?v='+sampleRevision);if(!response.ok)throw new Error('HTTP '+response.status);
         const buffer=await context.decodeAudioData(await response.arrayBuffer());buffers[name]=buffer;
         let peak=0,sum=0,n=0;
         // Measure only the useful onset, not a long silent file tail.
         const end=Math.min(buffer.length,Math.floor(buffer.sampleRate*.22));
         for(let ch=0;ch<buffer.numberOfChannels;ch++){const data=buffer.getChannelData(ch);for(let i=0;i<end;i++){const sample=data[i];peak=Math.max(peak,Math.abs(sample));sum+=sample*sample;n++;}}
         const rms=Math.sqrt(sum/Math.max(1,n));
-        levels[name]={peak,rms,gain:(name.startsWith('warm')||name.startsWith('weapons/')||name.startsWith('contacts/')||name.startsWith('slot')||/^(cut|defeat|laser|inspiration|giftPickup|softPickup|firecrackerPop)/.test(name))?1:clamp(Math.min(.75/Math.max(peak,.001),.16/Math.max(rms,.005)),.4,3.5)};
+        levels[name]={peak,rms,gain:(name.startsWith('warm')||name.startsWith('weapons/')||name.startsWith('contacts/')||name.startsWith('slot')||/^(cut|defeat|laser|inspiration|giftPickup|softPickup|firecrackerPop)/.test(name))?1:clamp(Math.min(.60/Math.max(peak,.001),.12/Math.max(rms,.005)),.4,1.5)};
         loaded.set(name,true);
       }catch{loaded.set(name,false);}
     })).then(()=>{if([...loaded.values()].some(v=>!v))status('部分采样未加载；刷新页面可重试。');});
@@ -143,7 +145,7 @@ const Sound=(()=>{
   async function unlock(){await activate(false);duck(ducked);}
   function voice(sample,volume,rate,delay,priority,tail,group,identity){
     const buffer=buffers[sample];if(!buffer)return false;
-    const groupLimit={contact:12,impact:3,cast:3,shot:2,pickup:2,weapon:10,reward:6,boss:5}[group];
+    const groupLimit={contact:12,impact:3,cast:3,shot:2,pickup:2,weapon:10,reward:6,boss:5,feedback:2}[group];
     const groupVoices=[...voices].filter(v=>v.group===group);
     const same=identity&&groupVoices.filter(v=>v.identity===identity);
     const victim=same&&same.length>=2?same[0]:groupLimit&&groupVoices.length>=groupLimit?groupVoices[0]:null;
@@ -162,10 +164,13 @@ const Sound=(()=>{
     }
     const source=context.createBufferSource(),gain=context.createGain(),now=context.currentTime+delay;
     source.buffer=buffer;source.playbackRate.value=clamp(rate,.65,1.7);
-    const level=clamp(volume*(levels[sample]?.gain||1),0,.9);
-    gain.gain.setValueAtTime(0,now);gain.gain.linearRampToValueAtTime(level,now+(group?.003:.0008));
+    const material=weaponAudio[identity]?.material;
+    const toneGain=group==='weapon'?({fire:.88,electric:.88,crush:.9,cut:.94,music:.9}[material]||1):1;
+    const level=clamp(volume*toneGain*(levels[sample]?.gain||1),0,.75);
+    const onset=group==='contact'?.007:group==='reward'?.012:.005;
+    gain.gain.setValueAtTime(0,now);gain.gain.linearRampToValueAtTime(level,now+onset);
     const duration=Math.min(buffer.duration/source.playbackRate.value,tail);
-    gain.gain.setValueAtTime(level,now+Math.max(.006,(group==='weapon'||group==='reward'||group==='boss')?duration-.025:duration*.28));gain.gain.exponentialRampToValueAtTime(.0001,now+Math.max(.025,duration+.035));
+    gain.gain.setValueAtTime(level,now+Math.max(onset+.002,(group==='weapon'||group==='reward'||group==='boss')?duration-.04:duration*.42));gain.gain.exponentialRampToValueAtTime(.0001,now+Math.max(.025,duration+.035));
     source.connect(gain);gain.connect(group&&group!=='weapon'&&group!=='reward'&&group!=='pickup'&&group!=='boss'?combatGain:sfxGain);
     const record={source,gain,priority,group,identity};voices.add(record);
     source.onended=()=>{voices.delete(record);source.disconnect();gain.disconnect();};
@@ -175,7 +180,7 @@ const Sound=(()=>{
     if(!started||muted||!context||context.state!=='running')return false;
     name=aliases[name]||name;const cue=cues[name];if(!cue)return false;
     const now=context.currentTime;
-    if(cue.group==='weapon'){if(ducked)return false;volume=1;rate=1+(Math.random()-.5)*.025;minInterval=Math.max(minInterval,cue.interval);}
+    if(cue.group==='weapon'){if(ducked)return false;volume=1;rate=['music','electric'].includes(weaponAudio[name]?.material)?1:1+(Math.random()-.5)*.012;minInterval=Math.max(minInterval,cue.interval);}
     const groupInterval={shot:.14,pickup:.18,cast:.12}[cue.group]||0;
     if(now-(lastGroupPlayed[cue.group]??-99)<groupInterval||now-(lastPlayed[name]??-99)<Math.max(.025,minInterval))return false;
     const variant=variations[name]||0;const chosen=cue.variants?.[variant%cue.variants.length];const layers=cue.layers.map(([sample,...rest])=>[chosen||sample.replace('$',String(variant%3)),...rest]);if(!layers.some(([sample])=>buffers[sample]))return false;
@@ -189,7 +194,7 @@ const Sound=(()=>{
   // Death > critical/parry > ordinary. This is audio only; every hit still deals damage.
   function play(name,volume=.3,rate=1,minInterval=.08){
     name=aliases[name]||name;const cue=cues[name];
-    if(!cue||!started||muted||!context||context.state!=='running'||ducked&&cue.group&&cue.group!=='reward')return false;
+    if(!cue||!started||muted||!context||context.state!=='running'||ducked&&cue.group&&!['reward','feedback'].includes(cue.group))return false;
     if(cue.group!=='impact')return playNow(name,volume,rate,minInterval);
     if(pendingImpact){impactStats.merged++;const count=pendingImpact.count+1;if(cue.rank>pendingImpact.rank||cue.rank===pendingImpact.rank&&volume>pendingImpact.volume)pendingImpact={name,volume,rate,rank:cue.rank,count};else pendingImpact.count=count;return true;}
     pendingImpact={name,volume,rate,rank:cue.rank,count:1};
@@ -215,14 +220,14 @@ const Sound=(()=>{
     const family=({nature:'paper',music:'frost'})[material]||material;
     const sample=name==='impactDefeat'||name==='heavyhit'||!['paper','ink','fire','electric','crush','frost'].includes(family)?cue.layers[0][0].replace('$',String(index)):'contacts/'+family+index;
     const now=context.currentTime,delay=Math.min(.11,Math.max(0,contactNextAt-now));contactNextAt=now+delay+.018;
-    const ok=voice(sample,Math.min(.62,volume)*cue.boost,rate*(1+(index-1)*.035),delay,3,Math.min(.20,cue.tail),'contact');
+    const ok=voice(sample,Math.min(.62,volume)*cue.boost,rate*(1+(index-1)*.012),delay,3,Math.min(.20,cue.tail),'contact');
     if(ok){contactCounts.emitted++;played[name]=(played[name]||0)+1;}else contactCounts.limited++;
     return ok;
   }
   function duck(on){ducked=!!on;if(ducked)stopSustains();if(ducked&&context){clearTimeout(impactFlushTimer);impactFlushTimer=null;pendingImpact=null;for(const v of [...voices])if(v.group&&v.group!=='reward'){v.gain.gain.setTargetAtTime(0,context.currentTime,.008);try{v.source.stop(context.currentTime+.03);}catch{}voices.delete(v);}}if(musicGain&&context){const now=context.currentTime;musicGain.gain.cancelScheduledValues(now);musicGain.gain.setTargetAtTime(musicVolume*(ducked?.15:.43),now,.2);musicLow.frequency.setTargetAtTime(ducked?5800:20000,now,.3);}}
   function volumes(m,s){musicVolume=clamp(Number(m)||0,0,1);sfxVolume=clamp(Number(s)||0,0,1);duck(ducked);if(sfxGain&&context)sfxGain.gain.setTargetAtTime(sfxVolume,context.currentTime,.06);try{localStorage.setItem('doodle-audio',JSON.stringify({music:musicVolume,sfx:sfxVolume}));}catch{}}
-  function toggle(){muted=!muted;if(muted)stopSustains();if(master&&context)master.gain.setTargetAtTime(muted?0:.82,context.currentTime,.06);return muted;}
-  function diagnostics(){let rms=0,peak=0;if(analyser){const samples=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(samples);for(const sample of samples){rms+=sample*sample;peak=Math.max(peak,Math.abs(sample));}rms=Math.sqrt(rms/samples.length);}return{started,muted,contextState:context?.state||'uninitialized',musicPaused:music.paused,musicTrack:BIOME_AUDIO[biomeKey].title,musicBiome:biomeKey,candidateBiome,musicGains:trackGains?.map(g=>g.gain.value),activeSustains:[...sustained.keys()],musicLoopEnd:BIOME_AUDIO[biomeKey].end,loopTransitions,crossfading,sfxLowpass:lowpass?.frequency.value,combatLowpass:combatLow?.frequency.value,musicReady:music.readyState,musicVolume,sfxVolume,activeVoices:voices.size,weaponIdentities:Object.keys(weaponAudio).length,activeWeaponVoices:[...voices].filter(v=>v.group==='weapon').length,activeImpactVoices:[...voices].filter(v=>v.group==='impact').length,contactMix:{...contactCounts},activeContactVoices:[...voices].filter(v=>v.group==='contact').length,impactMix:{...impactStats},samples:loaded.size,failed:[...loaded].filter(([,ok])=>!ok).map(([name])=>name),played:{...played},outputRms:rms,outputPeak:peak};}
+  function toggle(){muted=!muted;if(muted)stopSustains();if(master&&context)master.gain.setTargetAtTime(muted?0:.78,context.currentTime,.06);return muted;}
+  function diagnostics(){let rms=0,peak=0;if(analyser){const samples=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(samples);for(const sample of samples){rms+=sample*sample;peak=Math.max(peak,Math.abs(sample));}rms=Math.sqrt(rms/samples.length);}return{started,muted,contextState:context?.state||'uninitialized',musicPaused:music.paused,musicTrack:BIOME_AUDIO[biomeKey].title,musicBiome:biomeKey,candidateBiome,musicGains:trackGains?.map(g=>g.gain.value),activeSustains:[...sustained.keys()],musicLoopEnd:BIOME_AUDIO[biomeKey].end,loopTransitions,crossfading,sfxLowpass:lowpass?.frequency.value,combatLowpass:combatLow?.frequency.value,sfxHighShelfDb:sfxTone?.gain.value,mixStyle:'paper-magic-soft',musicReady:music.readyState,musicVolume,sfxVolume,activeVoices:voices.size,weaponIdentities:Object.keys(weaponAudio).length,activeWeaponVoices:[...voices].filter(v=>v.group==='weapon').length,activeImpactVoices:[...voices].filter(v=>v.group==='impact').length,contactMix:{...contactCounts},activeContactVoices:[...voices].filter(v=>v.group==='contact').length,impactMix:{...impactStats},samples:loaded.size,failed:[...loaded].filter(([,ok])=>!ok).map(([name])=>name),played:{...played},outputRms:rms,outputPeak:peak};}
   // Only the game sound bus is exposed: no microphone or device capture.
   function captureStream(){return capture?.stream||null;}
   function ready(){return loading||Promise.resolve();}

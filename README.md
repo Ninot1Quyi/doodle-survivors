@@ -124,6 +124,8 @@ For your own hosted deployment, provision your own Worker and D1 binding and app
 
 All 63 active weapon keys route to reviewed CC0 samples, grouped as cut, paper, ink, fire, electric, crush, frost, nature or music. Matching actions deliberately share suitable sources. The 67 weapon files include two additional page takes and two additional real-whip takes. Pencil launches use a short recorded swish; stones, paper, fire, electricity and ink use material-appropriate contact recordings. Weapon launches have a ten-voice budget; held beams use a sustained loop rather than restarting a one-shot every damage tick. Chest reels use a rhythmic spin, rising stop notes and a separate jackpot jingle. Three matching upgradeable results automatically grant three levels, capped by the item's maximum. Escape opens a pause menu with a return-to-main-menu button.
 
+The current sound palette uses soft paper, elastic contact and short ascending pizzicato rewards. Shared high-frequency shaping and gentle onsets bring launch, impact, beam and UI voices into one paper-magic mix; individual weapon and continuous-beam identities remain. The home totals are labeled as global run count and global play time. See [the sound-style revision](docs/AUDIO_STYLE15.md).
+
 Source licenses and per-file provenance are in `public/audio/`; design research and validation are in [docs/AUDIO_WEAPON_IDENTITIES.md](docs/AUDIO_WEAPON_IDENTITIES.md) and [docs/weapon-timbre-audit.md](docs/weapon-timbre-audit.md). Waveform, decoding and trigger tests do not by themselves certify subjective listening quality.
 
 ```sh
