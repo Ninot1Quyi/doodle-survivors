@@ -1,0 +1,13 @@
+{
+  "peak": 0.5324095487594604,
+  "densePeak": 0.5324095487594604,
+  "clippedReadings": 0,
+  "samples": 153,
+  "failed": [],
+  "voices": 0,
+  "contacts": {
+    "emitted": 272,
+    "limited": 0
+  },
+  "errors": []
+}

@@ -1,19 +1,14 @@
-# Prepared combat sample credits
+# Combat sample credits — soft15
 
-The prepared source set contains ten CC0 1.0 recordings. The game distributes the cuts, defeats and electrical loop in this directory, and the three revised whip takes as weapons/whip.ogg, weapons/whip2.ogg and weapons/whip3.ogg. Original samples and license evidence are retained in the separate combat-library. Redistribution of the original and edited audio files in a public repository is permitted. Voluntary attribution follows.
+All sound sources below are **CC0 1.0**: [license](https://creativecommons.org/publicdomain/zero/1.0/), bundled full text [weapons/CC0-1.0.txt](weapons/CC0-1.0.txt). Credits are voluntary and source identities remain preserved.
 
-- cut0.ogg, cut1.ogg, cut2.ogg: rubberduck, 80 CC0 RPG SFX, blade_01/02/03.ogg — https://opengameart.org/content/80-cc0-rpg-sfx
-- defeat0.ogg, defeat1.ogg: TinyWorlds, break pumpkin — https://opengameart.org/content/break-pumpkin
-- defeat2.ogg: Independent.nu (submitted by qubodup), 5 break, crunch impacts, impactcrunch03.mp3.flac — https://opengameart.org/content/5-break-crunch-impacts
-- laserLoop.ogg: faxcorp, Electricity Game Sound Pack, snaploop.wav — https://opengameart.org/content/electricity-game-sound-pack
-- Prepared whip0.ogg → weapons/whip.ogg: Joseph SARDIN / BigSoundBank, Complete whip #1 — https://bigsoundbank.com/complete-whip-1-s2961.html
-- Prepared whip1.ogg → weapons/whip2.ogg: Joseph SARDIN / BigSoundBank, Complete whip #2 — https://bigsoundbank.com/complete-whip-2-s2962.html
-- Prepared whip2.ogg → weapons/whip3.ogg: Joseph SARDIN / BigSoundBank, Whip crack #1 — https://bigsoundbank.com/whip-crack-1-s2949.html
+- `cut0.ogg`, `cut1.ogg`, `cut2.ogg`: **artisticdude**, [Swishes Sound Pack](https://opengameart.org/content/swishes-sound-pack), `swish-11.wav`, `swish-12.wav`, `swish-13.wav`. Recorded stick/hanger air swishes replace scraping blade recordings.
+- `defeat0.ogg`, `defeat1.ogg`, `defeat2.ogg`: **Dustyroom**, [Free Casual Game Sounds](https://dustyroom.com/free-casual-game-sounds/), `DM-CGS-13.wav`, `DM-CGS-41.wav`, `DM-CGS-47.wav`. Single rounded casual-game release/pop sounds replace pumpkin/crunch effects. Original license: [LICENSE-Dustyroom.pdf](LICENSE-Dustyroom.pdf).
+- `laserLoop.ogg`: **faxcorp**, [Electricity Game Sound Pack](https://opengameart.org/content/electricity-game-sound-pack), `snaploop.wav`. Existing 3.4–4.6 s excerpt, dynamic compression and 25 ms wrap crossfade are unchanged by the soft15 contact pass.
+- `weapons/whip.ogg`, `weapons/whip2.ogg`, `weapons/whip3.ogg`: **Joseph SARDIN / BigSoundBank**, [Complete whip #1](https://bigsoundbank.com/complete-whip-1-s2961.html), [Complete whip #2](https://bigsoundbank.com/complete-whip-2-s2962.html), [Whip crack #1](https://bigsoundbank.com/whip-crack-1-s2949.html). Original prepared take IDs were whip0/1/2. Weapon edits and final hashes remain in [WEAPON-AUDIO-PROVENANCE.json](WEAPON-AUDIO-PROVENANCE.json).
 
-License: https://creativecommons.org/publicdomain/zero/1.0/ (full text: weapons/CC0-1.0.txt).
+The soft15 cut/defeat pass uses one source at a time: excerpts, mono 44.1 kHz conversion, linear high/low-pass EQ, gain, short cosine onset/tail fades and Ogg Vorbis q5. It adds no synthesis, layers, pitch shift, nonlinear limiting or time stretching. New source/output hashes, recipes and decoded measurements are in [COMBAT-AUDIO-PROVENANCE.json](COMBAT-AUDIO-PROVENANCE.json). This statement concerns the new cut/defeat pass; it does not erase the separate historical processing of the retained beam loop or whip files.
 
-Edits: original recordings downmixed to mono and resampled to 22050 Hz. One-shots trimmed and given short edge fades, with RMS level adjustment constrained by peak ceilings. Laser loop uses the 3.4–4.6s portion of snaploop.wav, dynamic compression and a 25ms wrap crossfade to keep its electrical texture more even. It is normalized toward -20dBFS RMS with a -3dBFS peak ceiling. Ogg Vorbis quality 5 encoding. No generated tone, oscillator, procedural noise, or added sound layer. Exact prepared-source processing and intervals are in COMBAT-AUDIO-PROVENANCE.json. Further weapon-whip processing and final output hashes are in WEAPON-AUDIO-PROVENANCE.json.
+Material contacts now use short Kenney light-object/light-glass touches and Dustyroom casual-game pops; exact attribution is in [contacts/CREDITS.txt](contacts/CREDITS.txt) and [contacts/PROVENANCE.json](contacts/PROVENANCE.json). Reward cues use rising Kenney plucked-string phrases, recorded in [REWARD-AUDIO-PROVENANCE.json](REWARD-AUDIO-PROVENANCE.json).
 
-whip0 and whip1 contain the author's finished whoosh + snap, shortened around the whip tip. whip2 is a terminal crack accent, not a whole swing. Trigger whip attack audio once per swing; do not retrigger it for each enemy hit. laserLoop must be held by the beam lifecycle, not retriggered by damage ticks.
-
-The samples pass decoding checks. No claim of human listening approval or final game-mix acceptance is made. Source/recording identity and processing are verified; sound selection still needs the user's/integrator's hearing review.
+The stage14 user feedback described tearing/distortion-like hit texture. A separate stress capture reported no numerical output clipping, so this revision targets source texture, dynamics and envelope; it is not evidence of fixing measured digital clipping. Successful decoding and objective measurements do not certify human listening acceptance. The A/B review artifact is generated by `scripts/refine-paper-palette.py` in the external retained research directory.

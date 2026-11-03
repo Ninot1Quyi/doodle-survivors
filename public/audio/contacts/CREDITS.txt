@@ -1,71 +1,75 @@
-contacts/paper0.ogg: book_01.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.3900s; 180–8500 Hz EQ, gain 0.53650, boundary fades, mono OGG.
+soft15 material contacts — single-source short taps/pops. CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/
 
-contacts/paper1.ogg: book_02.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.3800s; 180–8500 Hz EQ, gain 0.99529, boundary fades, mono OGG.
+contacts/paper0.ogg: impactGeneric_light_000.ogg — Kenney (CC0-1.0)
+https://kenney.nl/assets/impact-sounds
+Excerpt 0.000000–0.104989s; mono 44100Hz; highpass=f=320:p=2,lowpass=f=8000:p=2; gain 0.43037491; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/paper2.ogg: book_03.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.6300s; 180–8500 Hz EQ, gain 1.08992, boundary fades, mono OGG.
+contacts/crush0.ogg: impactGeneric_light_000.ogg — Kenney (CC0-1.0)
+https://kenney.nl/assets/impact-sounds
+Excerpt 0.000000–0.130000s; mono 44100Hz; highpass=f=230:p=2,lowpass=f=8000:p=2; gain 0.45346704; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/ink0.ogg: creature_slime_01.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1000s; 180–8500 Hz EQ, gain 0.74088, boundary fades, mono OGG.
+contacts/frost0.ogg: impactGlass_light_000.ogg — Kenney (CC0-1.0)
+https://kenney.nl/assets/impact-sounds
+Excerpt 0.000000–0.120000s; mono 44100Hz; highpass=f=380:p=2,lowpass=f=7200:p=2; gain 0.34630388; 3ms cosine onset and 44.989ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/ink1.ogg: creature_slime_02.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0900s; 180–8500 Hz EQ, gain 0.68225, boundary fades, mono OGG.
+contacts/paper1.ogg: impactGeneric_light_001.ogg — Kenney (CC0-1.0)
+https://kenney.nl/assets/impact-sounds
+Excerpt 0.000000–0.114603s; mono 44100Hz; highpass=f=320:p=2,lowpass=f=8000:p=2; gain 0.55750906; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/ink2.ogg: creature_slime_03.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1600s; 180–8500 Hz EQ, gain 0.90228, boundary fades, mono OGG.
+contacts/crush1.ogg: impactGeneric_light_001.ogg — Kenney (CC0-1.0)
+https://kenney.nl/assets/impact-sounds
+Excerpt 0.000000–0.114603s; mono 44100Hz; highpass=f=230:p=2,lowpass=f=8000:p=2; gain 0.54208139; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/fire0.ogg: spell_fire_01.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1800s; 180–8500 Hz EQ, gain 4.13245, boundary fades, mono OGG.
+contacts/frost1.ogg: impactGlass_light_001.ogg — Kenney (CC0-1.0)
+https://kenney.nl/assets/impact-sounds
+Excerpt 0.000000–0.120000s; mono 44100Hz; highpass=f=380:p=2,lowpass=f=7200:p=2; gain 0.33960247; 3ms cosine onset and 44.989ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/fire1.ogg: spell_fire_02.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1900s; 180–8500 Hz EQ, gain 8.79008, boundary fades, mono OGG.
+contacts/paper2.ogg: impactGeneric_light_002.ogg — Kenney (CC0-1.0)
+https://kenney.nl/assets/impact-sounds
+Excerpt 0.000000–0.130000s; mono 44100Hz; highpass=f=320:p=2,lowpass=f=8000:p=2; gain 0.50040784; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/fire2.ogg: spell_fire_03.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.4200s; 180–8500 Hz EQ, gain 2.90749, boundary fades, mono OGG.
+contacts/crush2.ogg: impactGeneric_light_002.ogg — Kenney (CC0-1.0)
+https://kenney.nl/assets/impact-sounds
+Excerpt 0.000000–0.150000s; mono 44100Hz; highpass=f=230:p=2,lowpass=f=8000:p=2; gain 0.52659954; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/electric0.ogg: hit.wav by faxcorp (CC0-1.0)
-https://opengameart.org/content/electricity-game-sound-pack
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 1.12014, boundary fades, mono OGG.
+contacts/frost2.ogg: impactGlass_light_002.ogg — Kenney (CC0-1.0)
+https://kenney.nl/assets/impact-sounds
+Excerpt 0.000000–0.120000s; mono 44100Hz; highpass=f=380:p=2,lowpass=f=7200:p=2; gain 0.29507275; 3ms cosine onset and 44.989ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/electric1.ogg: shieldhit.wav by faxcorp (CC0-1.0)
-https://opengameart.org/content/electricity-game-sound-pack
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1400s; 180–8500 Hz EQ, gain 0.62335, boundary fades, mono OGG.
+contacts/ink0.ogg: DM-CGS-13.wav — Dustyroom (CC0-1.0)
+https://dustyroom.com/free-casual-game-sounds/
+Excerpt 0.000000–0.160000s; mono 44100Hz; highpass=f=240:p=2,lowpass=f=8000:p=2; gain 0.17939667; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/electric2.ogg: groundhit.wav by faxcorp (CC0-1.0)
-https://opengameart.org/content/electricity-game-sound-pack
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.86521, boundary fades, mono OGG.
+contacts/ink1.ogg: DM-CGS-47.wav — Dustyroom (CC0-1.0)
+https://dustyroom.com/free-casual-game-sounds/
+Excerpt 0.042041–0.182041s; mono 44100Hz; highpass=f=240:p=2,lowpass=f=8000:p=2; gain 0.21109990; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/crush0.ogg: stones_01.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0400s; 180–8500 Hz EQ, gain 0.51112, boundary fades, mono OGG.
+contacts/ink2.ogg: DM-CGS-41.wav — Dustyroom (CC0-1.0)
+https://dustyroom.com/free-casual-game-sounds/
+Excerpt 0.000000–0.170000s; mono 44100Hz; highpass=f=240:p=2,lowpass=f=8000:p=2; gain 0.25287640; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/crush1.ogg: stones_02.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.3100s; 180–8500 Hz EQ, gain 0.52928, boundary fades, mono OGG.
+contacts/fire0.ogg: DM-CGS-07.wav — Dustyroom (CC0-1.0)
+https://dustyroom.com/free-casual-game-sounds/
+Excerpt 0.000000–0.135011s; mono 44100Hz; highpass=f=300:p=2,lowpass=f=8000:p=2; gain 0.17693955; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/crush2.ogg: stones_03.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1000s; 180–8500 Hz EQ, gain 0.48924, boundary fades, mono OGG.
+contacts/fire1.ogg: DM-CGS-46.wav — Dustyroom (CC0-1.0)
+https://dustyroom.com/free-casual-game-sounds/
+Excerpt 0.065646–0.200658s; mono 44100Hz; highpass=f=300:p=2,lowpass=f=8000:p=2; gain 0.22859442; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/frost0.ogg: item_gem_01.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.50878, boundary fades, mono OGG.
+contacts/fire2.ogg: DM-CGS-41.wav — Dustyroom (CC0-1.0)
+https://dustyroom.com/free-casual-game-sounds/
+Excerpt 0.000000–0.150000s; mono 44100Hz; highpass=f=300:p=2,lowpass=f=8000:p=2; gain 0.25344206; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/frost1.ogg: item_gem_02.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.84961, boundary fades, mono OGG.
+contacts/electric0.ogg: DM-CGS-41.wav — Dustyroom (CC0-1.0)
+https://dustyroom.com/free-casual-game-sounds/
+Excerpt 0.000000–0.140000s; mono 44100Hz; highpass=f=360:p=2,lowpass=f=8000:p=2; gain 0.25965523; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
 
-contacts/frost2.ogg: item_gem_03.ogg by rubberduck (CC0-1.0)
-https://opengameart.org/content/80-cc0-rpg-sfx
-20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.53911, boundary fades, mono OGG.
+contacts/electric1.ogg: DM-CGS-46.wav — Dustyroom (CC0-1.0)
+https://dustyroom.com/free-casual-game-sounds/
+Excerpt 0.065646–0.195646s; mono 44100Hz; highpass=f=360:p=2,lowpass=f=8000:p=2; gain 0.22930666; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
+
+contacts/electric2.ogg: DM-CGS-47.wav — Dustyroom (CC0-1.0)
+https://dustyroom.com/free-casual-game-sounds/
+Excerpt 0.042041–0.182041s; mono 44100Hz; highpass=f=360:p=2,lowpass=f=8000:p=2; gain 0.24358832; 3ms cosine onset and 35.011ms cosine tail; Ogg Vorbis q5. Single source, no added layers/synthesis/pitch shift/nonlinear compression.
+
+Source/metrics review only; no human hearing approval is claimed.
