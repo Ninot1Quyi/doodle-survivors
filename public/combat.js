@@ -19,8 +19,8 @@ case 'marble':shot('bounce',{bounces:2+lv,speed:380,damage:damage*.7});break;
 case 'yoyo':shot('yoyo',{life:1.6,r:23,speed:270});break;
 case 'rocket':shot('rocket',{speed:100,r:16,life:3,damage:damage*1.5,target:target.id});break;
 case 'firecracker':for(let i=0;i<4+lv;i++)delayed(p.x+Math.cos(a)*i*45,p.y+Math.sin(a)*i*45,.2+i*.14,55,'burn');break;
-case 'ruler':ray();break;
-case 'prism':for(let i=-1;i<=1;i++)ray(a+i*.42,{r:340,damage:damage*.23});break;
+case 'ruler':ray(a-.22,{spin:.48,follow:true,life:1.45,delay:.24,width:13+lv});break;
+case 'prism':for(let i=-1;i<=1;i++)ray(a+i*.42,{r:340,life:1.5,follow:true,spin:i*.15,damage:damage*.23});break;
 case 'turret':put('turret',{life:8,fireCd:0,r:45});break;
 case 'foxspirit':put('friend',{life:9,r:38,speed:190});break;
 case 'mine':placeMinefield(lv,damage);break;
@@ -45,7 +45,7 @@ case 'void':at('void',{life:2.3,r:150,damage:damage*.45});break;
 case 'paladin':put('avatar',{life:1.5,r:160});for(let i=-1;i<=1;i++)put('thrust',{a:a+i*Math.PI/2,delay:.35+Math.abs(i)*.22,life:1.3,r:420,damage:damage*1.8});break;
 case 'pinball':at('pinballTable',{life:5,r:180,ballX:target.x,ballY:target.y,vx:390,vy:310,ballTrail:[],bumpers:[{x:-72,y:-38},{x:65,y:-25},{x:5,y:57}],damage:damage*1.15,contactTimes:new Map()});break;
 case 'festival':at('festival',{delay:.7,life:2.5,r:210,damage:damage*.9,cause:'burn'});break;
-case 'rainbowLaser':for(let i=0;i<6;i++)ray(i*TAU/6,{life:3,delay:.4,r:380,spin:.65,color:PALETTE[i%5],damage:damage*.27,cause:'erase'});put('avatar',{life:3,r:65});break;
+case 'rainbowLaser':for(let i=0;i<6;i++)ray(i*TAU/6,{life:3,delay:.4,r:430,width:19+lv,follow:true,spin:.65,color:PALETTE[i%5],damage:damage*.27,cause:'erase'});put('avatar',{life:3,r:65});break;
 case 'clockwork':put('castle',{life:9,r:65,speed:70,damage:damage*.65});break;
 case 'printingPress':put('avatar',{x:target.x,y:target.y,life:2.5,r:120});for(let i=0;i<5;i++)delayed(target.x+(i-2)*75,target.y,.3+i*.3,90);break;
 case 'loom':{let points=[{x:target.x-180,y:target.y-120},{x:target.x+180,y:target.y-120},{x:target.x-180,y:target.y+120},{x:target.x+180,y:target.y+120},{x:target.x-180,y:target.y-120}];at('thread',{life:3.2,points,collapse:true,damage:damage*.4,stun:.25});break;}
@@ -93,7 +93,7 @@ case 'pinballTable':{
  for(const e of game.enemies)if(e.hp>0&&o.age>=(o.contactTimes.get(e.id)||0)&&lineDistance(e,px,py,o.ballX,o.ballY)<e.r+18){o.contactTimes.set(e.id,o.age+.22);hit(e,o.damage,px,py,95,false,'crumple',{weapon:'pinball',color:o.color});}
  for(const b of game.enemyBullets)if(b.life>0&&lineDistance(b,px,py,o.ballX,o.ballY)<18+b.r)breakEnemyBullet(b,2,'pinball'+o.id);
  }break;
-case 'stamp':if(!o.done){o.done=true;combatArea(o,o.x,o.y,o.r,o.damage,170);game.shake=Math.max(game.shake,4);game.fx.push({type:'explosion',x:o.x,y:o.y,r:o.r,life:.5,max:.5,color:o.color});Sound.play(o.kind,.35,1,.24);}break;
+case 'stamp':if(!o.done){o.done=true;combatArea(o,o.x,o.y,o.r,o.damage,170);game.shake=Math.max(game.shake,4);game.fx.push({type:'explosion',x:o.x,y:o.y,r:o.r,life:.5,max:.5,color:o.color});Sound.play(o.kind,.35,1,o.kind==='firecracker'?.09:.24);}break;
 case 'mine':if(o.age>=o.delay&&nearest(o.x,o.y,o.r)){Sound.play(o.kind,.32,1,.24);combatArea(o,o.x,o.y,o.blastR,o.damage,170);o.life=0;game.fx.push({type:'explosion',x:o.x,y:o.y,r:o.blastR,life:.5,max:.5,color:o.color});}break;
 case 'turret':case 'castle':case 'friend':{if(o.mode==='castle'){o.x+=(p.x-80-o.x)*dt*1.5;o.y+=(p.y+40-o.y)*dt*1.5;}let e=constructTarget(o,600);if(!e)break;o.a=Math.atan2(e.y-(o.y-25),e.x-o.x);if(o.mode==='friend'){let dist=distance(e,o);o.x+=(e.x-o.x)/Math.max(1,dist)*o.speed*dt;o.y+=(e.y-o.y)/Math.max(1,dist)*o.speed*dt;if(tick&&dist<o.r+e.r){Sound.play(o.kind,.25,1,.5);hit(e,o.damage*.5,o.x,o.y,120,false,o.cause,{weapon:o.kind,color:o.color});o.x-=Math.cos(o.a)*22;o.y-=Math.sin(o.a)*22;}}else {o.fireCd=(o.fireCd||0)-dt;if(o.fireCd<=0){o.fireCd=o.mode==='castle'?.5:.65;Sound.play(o.kind,.26,1,.4);fireBullet('pencil',o.x,o.y-25,o.a,450,o.damage,3);if(o.mode==='castle'&&Math.random()<.45)construct(o.kind,'friend',o.x,o.y,o.a,o.lv,{life:2.5,speed:240,r:30,damage:o.damage});}}}break;
 case 'thread':if(o.collapse)for(let pt of o.points){pt.x+=(o.x-pt.x)*dt*.25;pt.y+=(o.y-pt.y)*dt*.25;}if(tick)for(let i=1;i<o.points.length;i++)combatLine(o,o.points[i-1].x,o.points[i-1].y,o.points[i].x,o.points[i].y,8);break;

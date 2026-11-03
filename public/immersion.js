@@ -5,7 +5,7 @@ function updateBookOrbit(){
  const soundCycle=Math.floor(game.t*(2+lv*.15)/Math.PI);if(n&&state==='playing'&&soundCycle!==game.bookSoundCycle){game.bookSoundCycle=soundCycle;Sound.play('book',.22,1,.5);}
  for(let i=0;i<n;i++){
   const a=game.t*(2+lv*.15)+i*TAU/n,b=game.orbit[i]||(game.orbit[i]={});
-  Object.assign(b,{a,rx:76+lv*8,ry:48+lv*6,cx:p.x,cy:p.y-31});
+  const sweep=Math.max(0,Math.sin(game.t*2.4));Object.assign(b,{a,rx:76+lv*8+sweep*48,ry:48+lv*6+sweep*30,cx:p.x,cy:p.y-31,sweep});
   b.x=b.cx+Math.cos(a)*b.rx;b.y=b.cy+Math.sin(a)*b.ry;
  }
 }
@@ -25,6 +25,7 @@ function renderLoosePage(x,y,size,angle,fold,alpha=1){
  ctx.restore();
 }
 function renderOrbitBook(b){
+ if(b.sweep>.3){ctx.save();ctx.translate(b.cx,b.cy);ctx.scale(1,b.ry/b.rx);ctx.strokeStyle='#c7b1e5';ctx.lineWidth=8;ctx.globalAlpha=.28+b.sweep*.22;ctx.beginPath();ctx.arc(0,0,b.rx,b.a-.6,b.a);ctx.stroke();ctx.strokeStyle='#fff3cb';ctx.lineWidth=2;ctx.stroke();ctx.restore();}
  const n=reducedEffects?3:5;
  for(let j=n;j>=1;j--){let age=j/n,a=b.a-.11-j*.105,drift=Math.sin(game.t*4+j+b.a)*3*age,x=b.cx+Math.cos(a)*(b.rx+age*7),y=b.cy+Math.sin(a)*(b.ry+age*4)-age*5+drift,tangent=Math.atan2(Math.cos(a)*b.ry,-Math.sin(a)*b.rx);renderLoosePage(x,y,7.5-age*3,tangent+Math.sin(game.t*5+j)*.3,game.t*7+j,.68*(1-age*.72));}
  const flap=Math.sin(game.t*9+b.a),s=.65+Math.sin(b.a)*.06;

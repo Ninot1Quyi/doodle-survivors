@@ -54,3 +54,9 @@ Enemy impacts remain aggregated and quieter; attacks bypass their 4.2 kHz filter
 Slot spin, three rising stop notes, reveal and jackpot use designer samples;
 old wood/metal/glass chest layers are removed. Jackpot includes a recorded
 pizzicato jingle followed by a short recorded reward cue. BGM is unchanged.
+
+Firecracker: Whistle and Explosion Single_Firework by Rudmer_Rotteveel, CC0.
+https://freesound.org/people/Rudmer_Rotteveel/sounds/336008/
+Extracted 1.14–1.54 s from the public HQ preview; gain .6, mono, boundary fades, OGG encoding.
+Six biome music tracks and changes: biomes/CREDITS.txt (Kevin MacLeod, CC BY 4.0).
+Reward cues: Kenney Music Jingles jingles_PIZZI07 and Digital Audio highUp/pepSound3, CC0; constant gain and fades.

@@ -7,7 +7,7 @@ const sandbox={Math,Number,Set,Map,console,game:null,
  playerHurt(damage){events.push(['player']);sandbox.game.hero.hp-=damage;},
  breakEnemyBullet(b,power,key){if(b.life<=0)return false;b.clashedBy??=new Set();if(b.clashedBy.has(key))return false;b.clashedBy.add(key);b.guard=(b.guard||1)-power;if(b.guard>0)return false;b.life=0;events.push(['clash',b.id]);return true;}
 };
-vm.createContext(sandbox);vm.runInContext(fs.readFileSync(__dirname+'/../public/projectile-step.js','utf8'),sandbox);const run=s=>vm.runInContext(s,sandbox);
+vm.createContext(sandbox);vm.runInContext(fs.readFileSync(__dirname+'/../public/kinetic-combat.js','utf8'),sandbox);vm.runInContext(fs.readFileSync(__dirname+'/../public/projectile-step.js','utf8'),sandbox);const run=s=>vm.runInContext(s,sandbox);
 function reset(){events.length=0;sandbox.game={bullets:[],enemyBullets:[],enemies:[],hero:{x:0,y:1000,r:16,hp:100},buffs:{slow:0},weapons:{fire:0},burns:[],parryPulses:[],enemyShotSerial:100};}
 function friendly(x=0,y=0,vx=520,vy=0,pierce=1,damage=10,kind='pencil',life=1){let b={id:sandbox.game.bullets.length+1,x,y,vx,vy,life,pierce,damage,kind,hit:new Set(),size:8};sandbox.game.bullets.push(b);return b;}
 function hostile(x,y,vx=0,vy=0,guard=1,life=1){let b={id:100+sandbox.game.enemyBullets.length,x,y,vx,vy,guard,life,r:6,damage:7};sandbox.game.enemyBullets.push(b);return b;}

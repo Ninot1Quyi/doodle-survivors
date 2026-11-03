@@ -46,17 +46,9 @@ function materialImpactSound(e,cause,crit,style={}){
  const k=style.weapon,cut=['saber','lance','scissors','gear','leaf','thread','whip','plane','paladin'].includes(k);
  // One outcome per contact: defeated enemies do not also trigger an ordinary hit and critical layer.
  const cue=e.hp<=0?'impactDefeat':crit?'heavyhit':k==='pencil'?'impactPencil':cut?'impactCut':({freeze:'impactGlass',soak:'impactInk',petals:'impactBloom',erase:'impactErase',crumple:'impactCrush',burn:'impactFire'}[cause]||'hit');
- Sound.play(cue,e.hp<=0?.48:crit?.5:.4,1+(e.id%3-1)*.018,.105);
+ e.hitSoundStep=(e.hitSoundStep||0)+1;if(Sound.contact)Sound.contact(cue,e.hp<=0?.48:crit?.46:.36,1+(e.id%3-1)*.018,{variant:(e.hitSoundStep+e.id)%3,weapon:k});else Sound.play(cue,e.hp<=0?.48:crit?.46:.36,1,.025);
 }
-function renderPolishedExplosion(f,r,u){
- const a=f.angle||0,col=f.color;ctx.save();ctx.translate(f.x,f.y);
- // One pressure core, a broken shock front, then separate curled paper chips.
- if(u<.48){ctx.globalAlpha*=Math.max(0,1-u/.48);ctx.fillStyle='#fff0c8';ctx.beginPath();ctx.ellipse(0,0,r*.6,r*.46,0,0,TAU);ctx.fill();}
- ctx.globalAlpha=Math.max(0,1-u)*.75;
- for(let i=0;i<8;i++){let aa=i*TAU/8+a,rr=r*(.55+u*.3),x=Math.cos(aa)*rr,y=Math.sin(aa)*rr;ctx.save();ctx.translate(x,y);ctx.rotate(aa+u*1.4);let sz=r*.14*(1-u*.4);paperPolygon([[-sz,-sz*.5],[sz*.8,-sz],[sz,sz*.5],[-sz*.6,sz]],col,'#9a7fa2',.9);paperPolygon([[-sz,-sz*.5],[0,0],[sz*.8,-sz]],'#f8e5c7',null);ctx.restore();}
- ctx.strokeStyle=col;ctx.lineWidth=4*(1-u)+1;for(let i=0;i<5;i++){ctx.beginPath();ctx.arc(0,0,Math.max(1,r),a+i*TAU/5,a+i*TAU/5+.9);ctx.stroke();}
- ctx.restore();
-}
+function renderPolishedExplosion(f,r,u){KineticArt.eruption(ctx,{x:f.x,y:f.y,r:f.r,age:.18+u*.82,duration:1,color:f.color,reduced:reducedEffects});}
 
 function renderBookContact(f,r,u){
  for(let i=0;i<5;i++){let a=i*TAU/5+(f.angle||0),travel=r*(.25+u*.9);renderLoosePage(f.x+Math.cos(a)*travel,f.y+Math.sin(a)*travel,7*(1-u*.4),a+u*2,u*7+i,1-u*.45);}

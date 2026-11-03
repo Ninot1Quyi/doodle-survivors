@@ -21,7 +21,7 @@ function stepProjectiles(dt,around,defend){if(!(dt>0)||!Number.isFinite(dt)||!ga
  let friendlyCount=0,hostileCount=0,maxRadius=0;const slow=game.buffs.slow>0?.55:1;
  // Capture the initial population: reflected/new shots begin moving next step.
  const initialFriendly=game.bullets.length,initialHostile=game.enemyBullets.length;
- for(let i=0;i<initialFriendly;i++){let b=game.bullets[i];if(b.life>0)projectileRecord(projectileFriendlyPool,friendlyCount++,b,dt,1);}
+ for(let i=0;i<initialFriendly;i++){let b=game.bullets[i];if(b.life>0){kineticProjectile(b,dt);if(b.life>0)projectileRecord(projectileFriendlyPool,friendlyCount++,b,dt,1);}}
  for(let i=0;i<initialHostile;i++){let b=game.enemyBullets[i];if(b.life>0){if(!b.id)b.id=game.enemyShotSerial++;projectileRecord(projectileHostilePool,hostileCount++,b,dt,slow);}}
  projectileMetrics.friendly=friendlyCount;projectileMetrics.hostile=hostileCount;
  // Root supplies book / wind / construct / existing pulse defenses here, after movement.

@@ -1,0 +1,23 @@
+"Enchanted Valley" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/
+Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200093
+Changes: Trimmed 0.40–188.00s, constant gain 0.618, 100ms onset fade, MP3 128k; runtime overlap crossfades.
+
+"Dreamy Flashback" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/
+Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100532
+Changes: Trimmed 0.00–126.55s, constant gain 0.434, 100ms onset fade, MP3 128k; runtime overlap crossfades.
+
+"Teller of the Tales" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/
+Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400020
+Changes: Trimmed 0.00–205.00s, constant gain 0.927, 100ms onset fade, MP3 128k; runtime overlap crossfades.
+
+"Fairytale Waltz" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/
+Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100232
+Changes: Trimmed 3.15–93.00s, constant gain 2.796, 100ms onset fade, MP3 128k; runtime overlap crossfades.
+
+"Desert City" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/
+Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100564
+Changes: Trimmed 0.00–89.30s, constant gain 0.275, 100ms onset fade, MP3 128k; runtime overlap crossfades.
+
+"Master of the Feast" Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License. https://creativecommons.org/licenses/by/4.0/
+Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400019
+Changes: Trimmed 0.00–222.75s, constant gain 0.501, 100ms onset fade, MP3 128k; runtime overlap crossfades.

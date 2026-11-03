@@ -1,0 +1,35 @@
+[
+  {
+    "cue": "inspiration",
+    "file": "inspiration.ogg",
+    "source": "jingles_PIZZI07.ogg",
+    "source_sha256": "91870588924e0e498c6eb8d4f4ccf8595c9e7dc51fb553797b551062e642ce7c",
+    "file_sha256": "34cc24ac3c9638e379c887b7874eb2f455397b69bb68bb82bf21642fc0609d76",
+    "license": "CC0-1.0",
+    "author": "Kenney",
+    "url": "https://kenney.nl/assets/music-jingles",
+    "changes": "Gain and 12ms onset/100ms end fades; no layered or synthesized timbre."
+  },
+  {
+    "cue": "giftPickup",
+    "file": "giftPickup.ogg",
+    "source": "highUp.ogg",
+    "source_sha256": "cbc1c3c7ccf5d7903818144a4c3f5b2ed2385095792f29d8d7c76360ba4fa559",
+    "file_sha256": "089312a01ffabf99dbd4a5aa1aa2d8484b6cd2b115b7d0a6a7a0d5b43abd6216",
+    "license": "CC0-1.0",
+    "author": "Kenney",
+    "url": "https://kenney.nl/assets/digital-audio",
+    "changes": "Gain and 12ms onset/100ms end fades; no layered or synthesized timbre."
+  },
+  {
+    "cue": "softPickup",
+    "file": "softPickup.ogg",
+    "source": "pepSound3.ogg",
+    "source_sha256": "5e9f2b4a0b14e65a157d0bbcb28cf816926583afa96e753489c722ec3d810a78",
+    "file_sha256": "4db1b01c076d525a781b417cab504276297c153d779dadc4cf91b2983d5f2386",
+    "license": "CC0-1.0",
+    "author": "Kenney",
+    "url": "https://kenney.nl/assets/digital-audio",
+    "changes": "Gain and 12ms onset/100ms end fades; no layered or synthesized timbre."
+  }
+]

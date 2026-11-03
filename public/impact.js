@@ -19,6 +19,7 @@ function impactStar(x,y,r,angle,color,points=7){
  ctx.closePath();ctx.fillStyle=color;ctx.strokeStyle='#705273';ctx.lineWidth=1.8;ctx.fill();ctx.stroke();ctx.restore();
 }
 function renderImpact(f){
+ if(renderKineticEffect(f))return true;
  if(!['inkhit','clash','explosion'].includes(f.type))return false;
  const u=clamp(1-f.life/f.max,0,1),burst=f.type==='explosion',clash=f.type==='clash',intensity=reducedEffects?.55:1;
  let r=f.r*(.55+Math.min(1,u*3)*.7)*intensity;
