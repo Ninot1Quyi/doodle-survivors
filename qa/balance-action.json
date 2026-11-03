@@ -1,0 +1,44 @@
+[
+  {
+    "time": 365,
+    "kills": 3510,
+    "hp": 113,
+    "level": 52,
+    "bosses": 2,
+    "fusions": [
+      "comet",
+      "aurora",
+      "tempest",
+      "garden"
+    ],
+    "state": "playing"
+  },
+  {
+    "time": 365,
+    "kills": 3450,
+    "hp": 33,
+    "level": 50,
+    "bosses": 2,
+    "fusions": [
+      "aurora",
+      "comet",
+      "tempest",
+      "garden"
+    ],
+    "state": "playing"
+  },
+  {
+    "time": 357,
+    "kills": 3209,
+    "hp": -5,
+    "level": 51,
+    "bosses": 2,
+    "fusions": [
+      "aurora",
+      "comet",
+      "tempest",
+      "garden"
+    ],
+    "state": "ended"
+  }
+]

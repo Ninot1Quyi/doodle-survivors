@@ -1,0 +1,21 @@
+{
+  "canvas": {
+    "dpr": 1.5,
+    "height": 1395,
+    "width": 1421
+  },
+  "clashes": 275,
+  "elapsedMs": 6505.299999991059,
+  "population": {
+    "bullets": 0,
+    "constructs": 14,
+    "enemies": 210,
+    "enemyBullets": 74,
+    "fx": 57,
+    "numbers": 71
+  },
+  "rafP95": 18.5,
+  "renderedFps": 60.104837594044454,
+  "renderedFrames": 391,
+  "smoothedWorkMs": 2.7737790498882022
+}

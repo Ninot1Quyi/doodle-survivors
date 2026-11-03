@@ -10,6 +10,8 @@ const Sound=(()=>{
   document.body.append(music);
   // A cue's layers are gently pitched recordings, with independent timing and gain.
   const cues={
+    heavyhit:{layers:[['hit',.9,.68],['explosion',.22,.8,.018]],priority:3,boost:1.1,tail:.28},
+    parry:{layers:[['hit',.6,1.45],['confirm',.4,1.2]],priority:2,boost:1.05,tail:.19},
     hit:{layers:[['hit',1,1]],priority:1,boost:1.65,tail:.18},
     shoot:{layers:[['shoot',1,1]],priority:0,boost:1.8,tail:.19},
     pickup:{layers:[['pickup',1,.9]],priority:2,boost:2.8,tail:.25},

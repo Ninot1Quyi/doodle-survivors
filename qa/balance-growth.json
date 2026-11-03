@@ -1,43 +1,42 @@
 [
   {
-    "time": 360,
-    "kills": 3238,
-    "hp": 120,
-    "level": 51,
-    "bosses": 3,
-    "fusions": [
-      "comet",
-      "aurora",
-      "nova",
-      "garden"
-    ],
-    "state": "ended"
-  },
-  {
-    "time": 360,
-    "kills": 3232,
-    "hp": 130,
+    "time": 365,
+    "kills": 3377,
+    "hp": 103,
     "level": 52,
-    "bosses": 3,
-    "fusions": [
-      "comet",
-      "aurora",
-      "tempest",
-      "mirror"
-    ],
-    "state": "ended"
-  },
-  {
-    "time": 360,
-    "kills": 3286,
-    "hp": 120,
-    "level": 52,
-    "bosses": 3,
+    "bosses": 2,
     "fusions": [
       "comet",
       "dragon",
+      "tempest",
+      "garden"
+    ],
+    "state": "playing"
+  },
+  {
+    "time": 365,
+    "kills": 3417,
+    "hp": 130,
+    "level": 54,
+    "bosses": 2,
+    "fusions": [
+      "comet",
       "aurora",
-      "tempest"
+      "skyWhale",
+      "paladin"
+    ],
+    "state": "playing"
+  },
+  {
+    "time": 300,
+    "kills": 2102,
+    "hp": -12,
+    "level": 42,
+    "bosses": 2,
+    "fusions": [
+      "comet",
+      "tempest",
+      "spotlight"
     ],
     "state": "ended"
   }

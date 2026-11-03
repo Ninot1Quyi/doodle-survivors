@@ -14,20 +14,18 @@ function initEnemyExpansion(){game.advancedSpawnClock=3;game.advancedEliteClock=
 function chooseBoss(kind){let pool=BOSS_POOLS[kind];if(!pool)return kind;let chosen=pool[Math.floor(Math.random()*pool.length)];game.bossChoices[kind]=chosen;if(kind==='bossMoon')game.finalBossKind=chosen;return chosen;}
 function decorateEnemy(e){e.intent=null;e.aiTick=0;e.variantClock=3+Math.random()*2;e.variantScale=1;e.finalBoss=e.boss&&e.kind===game.finalBossKind;game.creatureSeen?.add(e.kind);return e;}
 function applyEnemyVariant(e,key){const v=ELITE_VARIANTS[key];if(!v||e.boss||e.variant)return false;e.variant=key;e.elite=true;e.variantScale=v.scale;e.r*=v.scale;e.maxHp*=v.hp;e.hp=e.maxHp;e.speed*=v.speed;e.damage*=1.2;e.xp=Math.ceil(e.xp*4);e.variantClock=2;e.variantRewarded=false;game.variantWatches.push(e);return true;}
-function enemyWarn(e,type,seconds,opts={}){if(e.intent)return false;e.intent={type,left:seconds,max:seconds,x:opts.x??game.hero.x,y:opts.y??game.hero.y,a:Math.atan2(game.hero.y-e.y,game.hero.x-e.x),r:opts.r||65,n:opts.n||3,speed:opts.speed||135,kind:opts.kind||'imp',color:opts.color||'#b58fb8',...opts};return true;}
-function enemyShot(e,a,speed,color,r=6){if(game.enemyBullets.length>=130)return;game.enemyBullets.push({x:e.x,y:e.y-18,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r,life:4.2,color});}
-function enemyArea(x,y,r,delay,color='#be92b3'){if(game.hazards.length>=30)return;game.hazards.push({x,y,r,life:delay,max:delay,done:false,color});}
+function enemyWarn(e,type,seconds,opts={}){if(e.intent)return false;e.intent=prepareEnemyIntent(e,{type,left:seconds,max:seconds,x:opts.x??game.hero.x,y:opts.y??game.hero.y,a:Math.atan2(game.hero.y-e.y,game.hero.x-e.x),r:opts.r||65,n:opts.n||3,speed:opts.speed||135,kind:opts.kind||'imp',color:opts.color||'#b58fb8',...opts});return true;}
+function enemyShot(e,a,speed,color,r=6){if(game.enemyBullets.length>=130)return;game.enemyBullets.push({id:game.enemyShotSerial++,guard:e.boss?2:1,x:e.x,y:e.y-(e.boss?24:18),vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r,life:4.2,color:'#e14755'});}
+function enemyArea(x,y,r,delay,color='#be92b3',total=delay){if(game.hazards.length>=30)return;game.hazards.push({x,y,r,life:delay,max:total,done:false,color});}
 function resolveEnemyIntent(e,q){
  const rage=e.boss&&e.hp<e.maxHp*.5;
  if(q.type==='fan'||q.type==='sniper'||q.type==='radial'||q.type==='spiral'){let radial=q.type==='radial'||q.type==='spiral',n=q.n;for(let i=0;i<n;i++){let a=radial?q.a+i*Math.PI*2/n:q.a+(i-(n-1)/2)*.22;enemyShot(e,a,q.speed,q.color,q.type==='sniper'?5:6);}}
- else if(q.type==='charge'){e.advancedCharge=.55;e.chargeAX=Math.cos(q.a);e.chargeAY=Math.sin(q.a);}
- else if(q.type==='leap'){e.leapFromX=e.x;e.leapFromY=e.y;e.leapToX=q.x;e.leapToY=q.y;e.leapLife=.55;e.leapMax=.55;enemyArea(q.x,q.y,q.r,.65,q.color);}
- else if(q.type==='stomp'||q.type==='paint'){enemyArea(q.x,q.y,q.r,.7,q.color);}
+ else if(q.type==='charge'){e.chargeAttack={a:q.a,speed:q.speed,left:q.duration};}
+ else if(q.type==='leap'){e.leapFromX=e.x;e.leapFromY=e.y;e.leapToX=q.x;e.leapToY=q.y;e.leapLife=.55;e.leapMax=.55;}
  else if(q.type==='summon'){const cap=e.boss?2:1;for(let i=0;i<cap&&game.enemies.length<235;i++)spawnEnemy(q.kind,e.x+(i?40:-40),e.y+35);}
  else if(q.type==='mend'){let healed=0;for(let n of game.enemies){if(n!==e&&!n.boss&&n.hp>0&&(n.x-e.x)**2+(n.y-e.y)**2<160**2){n.hp=Math.min(n.maxHp,n.hp+n.maxHp*.12);if(++healed>=8)break;}}}
- else if(q.type==='clock'){for(let i=0;i<4;i++){let a=q.a+i*Math.PI/2;for(let j=1;j<=3;j++)enemyArea(e.x+Math.cos(a)*j*90,e.y+Math.sin(a)*j*90,32,.9+j*.15,'#b7a2ca');}}
- else if(q.type==='cloud'){for(let i=0;i<q.n;i++){let a=i*Math.PI*2/q.n;enemyArea(q.x+Math.cos(a)*100,q.y+Math.sin(a)*80,40,1+i*.08,'#a9b8d2');}}
- else if(q.type==='serpent'){for(let i=0;i<5;i++)enemyArea(q.x+(i-2)*70,q.y+Math.sin(i*1.4)*65,35,1+i*.1,'#a5bea8');}
+
+ for(let spot of q.spots||[])enemyArea(spot.x,spot.y,spot.r,Math.max(.025,spot.delay),q.color,q.max+spot.delay);
  if(game.fx.length<180)game.fx.push({type:'ring',x:e.x,y:e.y,r:Math.min(95,q.r),life:.35,max:.35,color:q.color});
 }
 function tickEnemyIntent(e,dt){if(!e.intent)return false;e.intent.left-=dt;if(e.intent.left<=0){const q=e.intent;e.intent=null;resolveEnemyIntent(e,q);}return true;}
@@ -42,9 +40,6 @@ function advancedEnemyBehavior(e,dt,dx,dy,d){
  if(game.buffs?.freeze>0){e.attackCd=Math.max(.2,e.attackCd);return 0;}
  const slow=game.buffs?.slow>0?.55:1;d=Math.max(1,d);tickVariant(e,dt,d);
  if(e.boss)return null;
- if(e.leapLife>0){e.leapLife=Math.max(0,e.leapLife-dt);let u=1-e.leapLife/e.leapMax;e.x=e.leapFromX+(e.leapToX-e.leapFromX)*u;e.y=e.leapFromY+(e.leapToY-e.leapFromY)*u;e.visualLift=Math.sin(u*Math.PI)*65;return 0;}e.visualLift=0;
- if(e.advancedCharge>0){e.advancedCharge-=dt;e.x+=e.chargeAX*240*dt*slow;e.y+=e.chargeAY*240*dt*slow;return 0;}
- if(tickEnemyIntent(e,dt))return .08;
  let ai=spec?.ai,m=1;
  if(ai==='wander'||ai==='snake'){e.x+=-dy/d*Math.sin(game.t*2.5+e.phase)*23*dt*slow;e.y+=dx/d*Math.sin(game.t*2.5+e.phase)*23*dt*slow;m=.85;}
  if(ai==='hop')m=.35+Math.max(0,Math.sin(game.t*3+e.phase))*1.7;
@@ -68,11 +63,9 @@ function advancedEnemyBehavior(e,dt,dx,dy,d){
   else if(ai==='summon'){e.attackCd=10;enemyWarn(e,'summon',1.25,{kind:'puff',color:'#d6b2c5'});}
  }
  if(e.variant==='berserker'&&e.hp<e.maxHp*.4)m*=1.65;
- return m*slow;
+ return e.intent?0:m*slow;
 }
-function advancedBossBehavior(e,dt,dx,dy,d){if(!e.boss)return false;if(game.buffs?.freeze>0)return true;if(tickEnemyIntent(e,dt))return true;
- if(e.leapLife>0){e.leapLife=Math.max(0,e.leapLife-dt);let u=1-e.leapLife/e.leapMax;e.x=e.leapFromX+(e.leapToX-e.leapFromX)*u;e.y=e.leapFromY+(e.leapToY-e.leapFromY)*u;e.visualLift=Math.sin(u*Math.PI)*95;return true;}e.visualLift=0;
- if(e.attackCd>0)return true;const rage=e.hp<e.maxHp*.5;e.attackCd=rage?2.9:4.6;const turn=e.aiTick++%3,at={x:game.hero.x,y:game.hero.y};
+function advancedBossBehavior(e,dt,dx,dy,d){if(!e.boss)return false;if(game.buffs?.freeze>0)return true; if(e.attackCd>0)return true;const rage=e.hp<e.maxHp*.5;e.attackCd=rage?2.9:4.6;const turn=e.aiTick++%3,at={x:game.hero.x,y:game.hero.y};
  if(e.kind==='bossCrab')enemyWarn(e,turn===1?'stomp':'fan',1,{...at,n:rage?7:5,speed:135,r:85,color:'#daa795'});
  else if(e.kind==='bossOwl')enemyWarn(e,turn===2?'summon':'fan',1.1,{n:rage?9:5,speed:150,kind:'owl',color:'#b8a5c7'});
  else if(e.kind==='bossFrog')enemyWarn(e,turn===1?'radial':'leap',1,{...at,n:12,speed:100,r:80,color:'#b4c599'});
@@ -93,10 +86,5 @@ function updateAdvancedEncounters(dt){if(!game.creatureSeen)initEnemyExpansion()
 }
 function renderEnemyVariant(e){if(e.hp<=0)return;const v=ELITE_VARIANTS[e.variant],q=e.intent;ctx.save();
  if(v){ctx.strokeStyle=v.color;ctx.lineWidth=2.2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(e.x,e.y+2,e.r+9,(e.r+9)*.55,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.font='bold 11px "PaperHand","Kaiti SC",serif';ctx.textAlign='center';ctx.strokeStyle='#fff1db';ctx.lineWidth=3;ctx.strokeText(v.name,e.x,e.y-e.r*2-12);ctx.fillStyle='#776178';ctx.fillText(v.name,e.x,e.y-e.r*2-12);}
- if(q){let u=1-q.left/q.max;ctx.strokeStyle=q.color;ctx.fillStyle=q.color;ctx.lineWidth=1.6;ctx.globalAlpha=.75;ctx.setLineDash([5,4]);
- if(['leap','stomp','paint','cloud','serpent','clock'].includes(q.type)){ctx.beginPath();ctx.ellipse(q.x,q.y,q.r,q.r*.72,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.beginPath();ctx.ellipse(q.x,q.y,Math.max(1,q.r*u),Math.max(1,q.r*.72*u),0,0,Math.PI*2);ctx.stroke();}
- else if(['charge','fan','sniper'].includes(q.type)){let reach=q.type==='charge'?170:120;ctx.beginPath();ctx.moveTo(e.x,e.y);ctx.lineTo(e.x+Math.cos(q.a)*reach,e.y+Math.sin(q.a)*reach);ctx.stroke();}
- else {ctx.beginPath();ctx.ellipse(e.x,e.y,30+u*28,16+u*13,0,0,Math.PI*2);ctx.stroke();}
- ctx.setLineDash([]);ctx.font='bold 20px serif';ctx.textAlign='center';ctx.fillStyle=q.color;ctx.fillText(q.type==='summon'?'♪':q.type==='mend'?'+':'!',e.x,e.y-e.r*2-8);
- }
+ if(q){ctx.font='bold 20px PaperHand';ctx.textAlign='center';ctx.fillStyle=['mend','summon'].includes(q.type)?q.color:'#c73d52';ctx.fillText(q.type==='summon'?'♪':q.type==='mend'?'+':'!',e.x,e.y-e.r*2-8);}
  ctx.restore();}

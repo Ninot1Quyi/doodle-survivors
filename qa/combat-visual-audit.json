@@ -1,0 +1,636 @@
+{
+  "missingSprites": [],
+  "results": [
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "pencil"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "book"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "lightning"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "tornado"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "fire"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "scissors"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "ink"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "rose"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "star"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "plane"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "bubble"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "bell"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "ribbon"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "frost"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "saber"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "lance"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "marble"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "yoyo"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "rocket"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "firecracker"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "ruler"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "prism"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "turret"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "foxspirit"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "mine"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "stamp"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "whip"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "thread"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "roller"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "chalk"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "camera"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "music"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "meteor"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "compass"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "magnetArm"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "gear"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "umbrella"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "kite"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "leaf"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "shield"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "portal"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "void"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "paladin"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "pinball"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "festival"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "rainbowLaser"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "clockwork"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "printingPress"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "loom"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "livingMural"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "spotlight"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "orrery"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "scrapColossus"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "skyWhale"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "autumnGuardian"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "paperCosmos"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "comet"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "garden"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "aurora"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "tempest"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "nova"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "dragon"
+    },
+    {
+      "reduced": false,
+      "renderedPhases": 6,
+      "weapon": "mirror"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "pencil"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "book"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "lightning"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "tornado"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "fire"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "scissors"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "ink"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "rose"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "star"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "plane"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "bubble"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "bell"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "ribbon"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "frost"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "saber"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "lance"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "marble"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "yoyo"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "rocket"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "firecracker"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "ruler"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "prism"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "turret"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "foxspirit"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "mine"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "stamp"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "whip"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "thread"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "roller"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "chalk"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "camera"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "music"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "meteor"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "compass"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "magnetArm"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "gear"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "umbrella"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "kite"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "leaf"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "shield"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "portal"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "void"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "paladin"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "pinball"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "festival"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "rainbowLaser"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "clockwork"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "printingPress"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "loom"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "livingMural"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "spotlight"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "orrery"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "scrapColossus"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "skyWhale"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "autumnGuardian"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "paperCosmos"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "comet"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "garden"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "aurora"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "tempest"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "nova"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "dragon"
+    },
+    {
+      "reduced": true,
+      "renderedPhases": 6,
+      "weapon": "mirror"
+    }
+  ],
+  "resourceFollowup": "Removed missing optional cloud sprite; thunderhead drawn as original filled shape and retested in browser."
+}
