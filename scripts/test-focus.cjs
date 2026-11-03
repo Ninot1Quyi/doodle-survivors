@@ -7,7 +7,7 @@ const sprites={};for(let key of ['tree','pillar','arch','rock','stump','bigMushr
 const biomeSizes={mushroomArch:[320,330],whale:[390,236],glassPalace:[370,366],clockTower:[218,377],bookBridge:[327,185],duneFlower:[199,240],kiteMill:[238,322],kiteTree:[207,285],moonRose:[144,219]};for(let [name,[w,h]] of Object.entries(biomeSizes))sprites['biome_'+name]={w,h,img:{width:w*2,height:h*2}};
 const sandbox={Math,Object,Map,Art:{sprites},document:{createElement:()=>{canvases++;return node();},getElementById:k=>nodes.get(k)},localStorage:{getItem:k=>stored[k]??null,setItem:(k,v)=>stored[k]=v},ctx:painter(),game:{hero:{x:0,y:70}},cam:{x:0,y:0},viewW:1200,viewH:800,realTime:0,reducedEffects:false};
 vm.createContext(sandbox);vm.runInContext(fs.readFileSync(__dirname+'/../public/focus.js','utf8'),sandbox);let run=s=>vm.runInContext(s,sandbox);
-run('initFocus()');let stats=run('getFocusStats()');assert.equal(stats.sources,16);assert(stats.variants<=40&&stats.pixels<=3000000);let initCanvases=canvases,initFilters=filterWrites;
+run('initFocus()');assert.equal(run('focusEnabled'),false,'clear scenery is the default');run('focusEnabled=true');let stats=run('getFocusStats()');assert.equal(stats.sources,16);assert(stats.variants<=40&&stats.pixels<=3000000);let initCanvases=canvases,initFilters=filterWrites;
 run('initFocus()');assert.equal(canvases,initCanvases,'repeat run initialization reuses baked textures');
 assert.equal(run("renderFocusedProp({name:'tree',x:80,y:70,scale:1})"),false,'hero vicinity stays crisp');
 assert.equal(run("renderFocusedProp({name:'tree',x:750,y:70,scale:1},.35)"),true,'far scenery uses blurred texture');

@@ -1,7 +1,7 @@
 [
   {
     "weapon": "pencil",
-    "damage": 5800
+    "damage": 5882
   },
   {
     "weapon": "book",
@@ -9,111 +9,111 @@
   },
   {
     "weapon": "lightning",
-    "damage": 5509
+    "damage": 5552
   },
   {
     "weapon": "tornado",
-    "damage": 19695
+    "damage": 19606
   },
   {
     "weapon": "fire",
-    "damage": 27720
+    "damage": 27730
   },
   {
     "weapon": "scissors",
-    "damage": 12880
+    "damage": 12920
   },
   {
     "weapon": "ink",
-    "damage": 6072
+    "damage": 6069
   },
   {
     "weapon": "rose",
-    "damage": 15245
+    "damage": 15091
   },
   {
     "weapon": "star",
-    "damage": 5246
+    "damage": 5074
   },
   {
     "weapon": "plane",
-    "damage": 6923
+    "damage": 6577
   },
   {
     "weapon": "bubble",
-    "damage": 2640
+    "damage": 2743
   },
   {
     "weapon": "bell",
-    "damage": 9492
+    "damage": 9828
   },
   {
     "weapon": "ribbon",
-    "damage": 5190
+    "damage": 5106
   },
   {
     "weapon": "frost",
-    "damage": 4750
+    "damage": 4625
   },
   {
     "weapon": "comet",
-    "damage": 12642
+    "damage": 12318
   },
   {
     "weapon": "garden",
-    "damage": 23850
+    "damage": 23246
   },
   {
     "weapon": "aurora",
-    "damage": 4286
+    "damage": 4354
   },
   {
     "weapon": "tempest",
-    "damage": 16874
+    "damage": 16987
   },
   {
     "weapon": "nova",
-    "damage": 8511
+    "damage": 8477
   },
   {
     "weapon": "dragon",
-    "damage": 8409
+    "damage": 8239
   },
   {
     "weapon": "mirror",
-    "damage": 22614
+    "damage": 22998
   },
   {
     "weapon": "saber",
-    "damage": 7030
+    "damage": 6710
   },
   {
     "weapon": "lance",
-    "damage": 2790
+    "damage": 2870
   },
   {
     "weapon": "marble",
-    "damage": 1328
+    "damage": 1502
   },
   {
     "weapon": "yoyo",
-    "damage": 3570
+    "damage": 3370
   },
   {
     "weapon": "rocket",
-    "damage": 4875
+    "damage": 4815
   },
   {
     "weapon": "firecracker",
-    "damage": 5024
+    "damage": 5280
   },
   {
     "weapon": "ruler",
-    "damage": 2238
+    "damage": 2269
   },
   {
     "weapon": "prism",
-    "damage": 2864
+    "damage": 2680
   },
   {
     "weapon": "turret",
@@ -121,83 +121,83 @@
   },
   {
     "weapon": "foxspirit",
-    "damage": 650
+    "damage": 550
   },
   {
     "weapon": "mine",
-    "damage": 13440
+    "damage": 13280
   },
   {
     "weapon": "stamp",
-    "damage": 4040
+    "damage": 3960
   },
   {
     "weapon": "whip",
-    "damage": 5989
+    "damage": 5829
   },
   {
     "weapon": "thread",
-    "damage": 8058
+    "damage": 8190
   },
   {
     "weapon": "roller",
-    "damage": 4057
+    "damage": 4124
   },
   {
     "weapon": "chalk",
-    "damage": 130
+    "damage": 138
   },
   {
     "weapon": "camera",
-    "damage": 1820
+    "damage": 2020
   },
   {
     "weapon": "music",
-    "damage": 1722
+    "damage": 1794
   },
   {
     "weapon": "meteor",
-    "damage": 7965
+    "damage": 8073
   },
   {
     "weapon": "compass",
-    "damage": 705
+    "damage": 780
   },
   {
     "weapon": "magnetArm",
-    "damage": 12680
+    "damage": 13180
   },
   {
     "weapon": "gear",
-    "damage": 5200
+    "damage": 4840
   },
   {
     "weapon": "umbrella",
-    "damage": 7116
+    "damage": 7172
   },
   {
     "weapon": "kite",
-    "damage": 2618
+    "damage": 2512
   },
   {
     "weapon": "leaf",
-    "damage": 2650
+    "damage": 2850
   },
   {
     "weapon": "shield",
-    "damage": 3695
+    "damage": 3655
   },
   {
     "weapon": "portal",
-    "damage": 1070
+    "damage": 1170
   },
   {
     "weapon": "void",
-    "damage": 7029
+    "damage": 7191
   },
   {
     "weapon": "paladin",
-    "damage": 4984
+    "damage": 4780
   },
   {
     "weapon": "pinball",
@@ -205,50 +205,50 @@
   },
   {
     "weapon": "festival",
-    "damage": 6303
+    "damage": 6262
   },
   {
     "weapon": "rainbowLaser",
-    "damage": 7242
+    "damage": 7150
   },
   {
     "weapon": "clockwork",
-    "damage": 3803
+    "damage": 2880
   },
   {
     "weapon": "printingPress",
-    "damage": 7384
+    "damage": 7657
   },
   {
     "weapon": "loom",
-    "damage": 9503
+    "damage": 9344
   },
   {
     "weapon": "livingMural",
-    "damage": 12418
+    "damage": 12617
   },
   {
     "weapon": "spotlight",
-    "damage": 11687
+    "damage": 11317
   },
   {
     "weapon": "orrery",
-    "damage": 11779
+    "damage": 11699
   },
   {
     "weapon": "scrapColossus",
-    "damage": 28718
+    "damage": 29354
   },
   {
     "weapon": "skyWhale",
-    "damage": 3802
+    "damage": 3809
   },
   {
     "weapon": "autumnGuardian",
-    "damage": 9960
+    "damage": 10079
   },
   {
     "weapon": "paperCosmos",
-    "damage": 17903
+    "damage": 19049
   }
 ]

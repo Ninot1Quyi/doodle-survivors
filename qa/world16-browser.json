@@ -1,0 +1,70 @@
+{
+  "opening": {
+    "k": 0.62,
+    "need": 156,
+    "focus": false,
+    "editions": 0
+  },
+  "chest": {
+    "id": "-3,-3",
+    "hold": 3,
+    "radius": 105
+  },
+  "stages": [
+    {
+      "t": 20,
+      "plan": {
+        "family": "ink",
+        "cap": 48
+      },
+      "enemies": 5,
+      "finite": true
+    },
+    {
+      "t": 75,
+      "plan": {
+        "family": "garden",
+        "cap": 70
+      },
+      "enemies": 21,
+      "finite": true
+    },
+    {
+      "t": 140,
+      "plan": {
+        "family": "pond",
+        "cap": 92
+      },
+      "enemies": 26,
+      "finite": true
+    },
+    {
+      "t": 210,
+      "plan": {
+        "family": "toys",
+        "cap": 114
+      },
+      "enemies": 31,
+      "finite": true
+    },
+    {
+      "t": 280,
+      "plan": {
+        "family": "dunes",
+        "cap": 136
+      },
+      "enemies": 36,
+      "finite": true
+    },
+    {
+      "t": 350,
+      "plan": {
+        "family": "dream",
+        "cap": 158
+      },
+      "enemies": 41,
+      "finite": true
+    }
+  ],
+  "errors": []
+}

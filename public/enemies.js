@@ -12,7 +12,7 @@ const BOSS_POOLS={bossRose:['bossRose','bossCrab','bossFrog'],boss:['boss','boss
 const NORMAL_EXPANSION_KEYS=Object.keys(MORE_ENEMIES).filter(k=>!k.startsWith('boss'));
 function initEnemyExpansion(){game.advancedSpawnClock=3;game.advancedEliteClock=48;game.variantWatches=[];game.creatureSeen=new Set();game.bossChoices={};game.finalBossKind=null;game.eliteCursor=0;game.encounterCursor=0;}
 function chooseBoss(kind){let pool=BOSS_POOLS[kind];if(!pool)return kind;let chosen=pool[Math.floor(Math.random()*pool.length)];game.bossChoices[kind]=chosen;if(kind==='bossMoon')game.finalBossKind=chosen;return chosen;}
-function decorateEnemy(e){e.intent=null;e.aiTick=0;e.variantClock=3+Math.random()*2;e.variantScale=1;e.finalBoss=e.boss&&e.kind===game.finalBossKind;game.creatureSeen?.add(e.kind);return e;}
+function decorateEnemy(e){e.intent=null;e.aiTick=0;e.variantClock=3+Math.random()*2;e.variantScale=1;e.finalBoss=e.boss&&e.kind===game.finalBossKind;decorateEncounterEnemy(e);game.creatureSeen?.add(e.kind);return e;}
 function applyEnemyVariant(e,key){const v=ELITE_VARIANTS[key];if(!v||e.boss||e.variant)return false;e.variant=key;e.elite=true;e.variantScale=v.scale;e.r*=v.scale;e.maxHp*=v.hp;e.hp=e.maxHp;e.speed*=v.speed;e.damage*=1.2;e.xp=Math.ceil(e.xp*4);e.variantClock=2;e.variantRewarded=false;game.variantWatches.push(e);return true;}
 function enemyWarn(e,type,seconds,opts={}){if(e.intent)return false;e.intent=prepareEnemyIntent(e,{type,left:seconds,max:seconds,x:opts.x??game.hero.x,y:opts.y??game.hero.y,a:Math.atan2(game.hero.y-e.y,game.hero.x-e.x),r:opts.r||65,n:opts.n||3,speed:opts.speed||135,kind:opts.kind||'imp',color:opts.color||'#b58fb8',...opts});return true;}
 function enemyShot(e,a,speed,color,r=6){if(game.enemyBullets.length>=130)return;game.enemyBullets.push({id:game.enemyShotSerial++,guard:e.boss?2:1,x:e.x,y:e.y-(e.boss?24:18),vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r,life:4.2,color:'#e14755'});}
@@ -22,8 +22,8 @@ function resolveEnemyIntent(e,q){
  if(q.type==='fan'||q.type==='sniper'||q.type==='radial'||q.type==='spiral'){let radial=q.type==='radial'||q.type==='spiral',n=q.n;for(let i=0;i<n;i++){let a=radial?q.a+i*Math.PI*2/n:q.a+(i-(n-1)/2)*.22;enemyShot(e,a,q.speed,q.color,q.type==='sniper'?5:6);}}
  else if(q.type==='charge'){e.chargeAttack={a:q.a,speed:q.speed,left:q.duration};}
  else if(q.type==='leap'){e.leapFromX=e.x;e.leapFromY=e.y;e.leapToX=q.x;e.leapToY=q.y;e.leapLife=.55;e.leapMax=.55;}
- else if(q.type==='summon'){const cap=e.boss?2:1;for(let i=0;i<cap&&game.enemies.length<235;i++)spawnEnemy(q.kind,e.x+(i?40:-40),e.y+35);}
- else if(q.type==='mend'){let healed=0;for(let n of game.enemies){if(n!==e&&!n.boss&&n.hp>0&&(n.x-e.x)**2+(n.y-e.y)**2<160**2){n.hp=Math.min(n.maxHp,n.hp+n.maxHp*.12);if(++healed>=8)break;}}}
+ else if(q.type==='summon'){const cap=e.boss?2:1;for(let i=0;i<cap&&game.enemies.length<235;i++)spawnFamilyMinion(e,e.x+(i?40:-40),e.y+35);}
+ else if(q.type==='mend'){let healed=0;for(let n of game.enemies){if(n!==e&&!n.boss&&n.family===e.family&&n.hp>0&&(n.x-e.x)**2+(n.y-e.y)**2<160**2){n.hp=Math.min(n.maxHp,n.hp+n.maxHp*.12);if(++healed>=8)break;}}}
 
  for(let spot of q.spots||[])enemyArea(spot.x,spot.y,spot.r,Math.max(.025,spot.delay),q.color,q.max+spot.delay);
  if(game.fx.length<180)game.fx.push({type:'ring',x:e.x,y:e.y,r:Math.min(95,q.r),life:.35,max:.35,color:q.color});
@@ -41,12 +41,12 @@ function advancedEnemyBehavior(e,dt,dx,dy,d){
  if(game.buffs?.freeze>0){e.attackCd=Math.max(.2,e.attackCd);return 0;}
  const slow=game.buffs?.slow>0?.55:1;d=Math.max(1,d);tickVariant(e,dt,d);
  if(e.boss)return null;
- let ai=spec?.ai,m=1;
+ let ai=spec?.ai,m=1;if(ai==='guard'){e.guardClock=(e.guardClock||0)+dt;e.guarding=e.guardClock%6<3.6&&d<250;}if(e.kind==='clockwork'&&e.attackCd<=0&&d<460){e.attackCd=6;enemyWarn(e,'clock',1.2,{r:32});}
  if(ai==='wander'||ai==='snake'){e.x+=-dy/d*Math.sin(game.t*2.5+e.phase)*23*dt*slow;e.y+=dx/d*Math.sin(game.t*2.5+e.phase)*23*dt*slow;m=.85;}
  if(ai==='hop')m=.35+Math.max(0,Math.sin(game.t*3+e.phase))*1.7;
  if(ai==='strafe'){e.x+=-dy/d*35*dt*slow;e.y+=dx/d*35*dt*slow;m=d<190?.1:.8;}
  if(ai==='orbit'||ai==='orbitFan'||ai==='float'){if(d<260){e.x+=-dy/d*e.speed*.8*dt*slow;e.y+=dx/d*e.speed*.8*dt*slow;m=d<150?-.3:.2;}e.frame+=dt*3;}
- if(ai==='guard')m=e.hp<e.maxHp*.5?.6:.8;
+ if(ai==='guard')m=e.guarding?.18:.8;
  if(ai==='tick')m=Math.sin(game.t*2+e.phase)>.2?1.8:.15;
  if(ai==='dodge'&&e.hitFlash>0){e.x+=-dy/d*80*dt*slow;e.y+=dx/d*80*dt*slow;}
  if(ai==='skate')m=.7+Math.max(0,Math.sin(game.t*1.8+e.phase))*1.3;
@@ -78,15 +78,13 @@ function advancedBossBehavior(e,dt,dx,dy,d){if(!e.boss)return false;if(typeof bo
  else enemyWarn(e,turn===2?'stomp':'radial',1,{...at,n:rage?16:12,speed:115,r:90,color:'#bd9ac7'});
  return true;
 }
-function updateAdvancedEncounters(dt){if(!game.creatureSeen)initEnemyExpansion();game.advancedSpawnClock-=dt;
- if(game.advancedSpawnClock<=0&&game.enemies.length<235){game.advancedSpawnClock=game.demo?2:Math.max(1.1,2.7-game.t*.0045);let unlocked=Math.min(NORMAL_EXPANSION_KEYS.length,6+Math.floor(game.t/12));let n=game.demo?2:Math.min(3,1+Math.floor(game.t/150));for(let i=0;i<n&&game.enemies.length<235;i++){let key=NORMAL_EXPANSION_KEYS[game.encounterCursor++%unlocked];spawnEnemy(key);}}
- game.advancedEliteClock-=dt;if(!game.demo&&game.advancedEliteClock<=0){game.advancedEliteClock=38;let living=game.variantWatches.filter(e=>e.hp>0);if(living.length<6){const eligible=game.enemies.filter(e=>!e.boss&&!e.elite&&e.hp>0&&Math.hypot(e.x-game.hero.x,e.y-game.hero.y)>230);let e=eligible[Math.floor(Math.random()*eligible.length)];if(e){let keys=Object.keys(ELITE_VARIANTS),key=keys[game.eliteCursor++%keys.length];applyEnemyVariant(e,key);if(typeof banner==='function')banner('奇想精英 · '+ELITE_VARIANTS[key].name);}}}
- for(let i=game.variantWatches.length-1;i>=0;i--){let e=game.variantWatches[i];if(e.hp<=0&&!e.variantRewarded){e.variantRewarded=true;if(e.variant==='splitter'&&game.enemies.length<232){for(let j=0;j<3;j++)spawnEnemy('puff',e.x+(j-1)*24,e.y+10);}game.pickups.push({x:e.x,y:e.y,kind:'chest',life:90});game.variantWatches.splice(i,1);}else if(Math.hypot(e.x-game.hero.x,e.y-game.hero.y)>2000)game.variantWatches.splice(i,1);}
+function updateAdvancedEncounters(dt){if(!game.creatureSeen)initEnemyExpansion();
+ for(let i=game.variantWatches.length-1;i>=0;i--){let e=game.variantWatches[i];if(e.hp<=0&&!e.variantRewarded){e.variantRewarded=true;if(e.variant==='splitter'&&game.enemies.length<232){for(let j=0;j<3;j++)spawnFamilyMinion(e,e.x+(j-1)*24,e.y+10);}game.pickups.push({x:e.x,y:e.y,kind:'chest',life:90});game.variantWatches.splice(i,1);}else if(Math.hypot(e.x-game.hero.x,e.y-game.hero.y)>2000)game.variantWatches.splice(i,1);}
  // Final-stage boss identity follows its randomised pool; victory never requires a specific skin.
  if(game.bossesDefeated>=game.bossGoal&&game.finalBossKind&&!game.bossKilled&&game.enemies.some(e=>e.finalBoss&&e.hp<=0))game.bossKilled=true;
 }
 function renderEnemyVariant(e){if(e.hp<=0)return;const v=ELITE_VARIANTS[e.variant],q=e.intent;ctx.save();
  if(v){ctx.strokeStyle=v.color;ctx.lineWidth=2.2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(e.x,e.y+2,e.r+9,(e.r+9)*.55,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);}
- const labels=()=>{if(v){ctx.font='bold 11px "PaperHand","Kaiti SC",serif';ctx.textAlign='center';ctx.strokeStyle='#fff1db';ctx.lineWidth=3;ctx.strokeText(v.name,0,-e.r*2-12);ctx.fillStyle='#776178';ctx.fillText(v.name,0,-e.r*2-12);}if(q){ctx.font='bold 20px PaperHand';ctx.textAlign='center';ctx.fillStyle=['mend','summon'].includes(q.type)?q.color:'#c73d52';ctx.fillText(q.type==='summon'?'♪':q.type==='mend'?'+':'!',0,-e.r*2-8);}};
+ const labels=()=>{if(v){ctx.strokeStyle=v.color;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-7,-e.r*2-17);ctx.lineTo(0,-e.r*2-24);ctx.lineTo(7,-e.r*2-17);ctx.lineTo(0,-e.r*2-10);ctx.closePath();ctx.stroke();}if(e.guarding){ctx.strokeStyle='#819fb4';ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,-e.r,e.r+5,-2.5,-.6);ctx.stroke();}if(q){ctx.font='bold 20px PaperHand';ctx.textAlign='center';ctx.fillStyle=['mend','summon'].includes(q.type)?q.color:'#c73d52';ctx.fillText(q.type==='summon'?'♪':q.type==='mend'?'+':'!',0,-e.r*2-8);}};
  if(typeof PaperCamera!=='undefined')PaperCamera.upright(ctx,e.x,e.y,labels);else {ctx.translate(e.x,e.y);labels();}
  ctx.restore();}

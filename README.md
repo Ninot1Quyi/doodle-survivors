@@ -31,7 +31,7 @@ Choose **火力开局** for four starting weapons, or **从零成长** for a pen
 
 Six authored regions have distinct large landmarks, plants, passive fantasy animals and their own Kevin MacLeod music tracks: mushroom forest, whale lake, moon greenhouse, paper-city ruins, flowering dunes and kite fields. Region changes crossfade between tracks; the full attribution and edits are listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-A lower oblique Canvas view compresses ground depth while keeping paper characters upright. Animated beam cores, blade ribbons, burst petals and moving orbit hoops track actual attack lifetimes. Guardians telegraph their locked geometry, perform the attack, and recover before acting again. Cloud, rain and thunder weather, brief hurt feedback, cached scenery focus and cause-dependent death animations keep the paper style. Settings can reduce effects and disable scenery focus. The compact cover retains mode selection, start, journal, both editions, shared statistics and the GitHub link; keyboard/touch diagrams replace long instructions.
+A lower oblique Canvas view compresses ground depth while keeping paper characters upright. Animated beam cores, blade ribbons, burst petals and moving orbit hoops track actual attack lifetimes. Guardians telegraph their locked geometry, perform the attack, and recover before acting again. Cloud, rain and thunder weather, brief hurt feedback, cached scenery focus and cause-dependent death animations keep the paper style. Settings can reduce effects and optionally enable scenery focus; scenery is clear by default. The compact cover retains mode selection, start, journal, shared statistics and the GitHub link; keyboard/touch diagrams replace long instructions.
 
 The default guardian sequence is fixed. A later guardian waits for the preceding one to be defeated, so these times are earliest spawn times rather than overlapping deadlines:
 
@@ -134,3 +134,13 @@ node scripts/verify-weapon-timbres.cjs
 node scripts/test-boss-choreography.cjs
 node scripts/test-rewards.cjs
 ```
+
+## Authored encounters and exploration (world16)
+
+The single encounter director introduces 36 ordinary creatures across six families: ink (0:00), garden (0:45), pond (1:40), toys (2:40), dunes (3:50), dream (5:00). Each family introduces basic movement first, then special roles with explicit unlock times. Squads contain one family, with occasional support from the previous family after the introduction. A 24-second rhythm includes a six-second recovery section; bosses reduce ordinary spawn pressure. The in-game journal lists the full roster and base attributes.
+
+Music-box treasure takes three seconds inside a 105-unit world radius. Progress decays at 0.22 seconds per second outside, including unloaded chunks, and resumes on return. Its visible ring matches the interaction radius. World labels, loot names, elite names and exploration instructions now use icons and meters, with detail retained in the journal, tooltips and accessible labels.
+
+Every level's XP requirement is exactly three times the previous live curve: level 1 requires 156 instead of 52; later levels require `6 * round((16 + level * 6.5 + level ** 1.33) * 1.9)`. Overflow carries into the next level.
+
+The oblique ground factor is 0.62, actors remain upright, and architecture has paper foundation faces. This is an authored Canvas projection, not a full 3D engine or a measured reconstruction of another game's camera. See [WORLD16_VERIFICATION.md](docs/WORLD16_VERIFICATION.md), [ENCOUNTER_ROSTER16.md](docs/ENCOUNTER_ROSTER16.md), and [GODOT_COMMUNITY_ASSETS16.md](docs/GODOT_COMMUNITY_ASSETS16.md). Reference-video media and community preview downloads stay outside the shipped game.
