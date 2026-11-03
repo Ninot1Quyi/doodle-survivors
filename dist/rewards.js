@@ -1,7 +1,7 @@
 'use strict';
 // One frame-driven reward session; no timers survive a selection or a new run.
 let rewardSession=null;
-function experienceForLevel(level){return level===1?26:Math.round((16+level*6.5+level**1.33)*1.9);}
+function experienceForLevel(level){return 2*(level===1?26:Math.round((16+level*6.5+level**1.33)*1.9));}
 function rewardRecommendation(choices){
  const hp=game.hero.hp/game.hero.maxHp;
  let best={index:0,score:-Infinity,reason:'强化当前火力'};
