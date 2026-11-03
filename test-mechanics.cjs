@@ -1,6 +1,7 @@
 const assert=require('assert');
 const {run}=require('./scripts/test-harness.cjs');
-run('start()');assert.equal(run('state'),'playing');assert.equal(run('game.enemies.length'),45);assert.equal(run('Object.keys(game.weapons).filter(k=>game.weapons[k]>0).length'),4);assert.equal(run('game.allies'),undefined);
+run('start()');assert.equal(run('state'),'playing');assert.equal(run('game.enemies.length'),28);assert.equal(run('Object.keys(game.weapons).filter(k=>game.weapons[k]>0).length'),1);assert.equal(run('game.weapons.pencil'),1);assert.equal(run('game.allies'),undefined);
+run("runMode='action';start()");assert.equal(run('game.enemies.length'),68);assert.equal(run('Object.keys(game.weapons).filter(k=>game.weapons[k]>0).length'),4);run("runMode='growth';start()");
 run("keys.add('d');update(.1);keys.clear()");assert(run('game.hero.x')>0);run('dash()');let cd=run('game.hero.dashCd');run('dash()');assert.equal(run('game.hero.dashCd'),cd);
 run('pause()');let t=run('game.t');run('update(1)');assert.equal(run('game.t'),t);run('pause()');
 run('game.hero.inv=0;playerHurt(10,game.hero.x-5,game.hero.y)');let hp=run('game.hero.hp');assert(hp<120);run('playerHurt(10,0,0)');assert.equal(run('game.hero.hp'),hp);
@@ -34,7 +35,7 @@ run("start();game.hero.x=60;game.hero.y=320;updateItems(.1)");let loot=run('game
 // Every new weapon must create attack objects and reduce enemy health when simulated.
 const newWeapons=run('Object.keys(EXTRA_WEAPONS).filter(k=>!EXTRA_WEAPONS[k].passive)');
 for(const k of newWeapons){run(`start();game.enemies=[];game.spawnClock=999;for(let key in game.weapons)game.weapons[key]=0;game.weapons.${k}=5;game.clocks.${k}=0;for(let i=0;i<12;i++)spawnEnemy('snail',Math.cos(i)*100,70+Math.sin(i)*80);`);const health=run('game.enemies.reduce((s,e)=>s+e.hp,0)');run("for(let i=0;i<90;i++){game.hero.inv=100;game.need=999999;update(1/60)}");assert(run('game.enemies.reduce((s,e)=>s+e.hp,0)')<health,k+' must deal damage');}
-run(`start();game.hero.hp=game.hero.maxHp=100000;for(let i=0;i<23000&&state!=='ended';i++){if(state==='upgrade'){let index=upgradeChoices.findIndex(k=>k.startsWith('fusion:'));chooseUpgrade(index<0?0:index);}else{keys.clear();keys.add(['d','s','a','w'][Math.floor(i/180)%4]);if(game.hero.storm>=100&&i%90===0)storm();update(1/60);}}`);
+run(`start();game.hero.hp=game.hero.maxHp=100000;for(let i=0;i<23000&&state!=='ended';i++){if(state==='upgrade'){if(rewardSession?.locked)updateRewardSession(3.7);let index=upgradeChoices.findIndex(k=>k.startsWith('fusion:'));chooseUpgrade(index<0?0:index);}else{keys.clear();keys.add(['d','s','a','w'][Math.floor(i/180)%4]);if(game.hero.storm>=100&&i%90===0)storm();update(1/60);}}`);
 assert(run('game.t')>=360||run('state')==='ended');assert(run('game.level')>=15);assert(run('game.kills')>100);assert(run('game.enemies.length')<280);assert(run('Number.isFinite(game.hero.x)&&Number.isFinite(game.hero.hp)'));
 console.log('PASS: single hero, movement, cooldowns, pause, hurt invulnerability, unbounded world, seven fusion prerequisites/consumption/extra levels, repeat-proof events, XP and upgrades, ultimate, all three boss spawns/victory gate, damage from every new weapon.');
 console.log('360s scripted stability run (extra health, not normal balance):',run('JSON.stringify({time:Math.floor(game.t),kills:game.kills,level:game.level,enemies:game.enemies.length,bosses:game.bossesDefeated,fusions:game.fusions})'));

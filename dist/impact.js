@@ -10,7 +10,7 @@ function hitFeedback(e,crit,damage,cause='confetti',sx=e.x-1,sy=e.y,knock=0,styl
   game.fx.push({type:'inkhit',x:e.x,y:e.y-e.r*.35,life:heavy?.32:.22,max:heavy?.32:.22,r,seed:e.id+game.t,weapon:style.weapon,color:style.color||({burn:'#e9af75',freeze:'#a7cbdc',petals:'#cea3bb',soak:'#a7bdd3',erase:'#c7b5d9',crumple:'#d4b69c'}[cause]||impactPalette[e.id%4]),crit:heavy,cause,angle:Math.atan2(e.y-sy,e.x-sx)});
   particleBurst(e.x,e.y-e.r*.3,reducedEffects?2:heavy?9:3,impactPalette[e.id%4],heavy?230:130);
  }
- if(heavy&&game.impactCooldown<=0){game.hitStop=reducedEffects?.008:.045;game.impactCooldown=.18;game.shake=Math.max(game.shake,reducedEffects?.6:Math.min(6,3+damage*.015));if(!crit)Sound.play('heavyhit',.29,1,.2);}
+ if(heavy&&game.impactCooldown<=0){game.hitStop=reducedEffects?.008:.045;game.impactCooldown=.18;game.shake=Math.max(game.shake,reducedEffects?.6:Math.min(6,3+damage*.015));/* Sound is emitted once by materialImpactSound, never duplicated here. */}
 }
 function impactStar(x,y,r,angle,color,points=7){
  ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.beginPath();

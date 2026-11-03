@@ -26,3 +26,13 @@ All visual artwork in this game is original procedural Canvas artwork.
 No image-generation service or extracted game sprites were used.
 Visual/gameplay reference: Rakuworld by SETO. This is an independent browser
 prototype, not an official Rakuworld release.
+
+WARM COMBAT PALETTE (2026-11-03)
+18 additional premixed single-voice clips use the same Kenney CC0 pack:
+soft impacts, punch impacts, carpet footsteps, generic light and light wood.
+No plate/glass/metal layers are used in repeated enemy contacts. Processing:
+onset trim, small resampling pitch change, 65 Hz high-pass, broad 2.7 kHz cut,
+4.5 kHz high shelf attenuation, soft attack, short fade, restrained mastering.
+WARM-IMPACT-PROVENANCE.json records sources, checksums, mix gains and metrics.
+Normal, critical and defeat impacts are mutually exclusive, with a 14 ms
+collection window and shared 105 ms pacing. Original BGM is unchanged.

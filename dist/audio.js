@@ -3,31 +3,35 @@
 const Sound=(()=>{
   let context,master,musicGain,sfxGain,compressor,lowpass,analyser,capture,musicSource,musicEQ,musicLow,trackGains;
   let started=false,muted=false,ducked=false,musicVolume=.38,sfxVolume=.56,loading,fadeTimer=null,crossfading=false,loopTransitions=0,activeTrack=0,musicGeneration=0;
+  let pendingImpact=null,impactFlushTimer=null,lastImpactAt=-99;const impactStats={merged:0,budgetSkipped:0,emitted:0};
   const buffers={},levels={},lastPlayed={},voices=new Set(),loaded=new Map(),played={};
-  const names=['hit','hurt','shoot','pickup','level','explosion','dash','wind','lightning','confirm','heal','storm','victory',...['wood','snap','glass','metal','soft','body','paper'].flatMap(k=>[k+'0',k+'1',k+'2'])];
+  const names=['hit','hurt','shoot','pickup','level','explosion','dash','wind','lightning','confirm','heal','storm','victory',...['wood','snap','glass','metal','soft','body','paper','warmHit','warmHeavy','warmFinish','warmCut','warmShot','warmParry'].flatMap(k=>[k+'0',k+'1',k+'2'])];
   let music=new Audio('audio/music.mp3');
   const musicPlayers=[music,new Audio('audio/music.mp3')];
   for(let i=0;i<2;i++){let audio=musicPlayers[i];audio.id='background-music'+(i?'-overlap':'');audio.hidden=true;audio.loop=true;audio.preload='auto';audio.volume=musicVolume;audio.addEventListener('timeupdate',()=>{if(audio===music)advanceMusicLoop();});document.body.append(audio);}
   const variations={};
   // A cue's layers are gently pitched recordings, with independent timing and gain.
   const cues={
+    reelTick:{layers:[['wood$',.6,1.4]],priority:2,boost:.8,tail:.07},
+    reelStop:{layers:[['metal$',.6,1.12],['glass$',.4,1.25],['pickup',.25,1.2]],priority:5,boost:1.05,tail:.26},
     chestRise:{layers:[['wind',.6,1.2],['metal$',.5,.9,.22],['paper$',.5,1.1,.38]],priority:5,boost:1.1,tail:.65},
     chestBurst:{layers:[['body$',.7,.88],['snap$',.8,1],['victory',.85,1.12,.08],['glass$',.6,1.35,.22]],priority:5,boost:1.1,tail:1.65},
     chestReveal:{layers:[['level',.65,1.18],['pickup',.6,1.35,.16],['glass$',.35,1.5,.32]],priority:5,boost:1.05,tail:.8},
-    heavyhit:{layers:[['snap$',.9,1.02],['body$',.8,.94],['metal$',.25,1.18,.008]],priority:3,boost:1,tail:.17},
-    parry:{layers:[['metal$',.62,1.28],['glass$',.3,1.3]],priority:2,boost:1,tail:.18},
-    hit:{layers:[['snap$',.8,1.12],['body$',.5,1.08],['wood$',.35,1.18]],priority:2,boost:1.1,tail:.14},
-    pencilShot:{layers:[['wood$',.58,1.48],['dash',.1,1.28]],priority:1,boost:.9,tail:.10},
-    impactPencil:{layers:[['snap$',.85,1.12],['wood$',.65,1.08],['body$',.48,1.04]],priority:2,boost:1.05,tail:.14},
-    impactCut:{layers:[['metal$',.55,1.26],['paper$',.5,1.15]],priority:2,boost:1,tail:.16},
-    impactGlass:{layers:[['glass$',.8,1.13],['metal$',.16,1.4]],priority:2,boost:1,tail:.23},
-    impactInk:{layers:[['soft$',.8,1.16],['wood$',.22,1.12]],priority:2,boost:1.1,tail:.16},
-    impactBloom:{layers:[['paper$',.7,1.18],['glass$',.14,1.42]],priority:2,boost:1,tail:.17},
-    impactErase:{layers:[['paper$',.7,1.3],['snap$',.18,1.25]],priority:2,boost:1,tail:.14},
-    impactCrush:{layers:[['snap$',.7,1.08],['body$',.35,1.08]],priority:2,boost:1,tail:.17},
-    impactFire:{layers:[['snap$',.72,1.12],['body$',.23,1.06]],priority:2,boost:1,tail:.18},
-    shoot:{layers:[['shoot',1,1]],priority:0,boost:1.8,tail:.19},
-    pickup:{layers:[['pickup',1,.9]],priority:2,boost:2.8,tail:.25},
+    heavyhit:{layers:[['warmHeavy$',1,1]],priority:3,group:'impact',rank:2,boost:1,tail:.215},
+    impactDefeat:{layers:[['warmFinish$',1,1]],priority:3,group:'impact',rank:3,boost:1,tail:.24},
+    parry:{layers:[['warmParry$',.8,1]],priority:2,group:'impact',rank:2,boost:.9,tail:.15},
+    hit:{layers:[['warmHit$',1,1]],priority:2,group:'impact',rank:1,boost:1,tail:.145},
+    pencilShot:{layers:[['warmShot$',1,1]],priority:1,group:'shot',boost:.65,tail:.095},
+    impactPencil:{layers:[['warmHit$',1,1.04]],priority:2,group:'impact',rank:1,boost:1,tail:.145},
+    impactCut:{layers:[['warmCut$',1,1]],priority:2,group:'impact',rank:1,boost:1,tail:.155},
+    impactGlass:{layers:[['warmParry$',.9,1.04]],priority:2,group:'impact',rank:1,boost:1,tail:.15},
+    impactInk:{layers:[['warmHit$',1,.92]],priority:2,group:'impact',rank:1,boost:1,tail:.16},
+    impactBloom:{layers:[['warmCut$',.9,.96]],priority:2,group:'impact',rank:1,boost:1,tail:.16},
+    impactErase:{layers:[['warmCut$',.85,1.04]],priority:2,group:'impact',rank:1,boost:1,tail:.15},
+    impactCrush:{layers:[['warmHit$',1,.9]],priority:2,group:'impact',rank:1,boost:1,tail:.16},
+    impactFire:{layers:[['warmHit$',1,.96]],priority:2,group:'impact',rank:1,boost:1,tail:.16},
+    shoot:{layers:[['warmShot$',1,1]],priority:0,group:'shot',boost:.65,tail:.095},
+    pickup:{layers:[['pickup',1,.9]],priority:2,group:'pickup',boost:1.15,tail:.16},
     hurt:{layers:[['hurt',1,.84],['hit',.35,.75,.045]],priority:4,boost:1.45,tail:.42},
     rose:{layers:[['shoot',.7,.83],['wind',.27,1.2,.025]],priority:1,boost:1.2,tail:.30},
     star:{layers:[['pickup',.7,.95],['shoot',.55,1.1]],priority:1,boost:1.2,tail:.30},
@@ -86,7 +90,7 @@ const Sound=(()=>{
         const end=Math.min(buffer.length,Math.floor(buffer.sampleRate*.22));
         for(let ch=0;ch<buffer.numberOfChannels;ch++){const data=buffer.getChannelData(ch);for(let i=0;i<end;i++){const sample=data[i];peak=Math.max(peak,Math.abs(sample));sum+=sample*sample;n++;}}
         const rms=Math.sqrt(sum/Math.max(1,n));
-        levels[name]={peak,rms,gain:clamp(Math.min(.75/Math.max(peak,.001),.16/Math.max(rms,.005)),.4,3.5)};
+        levels[name]={peak,rms,gain:name.startsWith('warm')?1:clamp(Math.min(.75/Math.max(peak,.001),.16/Math.max(rms,.005)),.4,3.5)};
         loaded.set(name,true);
       }catch{loaded.set(name,false);}
     })).then(()=>{if([...loaded.values()].some(v=>!v))status('部分采样未加载；刷新页面可重试。');});
@@ -109,10 +113,11 @@ const Sound=(()=>{
     const from=activeTrack,to=1-from,next=musicPlayers[to],old=music,generation=musicGeneration;crossfading=true;next.currentTime=0;
     next.play().then(()=>{if(!crossfading||generation!==musicGeneration)return;const now=context.currentTime,duration=Math.min(2.1,Math.max(.25,loopEnd-old.currentTime-.08));trackGains[from].gain.cancelScheduledValues(now);trackGains[to].gain.cancelScheduledValues(now);trackGains[from].gain.setValueAtTime(1,now);trackGains[to].gain.setValueAtTime(0,now);trackGains[from].gain.linearRampToValueAtTime(0,now+duration);trackGains[to].gain.linearRampToValueAtTime(1,now+duration);fadeTimer=setTimeout(()=>{old.pause();activeTrack=to;music=next;crossfading=false;loopTransitions++;},duration*1000+30);}).catch(()=>{crossfading=false;});
   }
-  async function start(){duck(false);await activate(true);duck(false);}
+  async function start(){clearTimeout(impactFlushTimer);impactFlushTimer=null;pendingImpact=null;lastImpactAt=-99;duck(false);await activate(true);duck(false);}
   async function unlock(){await activate(false);duck(ducked);}
-  function voice(sample,volume,rate,delay,priority,tail){
+  function voice(sample,volume,rate,delay,priority,tail,group){
     const buffer=buffers[sample];if(!buffer)return false;
+    if(group==='impact'&&[...voices].filter(v=>v.group==='impact').length>=3)return false;
     // Ordinary attacks cannot occupy the slots reserved for player feedback.
     const limit=priority>=3?24:priority>=2?19:10;
     if(voices.size>=limit){
@@ -128,26 +133,39 @@ const Sound=(()=>{
     const duration=Math.min(buffer.duration/source.playbackRate.value,tail);
     gain.gain.setValueAtTime(level,now+Math.max(.006,duration*.28));gain.gain.exponentialRampToValueAtTime(.0001,now+Math.max(.025,duration+.035));
     source.connect(gain);gain.connect(sfxGain);
-    const record={source,gain,priority};voices.add(record);
+    const record={source,gain,priority,group};voices.add(record);
     source.onended=()=>{voices.delete(record);source.disconnect();gain.disconnect();};
     source.start(now);source.stop(now+duration+.045);return true;
   }
-  function play(name,volume=.3,rate=1,minInterval=.08){
+  function playNow(name,volume=.3,rate=1,minInterval=.08){
     if(!started||muted||!context||context.state!=='running')return false;
     name=aliases[name]||name;const cue=cues[name];if(!cue)return false;
     const now=context.currentTime;
-    if(now-(lastPlayed[name]??-99)<Math.max(.025,minInterval))return false;
+    if(now-(lastPlayed[name]??-99)<Math.max(cue.group==='shot'?.14:cue.group==='pickup'?.16:.025,minInterval))return false;
     const variant=variations[name]||0;const layers=cue.layers.map(([sample,...rest])=>[sample.replace('$',String(variant%3)),...rest]);if(!layers.some(([sample])=>buffers[sample]))return false;
     let audible=false;
-    for(const [sample,mix,pitch,delay=0]of layers)audible=voice(sample,clamp(volume,0,1)*cue.boost*mix,rate*pitch,delay,cue.priority,cue.tail)||audible;
+    for(const [sample,mix,pitch,delay=0]of layers)audible=voice(sample,clamp(volume,0,1)*cue.boost*mix,rate*pitch,delay,cue.priority,cue.tail,cue.group)||audible;
     if(audible){variations[name]=variant+1;lastPlayed[name]=now;played[name]=(played[name]||0)+1;}
     if(audible&&cue.priority>=4&&!ducked){musicGain.gain.cancelScheduledValues(now);musicGain.gain.setTargetAtTime(musicVolume*.26,now,.05);musicGain.gain.setTargetAtTime(musicVolume*.43,now+.35,.16);}
     return audible;
   }
+  // A 14 ms collection window chooses one representative contact per burst.
+  // Death > critical/parry > ordinary. This is audio only; every hit still deals damage.
+  function play(name,volume=.3,rate=1,minInterval=.08){
+    name=aliases[name]||name;const cue=cues[name];
+    if(!cue||!started||muted||!context||context.state!=='running')return false;
+    if(cue.group!=='impact')return playNow(name,volume,rate,minInterval);
+    if(pendingImpact){impactStats.merged++;if(cue.rank>pendingImpact.rank||cue.rank===pendingImpact.rank&&volume>pendingImpact.volume)pendingImpact={name,volume,rate,rank:cue.rank};return true;}
+    pendingImpact={name,volume,rate,rank:cue.rank};
+    impactFlushTimer=setTimeout(()=>{const hit=pendingImpact;pendingImpact=null;impactFlushTimer=null;if(!hit||!context)return;const now=context.currentTime;
+      if(now-lastImpactAt<.105){impactStats.budgetSkipped++;return;}
+      if(playNow(hit.name,hit.volume,hit.rate,.105)){lastImpactAt=now;impactStats.emitted++;}
+    },14);return true;
+  }
   function duck(on){ducked=!!on;if(musicGain&&context){const now=context.currentTime;musicGain.gain.cancelScheduledValues(now);musicGain.gain.setTargetAtTime(musicVolume*(ducked?.15:.43),now,.2);musicLow.frequency.setTargetAtTime(ducked?5800:20000,now,.3);}}
   function volumes(m,s){musicVolume=clamp(Number(m)||0,0,1);sfxVolume=clamp(Number(s)||0,0,1);duck(ducked);if(sfxGain&&context)sfxGain.gain.setTargetAtTime(sfxVolume,context.currentTime,.06);try{localStorage.setItem('doodle-audio',JSON.stringify({music:musicVolume,sfx:sfxVolume}));}catch{}}
   function toggle(){muted=!muted;if(master&&context)master.gain.setTargetAtTime(muted?0:.82,context.currentTime,.06);return muted;}
-  function diagnostics(){let rms=0,peak=0;if(analyser){const samples=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(samples);for(const sample of samples){rms+=sample*sample;peak=Math.max(peak,Math.abs(sample));}rms=Math.sqrt(rms/samples.length);}return{started,muted,contextState:context?.state||'uninitialized',musicPaused:music.paused,musicTrack:'Master of the Feast',musicLoopEnd:220.7,loopTransitions,crossfading,sfxLowpass:lowpass?.frequency.value,musicReady:music.readyState,musicVolume,sfxVolume,activeVoices:voices.size,samples:loaded.size,failed:[...loaded].filter(([,ok])=>!ok).map(([name])=>name),played:{...played},outputRms:rms,outputPeak:peak};}
+  function diagnostics(){let rms=0,peak=0;if(analyser){const samples=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(samples);for(const sample of samples){rms+=sample*sample;peak=Math.max(peak,Math.abs(sample));}rms=Math.sqrt(rms/samples.length);}return{started,muted,contextState:context?.state||'uninitialized',musicPaused:music.paused,musicTrack:'Master of the Feast',musicLoopEnd:220.7,loopTransitions,crossfading,sfxLowpass:lowpass?.frequency.value,musicReady:music.readyState,musicVolume,sfxVolume,activeVoices:voices.size,activeImpactVoices:[...voices].filter(v=>v.group==='impact').length,impactMix:{...impactStats},samples:loaded.size,failed:[...loaded].filter(([,ok])=>!ok).map(([name])=>name),played:{...played},outputRms:rms,outputPeak:peak};}
   // Only the game sound bus is exposed: no microphone or device capture.
   function captureStream(){return capture?.stream||null;}
   function ready(){return loading||Promise.resolve();}

@@ -2,34 +2,62 @@
 // One frame-driven reward session; no timers survive a selection or a new run.
 let rewardSession=null;
 function experienceForLevel(level){return 2*(level===1?26:Math.round((16+level*6.5+level**1.33)*1.9));}
+const REWARD_AUTO_SECONDS=3;
+const REWARD_ROLES={
+ pencil:'ranged',star:'ranged',plane:'ranged',marble:'ranged',rocket:'ranged',music:'ranged',leaf:'ranged',compass:'ranged',
+ book:'guard',scissors:'melee',saber:'melee',lance:'melee',whip:'melee',yoyo:'melee',gear:'melee',shield:'guard',
+ tornado:'area',fire:'area',ink:'area',rose:'area',firecracker:'area',stamp:'area',mine:'area',roller:'area',meteor:'area',umbrella:'area',
+ lightning:'chain',thread:'chain',kite:'chain',ruler:'beam',prism:'beam',camera:'control',bubble:'control',bell:'control',frost:'control',chalk:'control',magnetArm:'control',portal:'control',void:'control',turret:'summon',foxspirit:'summon'
+};
 function rewardRecommendation(choices){
- const hp=game.hero.hp/game.hero.maxHp;
- let best={index:0,score:-Infinity,reason:'强化当前火力'};
- choices.forEach((key,index)=>{let score=0,reason='尝试新的攻击方式',d=weaponData[key],lv=game.weapons[key]||0;
-  if(key.startsWith('fusion:')){score=110;reason='两件材料已满级，可立即进化';}
-  else if((key==='heart'||key==='restore')&&hp<.42){score=140;reason='生命偏低，优先恢复生存能力';}
-  else if(d){score=lv?55+lv*4:20;reason=lv?'强化已装备武器':'拓展攻击方式';if(d.passive){score=key==='crown'||key==='candle'?48:25;reason='加强整套构筑';}if(!d.passive&&lv+(upgradeRarity[index]||1)>=d.max){score+=20;reason='本次强化可升至满级';}if(!lv&&RECIPES.some(([a,b])=>(a===key&&game.weapons[b]>0)||(b===key&&game.weapons[a]>0))){score=64;reason='补齐现有武器的合成搭档';}}
-  if(score>best.score)best={index,score,reason};
+ const hp=game.hero.hp/game.hero.maxHp,active=Object.keys(game.weapons).filter(k=>game.weapons[k]>0&&!weaponData[k].passive),roles=new Set(active.map(k=>REWARD_ROLES[k]||'evolved'));
+ const early=game.t<90&&active.length<4;
+ let best={index:0,score:-Infinity,reason:'强化当前火力',stage:early?'diversify':'build'};
+ choices.forEach((key,index)=>{
+  let score=0,reason='强化现有构筑',d=weaponData[key],lv=game.weapons[key]||0,gain=d?Math.min(upgradeRarity[index]||1,d.max-lv):0;
+  if(key.startsWith('fusion:')){score=150;reason='材料已齐 · 进化并释放一个武器槽';}
+  else if(key==='restore'){score=hp<.3?180:hp<.6?100:5;reason='恢复生命，继续战斗';}
+  else if(d){
+   const partner=RECIPES.filter(([a,b,c])=>!game.fusions.includes(c)&&(a===key||b===key)).map(([a,b])=>a===key?b:a).filter(k=>!game.consumed.has(k)).sort((a,b)=>game.weapons[b]-game.weapons[a])[0];
+   const partnerLevel=partner?game.weapons[partner]||0:0,newRole=!roles.has(REWARD_ROLES[key]||'evolved');
+   if(d.passive){score=35;if(['crown','candle'].includes(key)){score=early?38:55+active.length*4;reason='后期构筑 · 增益覆盖已装备武器';}else if(key==='heart'&&hp<.6){score=hp<.3?180:hp<.45?125:80;reason='生命偏低 · 增加上限并立即回血';}else if(['regen','armor'].includes(key)&&hp<.55){score=hp<.3?105:70;reason='生存补强 · 支持持续战斗';}else reason='补充随身护符';}
+   else if(early){
+    score=lv?42+Math.min(lv,5)*3+gain*2:(newRole?100:73)+gain*2;
+    reason=lv?'早期火力 · 强化已有武器':newRole?'前期多元化 · 补充新的攻击方式':'前期多元化 · 增加一件武器';
+    if(!lv&&partnerLevel>0){score+=5;reason+='，兼顾合成搭档';}
+   }else{
+    score=lv?65+Math.min(lv,5)*4+gain*3:15;
+    reason=lv?'后期构筑 · 集中强化已装备主力':'当前构筑外的新武器';
+    if(d.evolved&&lv){score+=24;reason='后期构筑 · 强化已进化武器';}
+    if(partnerLevel>0){
+     if(lv){score+=10+partnerLevel*3;if(lv+gain>=d.max){score+=20;reason=partnerLevel>=weaponData[partner].max?'本次满级 · 下一次即可合成':'合成准备 · 将现有材料升至满级';}else reason='后期构筑 · 推进已有合成路线';}
+     else if(partnerLevel>=3&&game.t<300){score=70+partnerLevel*4+gain*2;reason='后期构筑 · 补齐主力的合成搭档';}
+    }
+    if(!lv&&active.length<2&&newRole){score=95;reason='补足攻击覆盖 · 当前武器数量仍少';}
+   }
+  }
+  if(score>best.score)best={index,score,reason,stage:early?'diversify':'build'};
  });return best;
 }
 function closeRewardSession(){rewardSession=null;}
 function beginRewardSession(chest){
- rewardSession={chest,age:0,remaining:5,locked:chest,burst:false,particles:[],recommended:0,lastSecond:-1};
+ initRewardArt();
+ rewardSession={chest,age:0,remaining:REWARD_AUTO_SECONDS,locked:chest,burst:false,particles:[],recommended:0,lastSecond:-1,stops:0};
  const overlay=$('upgrades');overlay.classList.toggle('treasure-mode',chest);overlay.classList.toggle('opening-chest',chest);overlay.classList.remove('rewards-ready','chest-open');overlay.classList.toggle('reduced-rewards',reducedEffects);$('reward-time-fill').style.transform='scaleX(1)';
- $('chest-stage').classList.toggle('hidden',!chest);$('reward-subtitle').textContent=chest?'宝藏正在苏醒…':'选择一个灵感，继续你的冒险。';
- $('reward-status').textContent=chest?'开启宝箱…':'5 秒后自动选择推荐';
+ $('chest-stage').classList.toggle('hidden',!chest);$('skip-chest').onclick=()=>{if(rewardSession?.locked){rewardSession.age=reducedEffects?1.05:3.65;updateRewardSession(0);}};$('reward-subtitle').textContent=chest?'宝藏正在苏醒…':'选择一个灵感，继续你的冒险。';
+ $('reward-status').textContent=chest?'开启宝箱…':'3 秒后自动选择推荐';
  Sound.play(chest?'chestRise':'level',chest?.65:.5,1,.1);
 }
 function prepareRewardChoices(){
  if(!rewardSession||state!=='upgrade')return;
- const rec=rewardRecommendation(upgradeChoices);rewardSession.recommended=rec.index;rewardSession.remaining=5;rewardSession.lastSecond=-1;
+ const rec=rewardRecommendation(upgradeChoices);rewardSession.recommended=rec.index;rewardSession.remaining=REWARD_AUTO_SECONDS;rewardSession.lastSecond=-1;
  const cards=document.querySelectorAll('#choices .choice');
  cards.forEach((card,i)=>{card.querySelectorAll('.recommend-badge,.recommend-reason,.fusion-materials').forEach(n=>n.remove());card.style.setProperty('--reveal-delay',`${i*.14}s`);card.classList.toggle('recommended',i===rec.index);card.disabled=rewardSession.locked;card.setAttribute('aria-label',`${i===rec.index?'推荐：':''}${card.textContent}`);
-  if(i===rec.index){const badge=document.createElement('span');badge.className='recommend-badge';badge.textContent='✦ 默认推荐';card.append(badge);const why=document.createElement('span');why.className='recommend-reason';why.textContent=rec.reason;card.append(why);}
+  if(i===rec.index){const badge=document.createElement('span');badge.className='recommend-badge';badge.textContent=rec.stage==='diversify'?'✦ 多元灵感':'✦ 构筑推荐';card.append(badge);const why=document.createElement('span');why.className='recommend-reason';why.textContent=rec.reason;card.append(why);}
   const key=upgradeChoices[i];if(key.startsWith('fusion:')){const recipe=RECIPES.find(r=>r[2]===key.slice(7));if(recipe){const row=document.createElement('div');row.className='fusion-materials';row.innerHTML=`<span class="consume-label">消耗材料</span><span><img src="${icon(recipe[0])}" alt="${weaponData[recipe[0]].name}"><small>${weaponData[recipe[0]].name}</small></span><b>＋</b><span><img src="${icon(recipe[1])}" alt="${weaponData[recipe[1]].name}"><small>${weaponData[recipe[1]].name}</small></span><b>→</b><img src="${icon(recipe[2])}" alt="${weaponData[recipe[2]].name}">`;card.append(row);}}
  });
  $('reroll').disabled=rewardSession.locked||game.rerolls<=0;
- if(!rewardSession.locked){$('reward-status').textContent='5 秒后自动选择推荐 · 1 / 2 / 3 可立即选择';$('upgrades').classList.add('rewards-ready');cards[rec.index]?.focus();}
+ if(!rewardSession.locked){$('reward-status').textContent='3 秒后自动选择推荐 · 1 / 2 / 3 可立即选择';$('upgrades').classList.add('rewards-ready');cards[rec.index]?.focus();}
 }
 function rewardBurst(){
  const session=rewardSession;if(!session)return;session.burst=true;Sound.play('chestBurst',.8,1,.1);
@@ -46,7 +74,30 @@ function drawRewardConfetti(dt){
 function updateRewardSession(dt){
  const s=rewardSession;if(!s||state!=='upgrade'||document.hidden)return;
  s.age+=dt;
- if(s.locked){if(s.age>=.55&&!s.burst){$('upgrades').classList.add('chest-open');rewardBurst();}if(s.age>=1.45){s.locked=false;$('upgrades').classList.remove('opening-chest');$('reward-subtitle').textContent='三份宝藏灵感 · 选择一份带走';prepareRewardChoices();Sound.play('chestReveal',.55,1,.1);}}
- else {s.remaining=Math.max(0,s.remaining-dt);const sec=Math.ceil(s.remaining);if(sec!==s.lastSecond){s.lastSecond=sec;$('reward-status').textContent=`${sec} 秒后自动选择推荐 · 1 / 2 / 3 可立即选择`;}$('reward-time-fill').style.transform=`scaleX(${s.remaining/5})`;if(s.remaining<=0){chooseUpgrade(s.recommended);return;}}
- if(s.chest)drawRewardConfetti(dt);
+ if(s.locked){
+  if(s.age>=.55)$('upgrades').classList.add('chest-open');
+  const stops=reducedEffects?[.65,.75,.85]:[1.8,2.35,2.9];
+  while(s.stops<3&&s.age>=stops[s.stops]){Sound.play('reelStop',.4,1+s.stops*.12,.05);s.stops++;}
+  if(s.age>.8&&s.age<2.9&&!reducedEffects)Sound.play('reelTick',.17,1,.095);
+  if(s.age>=(reducedEffects?.9:3.05)&&!s.burst)rewardBurst();
+  if(s.age>=(reducedEffects?1.05:3.65)){s.locked=false;$('upgrades').classList.remove('opening-chest');$('reward-subtitle').textContent='带上一份灵感，继续你的旅程';prepareRewardChoices();Sound.play('chestReveal',.55,1,.1);}
+ }
+ else {s.remaining=Math.max(0,s.remaining-dt);const sec=Math.ceil(s.remaining);if(sec!==s.lastSecond){s.lastSecond=sec;$('reward-status').textContent=`${sec} 秒后自动选择推荐 · 1 / 2 / 3 可立即选择`;}$('reward-time-fill').style.transform=`scaleX(${s.remaining/REWARD_AUTO_SECONDS})`;if(s.remaining<=0){chooseUpgrade(s.recommended);return;}}
+ if(s.chest){drawChestCinema();drawRewardConfetti(dt);}
+}
+
+let bossCrayonReady=false;
+function initBossCrayon(){
+ if(bossCrayonReady)return;bossCrayonReady=true;
+ const c=document.createElement('canvas');c.width=1200;c.height=62;const g=c.getContext('2d');let seed=747;
+ const rand=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
+ // Separate, imperfect wax strokes. The paper shines through the pigment grain.
+ const colors=['#cd3447','#c32b40','#df4650','#bd293c','#e44a50','#d43844'];
+ g.lineCap='round';g.lineJoin='round';
+ for(let j=0;j<35;j++){let y=12+rand()*38,x=8+rand()*17;g.strokeStyle=colors[j%colors.length];g.globalAlpha=.55+rand()*.35;g.lineWidth=2+rand()*6;g.beginPath();g.moveTo(x,y);for(let k=1;k<=24;k++)g.lineTo(x+(1170-x)*k/24,y+(rand()-.5)*5);g.stroke();}
+ g.globalCompositeOperation='destination-out';
+ for(let i=0;i<16500;i++){let x=rand()*1200,y=rand()*62;g.globalAlpha=.13+rand()*.65;g.fillRect(x,y,.35+rand()*1.5,.3+rand()*1.2);}
+ // Longer pale scratches and uneven open edges are characteristic of a real crayon mark.
+ for(let i=0;i<270;i++){let x=rand()*1200,y=rand()*62;g.globalAlpha=.15+rand()*.5;g.fillRect(x,y,2+rand()*7,.35+rand()*.6);}
+ const url=c.toDataURL();$('boss-hud').style.setProperty('--boss-crayon',`url("${url}")`);
 }

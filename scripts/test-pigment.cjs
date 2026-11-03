@@ -1,6 +1,6 @@
 const assert=require('assert'),{run,sandbox}=require('./test-harness.cjs');
 let heard=[];sandbox.Sound.play=(...a)=>heard.push(a);
-run(`start();game.enemies=[];for(let k in game.weapons)game.weapons[k]=0;game.hero.x=0;game.hero.y=-300;spawnEnemy('snail',70,0);game.enemies[0].hp=10000;fireBullet('pencil',0,0,0,300,20,2);stepProjectiles(.25);`);
+run(`Math.random=()=>.5;start();game.enemies=[];for(let k in game.weapons)game.weapons[k]=0;game.hero.x=0;game.hero.y=-300;spawnEnemy('snail',70,0);game.enemies[0].hp=10000;fireBullet('pencil',0,0,0,300,20,2);stepProjectiles(.25);`);
 assert(run(`game.fx.some(f=>f.weapon==='pencil'&&f.color===PIGMENTS[1])`),'pencil contact receives its own pigment');assert(heard.some(c=>c[0]==='impactPencil'));
 run(`game.enemies=[];game.bullets=[];fireBullet('pencil',0,0,0,300,20,2);for(let i=0;i<30;i++)stepProjectiles(.016);`);assert(run(`game.bullets[0].trail.length===5&&game.bullets[0].trail.every(p=>p.x<=game.bullets[0].x)`),'trail is bounded and follows actual travel');
 run(`game.bullets=[];fireBullet('frost',0,0,0,300,20,2)`);assert.equal(run('game.bullets[0].tint'),run('weaponData.frost.color'),'ice retains its own palette');

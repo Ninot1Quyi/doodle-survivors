@@ -42,12 +42,11 @@ function renderCutContact(f,r,u){
  ctx.restore();
 }
 function materialImpactSound(e,cause,crit,style={}){
- if(!visible(e.x,e.y,130)||game.t<(game.nextHitSoundAt||0))return;
- game.nextHitSoundAt=game.t+.05;
+ if(!visible(e.x,e.y,130))return;
  const k=style.weapon,cut=['saber','lance','scissors','gear','leaf','thread','whip','plane','paladin'].includes(k);
- const cue=k==='pencil'?'impactPencil':cut?'impactCut':({freeze:'impactGlass',soak:'impactInk',petals:'impactBloom',erase:'impactErase',crumple:'impactCrush',burn:'impactFire'}[cause]||'hit');
- Sound.play(cue,crit?.49:.36,1+(e.id%3-1)*.025,.055);
- if(crit)Sound.play('heavyhit',.36,1,.18);
+ // One outcome per contact: defeated enemies do not also trigger an ordinary hit and critical layer.
+ const cue=e.hp<=0?'impactDefeat':crit?'heavyhit':k==='pencil'?'impactPencil':cut?'impactCut':({freeze:'impactGlass',soak:'impactInk',petals:'impactBloom',erase:'impactErase',crumple:'impactCrush',burn:'impactFire'}[cause]||'hit');
+ Sound.play(cue,e.hp<=0?.48:crit?.5:.4,1+(e.id%3-1)*.018,.105);
 }
 function renderPolishedExplosion(f,r,u){
  const a=f.angle||0,col=f.color;ctx.save();ctx.translate(f.x,f.y);
