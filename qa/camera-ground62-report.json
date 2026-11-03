@@ -1,0 +1,159 @@
+{
+  "geometry": {
+    "k": 0.62,
+    "viewH": 1239.5935380717767,
+    "expectedViewH": 1239.5935380717767,
+    "matrices": {
+      "ground": {
+        "a": 2,
+        "b": 0,
+        "c": 0,
+        "d": 1.2400000095367432,
+        "e": 40,
+        "f": 60,
+        "xScale": 2,
+        "yScale": 1.2400000095367432
+      },
+      "upright": {
+        "a": 2,
+        "b": 0,
+        "c": 0,
+        "d": 2,
+        "e": 240,
+        "f": 308,
+        "xScale": 2,
+        "yScale": 2
+      },
+      "nested": {
+        "a": 2,
+        "b": 0,
+        "c": 0,
+        "d": 2,
+        "e": 240,
+        "f": 308,
+        "xScale": 2,
+        "yScale": 2
+      },
+      "groundAgain": {
+        "a": 2,
+        "b": 0,
+        "c": 0,
+        "d": 1.2400000095367432,
+        "e": 240,
+        "f": 308,
+        "xScale": 2,
+        "yScale": 1.2400000095367432
+      },
+      "rotated": {
+        "a": 1.6160550117492676,
+        "b": 1.178289532661438,
+        "c": -1.178289532661438,
+        "d": 1.6160550117492676,
+        "e": 36.972415924072266,
+        "f": 104.6694107055664,
+        "xScale": 2.000000005944859,
+        "yScale": 2.000000005944859
+      }
+    },
+    "images": [
+      {
+        "matrix": {
+          "a": 2,
+          "b": 0,
+          "c": 0,
+          "d": 2,
+          "e": 240,
+          "f": 308,
+          "xScale": 2,
+          "yScale": 2
+        },
+        "width": 76,
+        "height": 96
+      },
+      {
+        "matrix": {
+          "a": 2,
+          "b": 0,
+          "c": 0,
+          "d": 2,
+          "e": 240,
+          "f": 308,
+          "xScale": 2,
+          "yScale": 2
+        },
+        "width": 62,
+        "height": 57
+      },
+      {
+        "matrix": {
+          "a": 2,
+          "b": 0,
+          "c": 0,
+          "d": 2,
+          "e": 240,
+          "f": 308,
+          "xScale": 2,
+          "yScale": 2
+        },
+        "width": 76,
+        "height": 96
+      }
+    ],
+    "boltGround": {
+      "x": 240,
+      "y": 308.00000190734863
+    }
+  },
+  "effects": [
+    "comet",
+    "garden",
+    "aurora",
+    "tempest",
+    "nova",
+    "dragon",
+    "mirror",
+    "saber",
+    "lance",
+    "marble",
+    "yoyo",
+    "rocket",
+    "firecracker",
+    "ruler",
+    "prism",
+    "turret",
+    "foxspirit",
+    "mine",
+    "stamp",
+    "whip",
+    "thread",
+    "roller",
+    "chalk",
+    "camera",
+    "music",
+    "meteor",
+    "compass",
+    "magnetArm",
+    "gear",
+    "umbrella",
+    "kite",
+    "leaf",
+    "shield",
+    "portal",
+    "void",
+    "paladin",
+    "pinball",
+    "festival",
+    "rainbowLaser",
+    "clockwork",
+    "printingPress",
+    "loom",
+    "livingMural",
+    "spotlight",
+    "orrery",
+    "scrapColossus",
+    "skyWhale",
+    "autumnGuardian",
+    "paperCosmos"
+  ],
+  "errors": []
+}

@@ -25,3 +25,23 @@ button,input,output,h1,h2,h3,strong,b,kbd,.timer-box,.level-stamp,.wave-info,.ch
 #trade-button{position:absolute;bottom:120px;left:50%;transform:translateX(-50%);background:#f3e3bb;border:2px solid #a88a8e;border-radius:6px;padding:10px 20px;z-index:7}
 .shop-paper{width:min(760px,94vw)}#shop-offers{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.shop-offer{display:flex;flex-direction:column;align-items:center;padding:14px 8px;background:#f4e8ce;border:1px solid #bba3a2;border-radius:7px;color:#66556a}.shop-offer img{width:64px;height:64px;object-fit:contain}.shop-offer p{font-size:13px;min-height:48px}.shop-offer:disabled{opacity:.5}.shop-offer b{color:#967044}#atmosphere-settings{font-size:13px;text-align:left;margin:14px 0}.settings input[type=checkbox]{width:18px}
 @media(max-width:700px){#weather-status{top:76px;font-size:9px}#shop-offers{grid-template-columns:repeat(2,1fr)}.coin-count{font-size:15px}.coin-count img{width:20px}}
+
+/* In-world information is carried by icons, silhouettes and progress, with text in menus. */
+.wave-info,.player-info>strong,.weapon-slot .name{display:none!important}
+#explore-label,#event-compass,#fusion-hint{display:inline-flex;align-items:center;gap:6px}
+#exploration img{width:25px;height:25px;object-fit:contain}
+#event-compass img{width:30px;height:30px}
+#weather-status{font-size:22px;background:none;border:0}
+#trade-button{display:flex;align-items:center;gap:10px}
+#trade-button.hidden{display:none}
+#banner{font-size:38px;pointer-events:none}
+#tip{font-size:13px;letter-spacing:2px}
+#paper-grain{opacity:.09}
+
+#enemy-journal h3{display:flex;align-items:center;gap:8px}#enemy-journal h3 img{width:38px;height:38px;object-fit:contain}#enemy-journal h3 small{font-size:12px;margin-left:auto}.enemy-roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}.enemy-roster article{display:flex;align-items:center;gap:10px;padding:8px;background:#fff6e680;border:1px solid #c4b6ab}.enemy-roster img{width:48px;height:54px;object-fit:contain}.enemy-roster small{display:block;font-size:11px;line-height:1.6}
+
+#item-toast img{width:38px;height:38px;object-fit:contain}
+
+#banner{display:flex;align-items:center;gap:8px}#banner img{width:50px;height:58px;object-fit:contain}#banner span:empty{display:none}#boss-hud strong{display:flex;justify-content:center;align-items:center;gap:8px;height:28px}#boss-hud strong img{width:40px;height:44px;object-fit:contain}#boss-hud strong span{color:#ad546b;font-size:16px}
+
+@media(pointer:coarse){#tip{display:none}}

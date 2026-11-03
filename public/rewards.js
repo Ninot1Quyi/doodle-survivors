@@ -1,7 +1,7 @@
 'use strict';
 // One frame-driven reward session; no timers survive a selection or a new run.
 let rewardSession=null;
-function experienceForLevel(level){return 2*(level===1?26:Math.round((16+level*6.5+level**1.33)*1.9));}
+function experienceForLevel(level){return 6*(level===1?26:Math.round((16+level*6.5+level**1.33)*1.9));}
 const REWARD_AUTO_SECONDS=3;
 const REWARD_ROLES={
  pencil:'ranged',ribbon:'ranged',star:'ranged',plane:'ranged',marble:'ranged',rocket:'ranged',music:'ranged',leaf:'ranged',compass:'control',

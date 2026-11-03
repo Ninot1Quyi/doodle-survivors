@@ -1,3 +1,3 @@
 'use strict';
-const EDITION=new URLSearchParams(location.search).get('edition')==='adventure'?'adventure':'paper';
+const EDITION='adventure';
 document.documentElement.dataset.edition=EDITION;

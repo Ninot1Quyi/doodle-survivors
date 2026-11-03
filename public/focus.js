@@ -5,7 +5,7 @@
 const FOCUS_LIMITS=Object.freeze({sources:20,variants:40,pixels:3000000});
 const focusSources=['tree','pillar','arch','rock','stump','bigMushroom','paperHouse','biome_mushroomArch','biome_whale','biome_glassPalace','biome_clockTower','biome_bookBridge','biome_duneFlower','biome_kiteMill','biome_kiteTree','biome_moonRose'];
 const focusVariants=new Map();
-let focusEnabled=true,focusReady=false,focusPixels=0,focusVariantCount=0,focusFallback=false;
+let focusEnabled=false,focusReady=false,focusPixels=0,focusVariantCount=0,focusFallback=false;
 function focusBake(source,blur){let ratio=1,pad=Math.ceil(blur*ratio*3)+2,width=Math.ceil(source.w*ratio)+pad*2,height=Math.ceil(source.h*ratio)+pad*2;if(focusVariantCount>=FOCUS_LIMITS.variants||focusPixels+width*height>FOCUS_LIMITS.pixels)return null;let image=document.createElement('canvas');image.width=width;image.height=height;let g=image.getContext('2d');if(!g)return null;
  if('filter' in g){g.filter=`blur(${blur*ratio}px)`;g.drawImage(source.img,pad,pad,source.w*ratio,source.h*ratio);g.filter='none';}
  else { // A fixed nine-tap softening fallback for browsers without canvas filters.
@@ -13,7 +13,7 @@ function focusBake(source,blur){let ratio=1,pad=Math.ceil(blur*ratio*3)+2,width=
  }
  focusVariantCount++;focusPixels+=width*height;return{img:image,w:width/ratio,h:height/ratio,pad:pad/ratio};
 }
-function initFocus(){if(focusReady)return;focusReady=true;try{let saved=localStorage.getItem('paperFocus');focusEnabled=saved===null||saved!=='false'&&saved!=='0';}catch{}for(let name of focusSources.slice(0,FOCUS_LIMITS.sources)){let source=Art.sprites[name];if(!source?.img||!(source.w>0&&source.h>0))continue;let soft=focusBake(source,2.3),deep=focusBake(source,4);if(soft)focusVariants.set(name,{soft,deep:deep||soft});}setupFocusUI();}
+function initFocus(){if(focusReady)return;focusReady=true;try{let saved=localStorage.getItem('paperFocus');focusEnabled=saved==='true'||saved==='1';}catch{}for(let name of focusSources.slice(0,FOCUS_LIMITS.sources)){let source=Art.sprites[name];if(!source?.img||!(source.w>0&&source.h>0))continue;let soft=focusBake(source,2.3),deep=focusBake(source,4);if(soft)focusVariants.set(name,{soft,deep:deep||soft});}setupFocusUI();}
 function renderFocusedProp(o,coveredAlpha=1){if(!focusEnabled||!focusReady||!game?.hero)return false;let variants=focusVariants.get(o.name),source=Art.sprites[o.name];if(!variants||!source)return false;let p=game.hero,scale=o.scale||1,dx=o.x-p.x,dy=o.y-p.y,dist2=dx*dx+dy*dy;
  // Keep both the nearby ground and any canopy overlapping the player in focus.
  const camera=globalThis.PaperCamera;let half=source.w*scale*.5,top=o.y-(camera?camera.height(source.h*scale):source.h*scale),nearX=Math.max(o.x-half,Math.min(p.x,o.x+half)),nearY=Math.max(top,Math.min(p.y-35,o.y));if(dist2<320*320||(nearX-p.x)**2+(nearY-(p.y-35))**2<155*155){o.focusBand=0;return false;}

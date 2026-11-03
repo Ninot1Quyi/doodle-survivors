@@ -158,3 +158,14 @@ function renderMine(o){
  drawCenteredSprite('mine',o.x,o.y,.56,0,armed?1:.6);
  ctx.save();ctx.beginPath();ctx.arc(o.x,o.y,24,-Math.PI/2,-Math.PI/2+TAU*u);ctx.strokeStyle=armed?'#edc778':'#b4b4c4';ctx.lineWidth=3;ctx.stroke();Art.ellipse(ctx,o.x,o.y-5,3,3,armed?'#f3cf82':'#a6a6b5',null);ctx.restore();
 }
+
+// Paper foundations expose a top and two vertical faces at the same ground anchor.
+function renderPaperFoundation(o){
+ if(!['biome_glassPalace','biome_clockTower','biome_kiteMill','paperHouse','pillar'].includes(o.name))return;
+ const source=Art.sprites[o.name];if(!source)return;const scale=o.scale||1,w=source.w*scale*.46,d=17*scale,h=PaperCamera.height(10*scale),x=o.x,y=o.y-PaperCamera.height(9*scale);
+ ctx.save();ctx.lineWidth=1;ctx.strokeStyle='#8d8291';
+ Art.path(ctx,`M${x-w} ${y-d}L${x+w*.78} ${y-d} ${x+w} ${y+d} ${x-w*.78} ${y+d}Z`,'#d4c9b2','#968a96',1);
+ Art.path(ctx,`M${x-w*.78} ${y+d}L${x+w} ${y+d} ${x+w} ${y+d+h} ${x-w*.78} ${y+d+h}Z`,'#aa9ca6','#897b8b',1);
+ Art.path(ctx,`M${x-w} ${y-d}L${x-w*.78} ${y+d} ${x-w*.78} ${y+d+h} ${x-w} ${y-d+h}Z`,'#bdafa9','#897b8b',1);
+ ctx.restore();
+}

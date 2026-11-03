@@ -48,7 +48,7 @@ const PaperBiomes=(()=>{
  make('biome_cloudsheep',86,72,g=>{for(let x of [25,57])L(g,[[x,48],[x,64]],'#a99aa3',5);P(g,'M12 43Q1 26 15 23Q19 9 33 16Q45 4 57 17Q76 12 77 28Q87 40 73 48Q63 60 50 51Q31 62 25 51Q12 57 12 43Z','#eee4da',[5,8,77,54],180);P(g,'M60 25Q78 20 80 35Q81 46 69 49Q58 43 60 25Z','#c5b2c7',[58,19,25,32],50);E(g,71,33,2,3,'#776481');E(g,80,39,2,2,'#a789a0');},2);
  }
  function strokePath(g,points,color,width){g.beginPath();g.moveTo(points[0][0],points[0][1]);for(let i=1;i<points.length;i++)g.lineTo(points[i][0],points[i][1]);g.strokeStyle=color;g.lineWidth=width;g.lineCap='round';g.lineJoin='round';g.stroke();}
- function bakeGround(type){const c=Art.canvas(SIZE,SIZE),g=c.getContext('2d');g.fillStyle=g.createPattern(Art.ground,'repeat');g.fillRect(0,0,SIZE,SIZE);let t=themes[type];
+ function bakeGround(type){const c=Art.canvas(SIZE,SIZE),g=c.getContext('2d');g.fillStyle=g.createPattern(Art.ground,'repeat');g.fillRect(0,0,SIZE,SIZE);g.globalAlpha=.62;g.fillStyle=['#a8b9a0','#b5cbd0','#b8c9ac','#b9bbb2','#d9bd92','#c0ca9c'][type];g.fillRect(0,0,SIZE,SIZE);g.globalAlpha=1;let t=themes[type];
  // Regional contours are irregular colored paper patches, not full-screen tint changes.
  g.globalAlpha=.35;for(let i=0;i<8;i++){let x=160+(i*137)%650,y=120+(i*193)%700;E(g,x,y,160+(i%3)*50,85+(i%4)*25,t.color,null);}g.globalAlpha=1;
  if(type===0){strokePath(g,[[0,500],[210,430],[410,510],[570,370],[760,430],[960,480]],'#e7d9c0',100);for(let i=0;i<28;i++){let x=80+(i*131)%820,y=80+(i*197)%800;g.globalAlpha=.16;E(g,x,y,35,17,'#b4a9c4',null);}g.globalAlpha=1;}

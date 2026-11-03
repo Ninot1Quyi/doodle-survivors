@@ -1,0 +1,72 @@
+[
+  {
+    "test": "test-actor-cache.cjs",
+    "passed": true,
+    "output": "PASS: cached pose classification matches every original substring rule.\n"
+  },
+  {
+    "test": "test-atmosphere.cjs",
+    "passed": true,
+    "output": "PASS: weather cycle, bounded rain, short non-stacking hurt, reduced effects persistence, unchanged weather rules, screen-space draw smoke.\n"
+  },
+  {
+    "test": "test-boss-choreography.cjs",
+    "passed": true,
+    "output": "Boss choreography: five distinct four-action rosters, rage, finite collision, safe gaps, locked aim, recovery, pause/freeze, caps and owner cleanup pass.\n"
+  },
+  {
+    "test": "test-encounters.cjs",
+    "passed": true,
+    "output": "PASS: 36 categorized enemies, timed roster gates, themed squads, rest/caps, frontal guard, same-family summons, 3-second chest, 105 radius, gradual persistent decay.\n"
+  },
+  {
+    "test": "test-expansion.cjs",
+    "passed": true,
+    "output": "PASS: 42 base weapons + 21 evolutions each deal damage; all 21 fusion routes consume materials; 39 items / 36 normals / 9 bosses; causes, shop pricing and final boss identity.\n"
+  },
+  {
+    "test": "test-focus.cjs",
+    "passed": true,
+    "output": "PASS: finite one-time focus cache, clear hero vicinity, scenery-only blur, zero runtime filter writes/canvas allocations, accessibility and preference toggle.\n{\"sources\":16,\"variants\":32,\"pixels\":2254182,\"bytes\":9016728,\"enabled\":true,\"fallback\":false}\n"
+  },
+  {
+    "test": "test-frame-pacing.cjs",
+    "passed": true,
+    "output": "{\n  \"note\": \"Deterministic synthetic rAF timestamp replay; not measured browser/device FPS.\",\n  \"rows\": [\n    {\n      \"inputHz\": 60,\n      \"jitterMs\": 1.2,\n      \"before\": {\n        \"rendered\": 481,\n        \"gapsAbove25ms\": 118,\n        \"maxGapMs\": 33.795\n      },\n      \"after\": {\n        \"rendered\": 600,\n        \"gapsAbove25ms\": 0,\n        \"maxGapMs\": 18.524\n      }\n    },\n    {\n      \"inputHz\": 90,\n      \"jitterMs\": 1.2,\n      \"before\": {\n        \"rendered\": 651,\n        \"gapsAbove25ms\": 0,\n        \"maxGapMs\": 24.226\n      },\n      \"after\": {\n        \"rendered\": 600,\n        \"gapsAbove25ms\": 0,\n        \"maxGapMs\": 24.575\n      }\n    },\n    {\n      \"inputHz\": 120,\n      \"jitterMs\": 1.2,\n      \"before\": {\n        \"rendered\": 699,\n        \"gapsAbove25ms\": 14,\n        \"maxGapMs\": 25.175\n      },\n      \"after\": {\n        \"rendered\": 600,\n        \"gapsAbove25ms\": 0,\n        \"maxGapMs\": 19.019\n      }\n    },\n    {\n      \"inputHz\": 144,\n      \"jitterMs\": 1.2,\n      \"before\": {\n        \"rendered\": 651,\n        \"gapsAbove25ms\": 0,\n        \"maxGapMs\": 21.925\n      },\n      \"after\": {\n        \"rendered\": 600,\n        \"gapsAbove25ms\": 0,\n        \"maxGapMs\": 21.955\n      }\n    }\n  ]\n}\nPASS: jitter, high refresh cap, menu pacing, stalls, mode switches, visibility reset, no duplicate frames.\n"
+  },
+  {
+    "test": "test-immersion.cjs",
+    "passed": true,
+    "output": "PASS: translated orbit centering/depth/contact; additive visual lift; finite poses for all enemies; bounded footfalls.\n"
+  },
+  {
+    "test": "test-impact-audio.cjs",
+    "passed": true,
+    "output": "PASS: decoded material and weapon samples; one source per aggregated burst; defeat/critical/normal exclusivity; shared pacing; UI separation; new-run cancellation; no duplicate impact feedback; distinct weapon identities, simultaneous attack voices, restrained collection, authored slot cues.\n"
+  },
+  {
+    "test": "test-pigment.cjs",
+    "passed": true,
+    "output": "PASS: pigment contact/source color, dedicated hit cue, bounded motion trail, ice palette, blade contact identity, 21 original-sample variants.\n"
+  },
+  {
+    "test": "test-projectile-step.cjs",
+    "passed": true,
+    "output": "PASS: chronological body/clash/player events, piercing, armor, relative sweeps, expiration, impact-position explosions, same-step pulses and passive-defense hook.\n{\"note\":\"CPU-only VM; no rendering/GPU measurement\",\"fallback120StepsMs\":558.74,\"emptySpatialGrid120StepsMs\":31.52,\"friendly\":180,\"hostile\":130,\"pairTests\":0,\"enemyTests\":44100,\"events\":0,\"eventPool\":4}\n"
+  },
+  {
+    "test": "test-rewards.cjs",
+    "passed": true,
+    "output": "PASS: increased XP, health/fusion recommendation, single automatic grant after 3s, chest reveal lock, hidden/settings pause, reroll/new-run reset, fixed pinball table with bounded moving ball, no projectile lanes and retained charge warning.\nPASS: early attack diversity, late existing fusion route, emergency health override.\nPASS: actual draft diversity, all weapon roles, mature fusion stage, late partners, emergency recovery, and local-only ordinary impacts.\nPASS: triple +3, exactly-once grant, caps, evolved weapons, passive effects, hidden pause, two-match/fusion exclusions, skip/reset, chest replacement sampling and distinct ordinary upgrades.\nPASS: below-threshold XP does not level; crossing 156 opens exactly one upgrade and preserves overflow.\n"
+  },
+  {
+    "test": "test-tactics.cjs",
+    "passed": true,
+    "output": "PASS: target reservations, mine spacing/arming/cap, locked charge geometry, six exact area warnings, frozen intent, swept melee, oriented thrust, 63 visual entries, red hostile shots.\n"
+  },
+  {
+    "test": "test-weapon-voices.cjs",
+    "passed": true,
+    "output": "PASS: all 63 active weapons map to licensed authored sample families and emit their own cue from actual attack logic, including delayed attacks, summons, book orbit and mine detonation.\n"
+  }
+]
