@@ -36,6 +36,7 @@ function tickVariant(e,dt,d){if(!e.variant)return;e.variantClock-=dt;if(e.varian
  if(kind==='summoner')enemyWarn(e,'summon',1,{kind:'puff',color:'#cdb784'});
 }
 function advancedEnemyBehavior(e,dt,dx,dy,d){
+ if(e.boss&&typeof bossCombatBehavior==='function'){bossCombatBehavior(e,dt,dx,dy,d);return 0;}
  const spec=MORE_ENEMIES[e.kind];if(!spec&&!e.variant)return null;
  if(game.buffs?.freeze>0){e.attackCd=Math.max(.2,e.attackCd);return 0;}
  const slow=game.buffs?.slow>0?.55:1;d=Math.max(1,d);tickVariant(e,dt,d);
@@ -65,7 +66,7 @@ function advancedEnemyBehavior(e,dt,dx,dy,d){
  if(e.variant==='berserker'&&e.hp<e.maxHp*.4)m*=1.65;
  return e.intent?0:m*slow;
 }
-function advancedBossBehavior(e,dt,dx,dy,d){if(!e.boss)return false;if(game.buffs?.freeze>0)return true; if(e.attackCd>0)return true;const rage=e.hp<e.maxHp*.5;e.attackCd=rage?2.9:4.6;const turn=e.aiTick++%3,at={x:game.hero.x,y:game.hero.y};
+function advancedBossBehavior(e,dt,dx,dy,d){if(!e.boss)return false;if(typeof bossCombatBehavior==='function')return bossCombatBehavior(e,dt,dx,dy,d);if(game.buffs?.freeze>0)return true; if(e.attackCd>0)return true;const rage=e.hp<e.maxHp*.5;e.attackCd=rage?2.9:4.6;const turn=e.aiTick++%3,at={x:game.hero.x,y:game.hero.y};
  if(e.kind==='bossCrab')enemyWarn(e,turn===1?'stomp':'fan',1,{...at,n:rage?7:5,speed:135,r:85,color:'#daa795'});
  else if(e.kind==='bossOwl')enemyWarn(e,turn===2?'summon':'fan',1.1,{n:rage?9:5,speed:150,kind:'owl',color:'#b8a5c7'});
  else if(e.kind==='bossFrog')enemyWarn(e,turn===1?'radial':'leap',1,{...at,n:12,speed:100,r:80,color:'#b4c599'});
@@ -82,9 +83,10 @@ function updateAdvancedEncounters(dt){if(!game.creatureSeen)initEnemyExpansion()
  game.advancedEliteClock-=dt;if(!game.demo&&game.advancedEliteClock<=0){game.advancedEliteClock=38;let living=game.variantWatches.filter(e=>e.hp>0);if(living.length<6){const eligible=game.enemies.filter(e=>!e.boss&&!e.elite&&e.hp>0&&Math.hypot(e.x-game.hero.x,e.y-game.hero.y)>230);let e=eligible[Math.floor(Math.random()*eligible.length)];if(e){let keys=Object.keys(ELITE_VARIANTS),key=keys[game.eliteCursor++%keys.length];applyEnemyVariant(e,key);if(typeof banner==='function')banner('奇想精英 · '+ELITE_VARIANTS[key].name);}}}
  for(let i=game.variantWatches.length-1;i>=0;i--){let e=game.variantWatches[i];if(e.hp<=0&&!e.variantRewarded){e.variantRewarded=true;if(e.variant==='splitter'&&game.enemies.length<232){for(let j=0;j<3;j++)spawnEnemy('puff',e.x+(j-1)*24,e.y+10);}game.pickups.push({x:e.x,y:e.y,kind:'chest',life:90});game.variantWatches.splice(i,1);}else if(Math.hypot(e.x-game.hero.x,e.y-game.hero.y)>2000)game.variantWatches.splice(i,1);}
  // Final-stage boss identity follows its randomised pool; victory never requires a specific skin.
- if(game.finalBossKind&&!game.bossKilled&&game.enemies.some(e=>e.finalBoss&&e.hp<=0))game.bossKilled=true;
+ if(game.bossesDefeated>=game.bossGoal&&game.finalBossKind&&!game.bossKilled&&game.enemies.some(e=>e.finalBoss&&e.hp<=0))game.bossKilled=true;
 }
 function renderEnemyVariant(e){if(e.hp<=0)return;const v=ELITE_VARIANTS[e.variant],q=e.intent;ctx.save();
- if(v){ctx.strokeStyle=v.color;ctx.lineWidth=2.2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(e.x,e.y+2,e.r+9,(e.r+9)*.55,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.font='bold 11px "PaperHand","Kaiti SC",serif';ctx.textAlign='center';ctx.strokeStyle='#fff1db';ctx.lineWidth=3;ctx.strokeText(v.name,e.x,e.y-e.r*2-12);ctx.fillStyle='#776178';ctx.fillText(v.name,e.x,e.y-e.r*2-12);}
- if(q){ctx.font='bold 20px PaperHand';ctx.textAlign='center';ctx.fillStyle=['mend','summon'].includes(q.type)?q.color:'#c73d52';ctx.fillText(q.type==='summon'?'♪':q.type==='mend'?'+':'!',e.x,e.y-e.r*2-8);}
+ if(v){ctx.strokeStyle=v.color;ctx.lineWidth=2.2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(e.x,e.y+2,e.r+9,(e.r+9)*.55,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);}
+ const labels=()=>{if(v){ctx.font='bold 11px "PaperHand","Kaiti SC",serif';ctx.textAlign='center';ctx.strokeStyle='#fff1db';ctx.lineWidth=3;ctx.strokeText(v.name,0,-e.r*2-12);ctx.fillStyle='#776178';ctx.fillText(v.name,0,-e.r*2-12);}if(q){ctx.font='bold 20px PaperHand';ctx.textAlign='center';ctx.fillStyle=['mend','summon'].includes(q.type)?q.color:'#c73d52';ctx.fillText(q.type==='summon'?'♪':q.type==='mend'?'+':'!',0,-e.r*2-8);}};
+ if(typeof PaperCamera!=='undefined')PaperCamera.upright(ctx,e.x,e.y,labels);else {ctx.translate(e.x,e.y);labels();}
  ctx.restore();}

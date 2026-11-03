@@ -1,56 +1,68 @@
-BACKGROUND MUSIC
-“Master of the Feast” — Kevin MacLeod (incompetech.com)
-Source: https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400019
-Audio source: https://incompetech.com/music/royalty-free/mp3-royaltyfree/Master%20of%20the%20Feast.mp3
-Licensed under Creative Commons: By Attribution 4.0
-https://creativecommons.org/licenses/by/4.0/
-Original recording retained. Original playing volume restored. Runtime
-crossfades before the quiet outro tail, with a 220.7-second transition endpoint.
+PAPER STARGAZER — MUSIC AND SOUND CREDITS (stage14, 2026-11-03)
 
-SOUND EFFECTS
-Kenney Impact Sounds — Kenney (https://kenney.nl)
-https://kenney.nl/assets/impact-sounds
-Creative Commons CC0 1.0 Universal
-https://creativecommons.org/publicdomain/zero/1.0/
-The 13 original game samples are retained. 21 additional short Foley variants
-are extracted from the same licensed pack: wood, plate, glass, metal, generic,
-punch and plank recordings, three versions each. Changes: onset trim,
-high-pass/EQ, tiny fade-in, short fade-out and peak normalization.
-MIX-PROVENANCE.json records every original filename, SHA-256 and filter.
-The runtime layers recordings with round-robin variants, small pitch changes,
-priority/polyphony limits, separate SFX compression and a final bus limiter.
-No oscillator sound effects or microphone recordings are used.
+REGIONAL MUSIC
+All six region tracks are by Kevin MacLeod (incompetech.com), CC BY 4.0.
+https://creativecommons.org/licenses/by/4.0/
+Mushroom forest: Enchanted Valley — https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1200093
+Whale lake: Dreamy Flashback — https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100532
+Moon greenhouse: Teller of the Tales — https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400020
+Paper-city ruins: Fairytale Waltz — https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100232
+Flowering dunes: Desert City — https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100564
+Kite fields: Master of the Feast — https://incompetech.com/music/royalty-free/index.html?isrc=USUAN1400019
+Full attribution, trim/gain/fade/MP3 changes and license: biomes/CREDITS.txt,
+biomes/manifest.json and biomes/CC-BY-4.0.txt. Runtime uses region/loop crossfades.
+Retained music.mp3 is the original Master of the Feast recording, under the same
+attribution and license; the six region files are separately processed excerpts.
+
+CC0 SOUND SOURCES
+CC0 1.0 Universal: https://creativecommons.org/publicdomain/zero/1.0/
+Full copy: weapons/CC0-1.0.txt. Original pack notices remain alongside this file.
+Kenney — Impact Sounds: https://kenney.nl/assets/impact-sounds
+Kenney — RPG Audio: https://kenney.nl/assets/rpg-audio
+Kenney — Digital Audio: https://kenney.nl/assets/digital-audio
+Kenney — Sci-fi Sounds: https://kenney.nl/assets/sci-fi-sounds
+Kenney — Music Jingles: https://kenney.nl/assets/music-jingles
+Dustyroom — Free Casual Game Sounds: https://dustyroom.com/free-casual-game-sounds/
+rubberduck — 80 CC0 RPG SFX: https://opengameart.org/content/80-cc0-rpg-sfx
+artisticdude — Swishes Sound Pack: https://opengameart.org/content/swishes-sound-pack
+StarNinjas — 20 Sword Sound Effects: https://opengameart.org/content/20-sword-sound-effects-attacks-and-clashes
+TinyWorlds — Break Pumpkin: https://opengameart.org/content/break-pumpkin
+Independent.nu (submitted by qubodup) — 5 Break, Crunch Impacts: https://opengameart.org/content/5-break-crunch-impacts
+faxcorp — Electricity Game Sound Pack: https://opengameart.org/content/electricity-game-sound-pack
+Joseph SARDIN / BigSoundBank — Complete whip #1: https://bigsoundbank.com/complete-whip-1-s2961.html
+Joseph SARDIN / BigSoundBank — Complete whip #2: https://bigsoundbank.com/complete-whip-2-s2962.html
+Joseph SARDIN / BigSoundBank — Whip crack #1: https://bigsoundbank.com/whip-crack-1-s2949.html
+Rudmer_Rotteveel — Whistle and Explosion Single_Firework: https://freesound.org/people/Rudmer_Rotteveel/sounds/336008/
+
+CURRENT DISTRIBUTION AND PROCESSING
+63 weapon keys use 67 OGG launch files, including two additional real page turns
+and two additional real whip takes. Matching physical actions may share suitable
+recordings. Single-source launch processing: silence trim, mono 44.1 kHz,
+material EQ, mild compression, level alignment and edge fades. No new synthesis,
+layering or pitch shift is used in that offline launch pass. Some source files
+are already authored electronic/musical effects. Per-file authors, source/output
+hashes and exact processing: WEAPON-AUDIO-PROVENANCE.json; weapons/CREDITS.md.
+
+Firecracker/festival use the real fireworks excerpt 1.14–1.54 s, gain 0.6, mono,
+boundary fades and OGG encoding. Three independent BigSoundBank whip takes are
+used instead of re-labeling a knife clip. Blade cuts, organic breaks and the
+held electrical loop are documented in COMBAT-AUDIO-PROVENANCE.json and
+COMBAT-CREDITS.md. Paper, ink, fire, electric, crush and frost contact samples
+have short excerpts/EQ/gain/fades; see contacts/PROVENANCE.json and contacts/CREDITS.txt.
+Weapon launches and contacts have separate voice budgets; sustained beam loops
+follow the active attack lifetime. This source notice does not claim human
+listening acceptance from decoding, waveform or automated game checks.
+
+Reward/collection cues: Kenney Music Jingles jingles_PIZZI07 and Digital Audio
+highUp/pepSound3, gain/fades; REWARD-AUDIO-PROVENANCE.json. Chest reels use
+separate authored slot/reveal/jackpot cues from Kenney and Dustyroom; provenance
+is in WEAPON-AUDIO-PROVENANCE.json.
+
+Legacy Kenney original/Foley/warm variants remain distributed. Their historical
+trim/EQ/fade/normalization, small resampling pitch changes and premixes are in
+MIX-PROVENANCE.json and WARM-IMPACT-PROVENANCE.json. These historical treatments
+must not be confused with the single-source stage14 launch palette.
 
 VISUALS
-All visual artwork in this game is original procedural Canvas artwork.
-No image-generation service or extracted game sprites were used.
-Visual/gameplay reference: Rakuworld by SETO. This is an independent browser
-prototype, not an official Rakuworld release.
-
-WARM COMBAT PALETTE (2026-11-03)
-18 additional premixed single-voice clips use the same Kenney CC0 pack:
-soft impacts, punch impacts, carpet footsteps, generic light and light wood.
-No plate/glass/metal layers are used in repeated enemy contacts. Processing:
-onset trim, small resampling pitch change, 65 Hz high-pass, broad 2.7 kHz cut,
-4.5 kHz high shelf attenuation, soft attack, short fade, restrained mastering.
-WARM-IMPACT-PROVENANCE.json records sources, checksums, mix gains and metrics.
-Normal, critical and defeat impacts are mutually exclusive, with a 14 ms
-collection window and shared 105 ms pacing. Original BGM is unchanged.
-
-WEAPON IDENTITIES AND SLOT REWARDS (2026-11-03, voices12)
-63 distinct authored weapon sources, plus two alternate book-page takes.
-Kenney RPG Audio, Digital Audio, Sci-fi Sounds, Music Jingles — CC0:
-https://kenney.nl/assets/rpg-audio
-https://kenney.nl/assets/digital-audio
-https://kenney.nl/assets/sci-fi-sounds
-https://kenney.nl/assets/music-jingles
-Dustyroom Free Casual Game Sounds — CC0:
-https://dustyroom.com/free-casual-game-sounds/
-The original licenses are included beside this file.
-WEAPON-AUDIO-PROVENANCE.json lists source filenames, SHA-256 and simple gain/trim
-processing. Single authored attack voices preserve source timbre. Weapon voices
-have individual pacing and a six-voice budget, independent from enemy impacts.
-Enemy impacts remain aggregated and quieter; attacks bypass their 4.2 kHz filter.
-Slot spin, three rising stop notes, reveal and jackpot use designer samples;
-old wood/metal/glass chest layers are removed. Jackpot includes a recorded
-pizzicato jingle followed by a short recorded reward cue. BGM is unchanged.
+Original procedural Canvas artwork. No image-generation service or extracted
+game sprites. Rakuworld by SETO is a visual/gameplay reference, not an affiliate.

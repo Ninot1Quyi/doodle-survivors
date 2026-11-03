@@ -1,0 +1,71 @@
+contacts/paper0.ogg: book_01.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.3900s; 180–8500 Hz EQ, gain 0.53650, boundary fades, mono OGG.
+
+contacts/paper1.ogg: book_02.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.3800s; 180–8500 Hz EQ, gain 0.99529, boundary fades, mono OGG.
+
+contacts/paper2.ogg: book_03.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.6300s; 180–8500 Hz EQ, gain 1.08992, boundary fades, mono OGG.
+
+contacts/ink0.ogg: creature_slime_01.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1000s; 180–8500 Hz EQ, gain 0.74088, boundary fades, mono OGG.
+
+contacts/ink1.ogg: creature_slime_02.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0900s; 180–8500 Hz EQ, gain 0.68225, boundary fades, mono OGG.
+
+contacts/ink2.ogg: creature_slime_03.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1600s; 180–8500 Hz EQ, gain 0.90228, boundary fades, mono OGG.
+
+contacts/fire0.ogg: spell_fire_01.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1800s; 180–8500 Hz EQ, gain 4.13245, boundary fades, mono OGG.
+
+contacts/fire1.ogg: spell_fire_02.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1900s; 180–8500 Hz EQ, gain 8.79008, boundary fades, mono OGG.
+
+contacts/fire2.ogg: spell_fire_03.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.4200s; 180–8500 Hz EQ, gain 2.90749, boundary fades, mono OGG.
+
+contacts/electric0.ogg: hit.wav by faxcorp (CC0-1.0)
+https://opengameart.org/content/electricity-game-sound-pack
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 1.12014, boundary fades, mono OGG.
+
+contacts/electric1.ogg: shieldhit.wav by faxcorp (CC0-1.0)
+https://opengameart.org/content/electricity-game-sound-pack
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1400s; 180–8500 Hz EQ, gain 0.62335, boundary fades, mono OGG.
+
+contacts/electric2.ogg: groundhit.wav by faxcorp (CC0-1.0)
+https://opengameart.org/content/electricity-game-sound-pack
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.86521, boundary fades, mono OGG.
+
+contacts/crush0.ogg: stones_01.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0400s; 180–8500 Hz EQ, gain 0.51112, boundary fades, mono OGG.
+
+contacts/crush1.ogg: stones_02.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.3100s; 180–8500 Hz EQ, gain 0.52928, boundary fades, mono OGG.
+
+contacts/crush2.ogg: stones_03.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1000s; 180–8500 Hz EQ, gain 0.48924, boundary fades, mono OGG.
+
+contacts/frost0.ogg: item_gem_01.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.50878, boundary fades, mono OGG.
+
+contacts/frost1.ogg: item_gem_02.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.84961, boundary fades, mono OGG.
+
+contacts/frost2.ogg: item_gem_03.ogg by rubberduck (CC0-1.0)
+https://opengameart.org/content/80-cc0-rpg-sfx
+20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.53911, boundary fades, mono OGG.

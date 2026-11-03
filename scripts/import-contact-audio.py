@@ -1,0 +1,12 @@
+"""Short material contact excerpts from licensed authored recordings, never oscillators."""
+from pathlib import Path
+import argparse,json,subprocess,array,math,hashlib
+p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--ffmpeg',required=True);a=p.parse_args();manifest=json.loads((a.source/'manifest.json').read_text());out=Path(__file__).resolve().parent.parent/'public/audio/contacts';out.mkdir(exist_ok=True)
+groups={'paper':['book_01.ogg','book_02.ogg','book_03.ogg'],'ink':['creature_slime_01.ogg','creature_slime_02.ogg','creature_slime_03.ogg'],'fire':['spell_fire_01.ogg','spell_fire_02.ogg','spell_fire_03.ogg'],'electric':['hit.wav','shieldhit.wav','groundhit.wav'],'crush':['stones_01.ogg','stones_02.ogg','stones_03.ogg'],'frost':['item_gem_01.ogg','item_gem_02.ogg','item_gem_03.ogg']};rows=[]
+for group,names in groups.items():
+ for i,name in enumerate(names):
+  asset=next(x for x in manifest['assets'] if x['original_filename']==name);src=a.source/asset['file'];raw=subprocess.check_output([a.ffmpeg,'-v','error','-i',str(src),'-ac','1','-ar','44100','-af','highpass=f=180,lowpass=f=8500','-f','f32le','pipe:1']);v=array.array('f');v.frombytes(raw)
+  win=1323;start=max(range(0,max(1,len(v)-win),441),key=lambda j:sum(x*x for x in v[j:j+win]));start=max(0,start-441);samples=v[start:start+8820];peak=max(map(abs,samples));rms=math.sqrt(sum(x*x for x in samples)/len(samples));gain=min(.68/max(.001,peak),.15/max(.001,rms));dst=out/(group+str(i)+'.ogg')
+  subprocess.run([a.ffmpeg,'-v','error','-y','-f','f32le','-ac','1','-ar','44100','-i','pipe:0','-af',f'volume={gain},afade=t=in:d=0.002,afade=t=out:st=0.14:d=0.06','-c:a','libvorbis','-q:a','5',str(dst)],input=samples.tobytes(),check=True)
+  rows.append({'file':'contacts/'+dst.name,'material':group,'source':name,'source_url':asset['source_url'],'author':asset['author'],'license':asset['license'],'source_sha256':asset['sha256'],'file_sha256':hashlib.sha256(dst.read_bytes()).hexdigest(),'changes':f'20 ms context before strongest 30 ms window; up to 200 ms excerpt at {start/44100:.4f}s; 180–8500 Hz EQ, gain {gain:.5f}, boundary fades, mono OGG.'})
+(out/'PROVENANCE.json').write_text(json.dumps(rows,ensure_ascii=False,indent=2)+'\n');(out/'CREDITS.txt').write_text('\n\n'.join(f"{r['file']}: {r['source']} by {r['author']} ({r['license']})\n{r['source_url']}\n{r['changes']}" for r in rows)+'\n');print('Prepared',len(rows),'material contact excerpts')

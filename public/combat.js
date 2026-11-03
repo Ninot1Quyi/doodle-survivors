@@ -19,8 +19,8 @@ case 'marble':shot('bounce',{bounces:2+lv,speed:380,damage:damage*.7});break;
 case 'yoyo':shot('yoyo',{life:1.6,r:23,speed:270});break;
 case 'rocket':shot('rocket',{speed:100,r:16,life:3,damage:damage*1.5,target:target.id});break;
 case 'firecracker':for(let i=0;i<4+lv;i++)delayed(p.x+Math.cos(a)*i*45,p.y+Math.sin(a)*i*45,.2+i*.14,55,'burn');break;
-case 'ruler':ray();break;
-case 'prism':for(let i=-1;i<=1;i++)ray(a+i*.42,{r:340,damage:damage*.23});break;
+case 'ruler':ray(a-.22,{spin:.48,follow:true,life:1.45,delay:.24,width:13+lv});break;
+case 'prism':for(let i=-1;i<=1;i++)ray(a+i*.42,{r:340,life:1.5,follow:true,spin:i*.15,damage:damage*.23});break;
 case 'turret':put('turret',{life:8,fireCd:0,r:45});break;
 case 'foxspirit':put('friend',{life:9,r:38,speed:190});break;
 case 'mine':placeMinefield(lv,damage);break;
@@ -45,7 +45,7 @@ case 'void':at('void',{life:2.3,r:150,damage:damage*.45});break;
 case 'paladin':put('avatar',{life:1.5,r:160});for(let i=-1;i<=1;i++)put('thrust',{a:a+i*Math.PI/2,delay:.35+Math.abs(i)*.22,life:1.3,r:420,damage:damage*1.8});break;
 case 'pinball':at('pinballTable',{life:5,r:180,ballX:target.x,ballY:target.y,vx:390,vy:310,ballTrail:[],bumpers:[{x:-72,y:-38},{x:65,y:-25},{x:5,y:57}],damage:damage*1.15,contactTimes:new Map()});break;
 case 'festival':at('festival',{delay:.7,life:2.5,r:210,damage:damage*.9,cause:'burn'});break;
-case 'rainbowLaser':for(let i=0;i<6;i++)ray(i*TAU/6,{life:3,delay:.4,r:380,spin:.65,color:PALETTE[i%5],damage:damage*.27,cause:'erase'});put('avatar',{life:3,r:65});break;
+case 'rainbowLaser':for(let i=0;i<6;i++)ray(i*TAU/6,{life:3,delay:.4,r:430,width:19+lv,follow:true,spin:.65,color:PALETTE[i%5],damage:damage*.27,cause:'erase'});put('avatar',{life:3,r:65});break;
 case 'clockwork':put('castle',{life:9,r:65,speed:70,damage:damage*.65});break;
 case 'printingPress':put('avatar',{x:target.x,y:target.y,life:2.5,r:120});for(let i=0;i<5;i++)delayed(target.x+(i-2)*75,target.y,.3+i*.3,90);break;
 case 'loom':{let points=[{x:target.x-180,y:target.y-120},{x:target.x+180,y:target.y-120},{x:target.x-180,y:target.y+120},{x:target.x+180,y:target.y+120},{x:target.x-180,y:target.y-120}];at('thread',{life:3.2,points,collapse:true,damage:damage*.4,stun:.25});break;}
@@ -93,27 +93,27 @@ case 'pinballTable':{
  for(const e of game.enemies)if(e.hp>0&&o.age>=(o.contactTimes.get(e.id)||0)&&lineDistance(e,px,py,o.ballX,o.ballY)<e.r+18){o.contactTimes.set(e.id,o.age+.22);hit(e,o.damage,px,py,95,false,'crumple',{weapon:'pinball',color:o.color});}
  for(const b of game.enemyBullets)if(b.life>0&&lineDistance(b,px,py,o.ballX,o.ballY)<18+b.r)breakEnemyBullet(b,2,'pinball'+o.id);
  }break;
-case 'stamp':if(!o.done){o.done=true;combatArea(o,o.x,o.y,o.r,o.damage,170);game.shake=Math.max(game.shake,4);game.fx.push({type:'explosion',x:o.x,y:o.y,r:o.r,life:.5,max:.5,color:o.color});Sound.play(o.kind,.35,1,.24);}break;
+case 'stamp':if(!o.done){o.done=true;combatArea(o,o.x,o.y,o.r,o.damage,170);game.shake=Math.max(game.shake,4);game.fx.push({type:'explosion',x:o.x,y:o.y,r:o.r,life:.5,max:.5,color:o.color});Sound.play(o.kind,.35,1,o.kind==='firecracker'?.09:.24);}break;
 case 'mine':if(o.age>=o.delay&&nearest(o.x,o.y,o.r)){Sound.play(o.kind,.32,1,.24);combatArea(o,o.x,o.y,o.blastR,o.damage,170);o.life=0;game.fx.push({type:'explosion',x:o.x,y:o.y,r:o.blastR,life:.5,max:.5,color:o.color});}break;
 case 'turret':case 'castle':case 'friend':{if(o.mode==='castle'){o.x+=(p.x-80-o.x)*dt*1.5;o.y+=(p.y+40-o.y)*dt*1.5;}let e=constructTarget(o,600);if(!e)break;o.a=Math.atan2(e.y-(o.y-25),e.x-o.x);if(o.mode==='friend'){let dist=distance(e,o);o.x+=(e.x-o.x)/Math.max(1,dist)*o.speed*dt;o.y+=(e.y-o.y)/Math.max(1,dist)*o.speed*dt;if(tick&&dist<o.r+e.r){Sound.play(o.kind,.25,1,.5);hit(e,o.damage*.5,o.x,o.y,120,false,o.cause,{weapon:o.kind,color:o.color});o.x-=Math.cos(o.a)*22;o.y-=Math.sin(o.a)*22;}}else {o.fireCd=(o.fireCd||0)-dt;if(o.fireCd<=0){o.fireCd=o.mode==='castle'?.5:.65;Sound.play(o.kind,.26,1,.4);fireBullet('pencil',o.x,o.y-25,o.a,450,o.damage,3);if(o.mode==='castle'&&Math.random()<.45)construct(o.kind,'friend',o.x,o.y,o.a,o.lv,{life:2.5,speed:240,r:30,damage:o.damage});}}}break;
 case 'thread':if(o.collapse)for(let pt of o.points){pt.x+=(o.x-pt.x)*dt*.25;pt.y+=(o.y-pt.y)*dt*.25;}if(tick)for(let i=1;i<o.points.length;i++)combatLine(o,o.points[i-1].x,o.points[i-1].y,o.points[i].x,o.points[i].y,8);break;
 case 'paint':if(tick)combatLine(o,o.x,o.y,o.x+ca*o.r*Math.min(1,o.age*2),o.y+sa*o.r*Math.min(1,o.age*2),o.width);break;
 case 'wall':if(tick)combatLine(o,o.x-sa*o.r,o.y+ca*o.r,o.x+sa*o.r,o.y-ca*o.r,18);for(let e of game.enemies)if(e.hp>0&&lineDistance(e,o.x-sa*o.r,o.y+ca*o.r,o.x+sa*o.r,o.y-ca*o.r)<e.r+20){let sign=(e.x-o.x)*ca+(e.y-o.y)*sa>0?1:-1;e.x+=ca*sign*100*dt;e.y+=sa*sign*100*dt;}break;
-case 'mark':{let e=game.enemies.find(e=>e.id===o.target&&e.hp>0);if(e){o.x=e.x;o.y=e.y;if(tick)hit(e,o.damage,o.x-10,o.y,0,false,'erase');}else o.life=0;}break;
-case 'pull':case 'void':for(let e of game.enemies)if(e.hp>0&&distance(e,o)<o.r){let d=distance(e,o)||1,m=e.elite?.22:1;e.x+=(o.x-e.x)/d*dt*95*m;e.y+=(o.y-e.y)/d*dt*95*m;if(tick)hit(e,o.damage,o.x,o.y,0,false,o.cause,{weapon:o.kind,color:o.color});}if(o.life<.22&&!o.done){o.done=true;combatArea(o,o.x,o.y,o.r,o.damage*4,250);game.fx.push({type:'explosion',x:o.x,y:o.y,r:o.r,life:.5,max:.5,color:o.color});}break;
+case 'mark':{let e=game.enemies.find(e=>e.id===o.target&&e.hp>0);if(e){o.x=e.x;o.y=e.y;if(tick)hit(e,o.damage,o.x-10,o.y,0,false,'erase',{weapon:o.kind,color:o.color});}else o.life=0;}break;
+case 'pull':case 'void':for(let e of game.enemies)if(e.hp>0&&distance(e,o)<o.r){let d=distance(e,o)||1,m=e.elite?.22:1;if(!e.boss){e.x+=(o.x-e.x)/d*dt*95*m;e.y+=(o.y-e.y)/d*dt*95*m;}if(tick)hit(e,o.damage,o.x,o.y,0,false,o.cause,{weapon:o.kind,color:o.color});}if(o.life<.22&&!o.done){o.done=true;combatArea(o,o.x,o.y,o.r,o.damage*4,250);game.fx.push({type:'explosion',x:o.x,y:o.y,r:o.r,life:.5,max:.5,color:o.color});}break;
 case 'rain':if(tick)combatArea(o);break;
 case 'kite':o.x=p.x+Math.cos(o.age*1.7+o.a)*o.r;o.y=p.y+Math.sin(o.age*1.7+o.a)*o.r;if(tick)combatLine(o,p.x,p.y,o.x,o.y,12);break;
 case 'shield':o.x=p.x;o.y=p.y;o.guardFlash=Math.max(0,(o.guardFlash||0)-dt);if(tick)combatArea(o,o.x,o.y,o.r,o.damage,160);for(let b of game.enemyBullets)if(b.life>0&&distance(b,o)<o.r){let blocked=breakEnemyBullet(b,3,'shield'+o.id);if(blocked){o.guardFlash=.16;o.guardAngle=Math.atan2(b.y-o.y,b.x-o.x);}if(blocked&&o.reflect)fireBullet('frost',b.x,b.y,Math.atan2(-b.vy,-b.vx),330,o.damage*2,4);}break;
 case 'portal':for(let e of game.enemies)if(e.hp>0&&!o.hit.has(e.id)&&distance(e,o)<o.r){o.hit.add(e.id);hit(e,o.damage,o.x,o.y,0,false,o.cause,{weapon:o.kind,color:o.color});if(!e.boss){e.x=o.outX+rnd(-35,35);e.y=o.outY+rnd(-35,35);e.stun=.5;}}if(o.cosmos&&o.life<.3&&!o.done){o.done=true;combatArea(o,o.outX,o.outY,200,o.damage*2,170);}break;
 case 'festival':if(tick){let step=Math.floor((o.age-o.delay)*5);if(step!==o.step){o.step=step;for(let i=0;i<8;i++){let aa=i*TAU/8+step*.2;construct(o.kind,'stamp',o.x+Math.cos(aa)*step*38,o.y+Math.sin(aa)*step*38,aa,o.lv,{delay:.18,life:.5,r:45,damage:o.damage*.4,cause:'burn'});}}}break;
-case 'mural':if(tick){let rr=o.r*u;for(let e of game.enemies)if(e.hp>0&&Math.abs(distance(e,o)-rr)<55)hit(e,o.damage,o.x,o.y,130,false,'petals');}break;
+case 'mural':if(tick){let rr=o.r*u;for(let e of game.enemies)if(e.hp>0&&Math.abs(distance(e,o)-rr)<55)hit(e,o.damage,o.x,o.y,130,false,'petals',{weapon:o.kind,color:o.color});}break;
 case 'spotlight':{let e=game.enemies.find(e=>e.id===o.target&&e.hp>0);if(e){o.x+=(e.x-o.x)*dt*2;o.y+=(e.y-o.y)*dt*2;}if(tick)combatArea(o,o.x,o.y,o.r*(1-u*.6));if(o.life<.25&&!o.done){o.done=true;for(let i=0;i<16;i++)fireBullet('star',o.x,o.y,i*TAU/16,330,o.damage*2,4);}}break;
 case 'planet':{let rr=115+o.age*16,aa=o.age*1.9+o.phase;o.x=p.x+Math.cos(aa)*rr;o.y=p.y+Math.sin(aa)*rr;if(tick)combatArea(o);if(o.life<.25&&!o.done){o.done=true;combatArea(o,o.x,o.y,130,o.damage*4,180);}}break;
 case 'whale':case 'dragonSpirit':{let e=constructTarget(o,700);if(e&&o.mode==='dragonSpirit'){let aa=Math.atan2(e.y-o.y,e.x-o.x);o.a+=Math.atan2(Math.sin(aa-o.a),Math.cos(aa-o.a))*dt*1.8;}o.x+=Math.cos(o.a)*o.speed*dt;o.y+=Math.sin(o.a)*o.speed*dt;if(tick){combatArea(o);if(o.mode==='whale')construct(o.kind,'rain',o.x,o.y,o.a,o.lv,{life:1.5,r:80,damage:o.damage*.25,cause:'soak'});}break;}
 case 'garden':case 'cyclone':o.x=p.x;o.y=p.y;if(tick){for(let e of game.enemies)if(e.hp>0&&distance(e,o)<o.r){hit(e,o.damage,o.x,o.y,12,false,o.cause,{weapon:o.kind,color:o.color});e.slow=.3;if(o.mode==='cyclone'&&!e.elite){e.x+=(o.x-e.x)*.06;e.y+=(o.y-e.y)*.06;}}}break;
-case 'stormNode':if(tick){let e=nearest(o.x,o.y,230);if(e){hit(e,o.damage,o.x,o.y,25,false,'soak');game.fx.push({type:'chain',x:o.x,y:o.y-45,x2:e.x,y2:e.y,life:.2,max:.2,seed:o.id});}}break;
-case 'nova':if(tick){let r=o.r*Math.abs(Math.sin(u*Math.PI*2));for(let e of game.enemies)if(e.hp>0&&Math.abs(distance(e,o)-r)<42)hit(e,o.damage*.6,o.x,o.y,100,false,'burn');}break;
-case 'mirrorArena':o.x=p.x;o.y=p.y;if(tick){for(let e of game.enemies)if(e.hp>0&&distance(e,o)<o.r){e.slow=.5;hit(e,o.damage,o.x,o.y,20,false,'freeze');}}for(let b of game.enemyBullets)if(b.life>0&&distance(b,o)<o.r){if(!breakEnemyBullet(b,3,'mirror'+o.id))continue;fireBullet('frost',b.x,b.y,Math.atan2(-b.vy,-b.vx),350,o.damage*2,4);}break;
+case 'stormNode':if(tick){let e=nearest(o.x,o.y,230);if(e){hit(e,o.damage,o.x,o.y,25,false,'soak',{weapon:o.kind,color:o.color});game.fx.push({type:'chain',x:o.x,y:o.y-45,x2:e.x,y2:e.y,life:.2,max:.2,seed:o.id});}}break;
+case 'nova':if(tick){let r=o.r*Math.abs(Math.sin(u*Math.PI*2));for(let e of game.enemies)if(e.hp>0&&Math.abs(distance(e,o)-r)<42)hit(e,o.damage*.6,o.x,o.y,100,false,'burn',{weapon:o.kind,color:o.color});}break;
+case 'mirrorArena':o.x=p.x;o.y=p.y;if(tick){for(let e of game.enemies)if(e.hp>0&&distance(e,o)<o.r){e.slow=.5;hit(e,o.damage,o.x,o.y,20,false,'freeze',{weapon:o.kind,color:o.color});}}for(let b of game.enemyBullets)if(b.life>0&&distance(b,o)<o.r){if(!breakEnemyBullet(b,3,'mirror'+o.id))continue;fireBullet('frost',b.x,b.y,Math.atan2(-b.vy,-b.vx),350,o.damage*2,4);}break;
 }}
 compact(game.constructs,o=>o.life>0&&distance(o,p)<1700);if(game.bullets.length>180)game.bullets.splice(0,game.bullets.length-180);if(game.enemyBullets.length>120)game.enemyBullets.splice(0,game.enemyBullets.length-120);
 }

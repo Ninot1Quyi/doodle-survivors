@@ -1,0 +1,200 @@
+[
+  {
+    "file": "contacts/paper0.ogg",
+    "material": "paper",
+    "source": "book_01.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "39b2d652dc8de9d4100ae8a1d23364077fff39bf1c90009b0c0d72af8c47d0d4",
+    "file_sha256": "73c3fb19c2ab77b03e14fd2a1df6129c73702c07e09220bb430b1b4e6a818879",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.3900s; 180–8500 Hz EQ, gain 0.53650, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/paper1.ogg",
+    "material": "paper",
+    "source": "book_02.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "a3f87cfd37a452231a05ceebf746ae2459849c2e20f7b244e4a9b7dbc1d9e76b",
+    "file_sha256": "bd88cef7456ca46d6795cf5850d93727dcc5d482bcaaa9e5c7aa0ea4abadc105",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.3800s; 180–8500 Hz EQ, gain 0.99529, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/paper2.ogg",
+    "material": "paper",
+    "source": "book_03.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "f72e4af8172ae98eaa350892072120e79eb87f91448b99aeaaf1febe070fbb2e",
+    "file_sha256": "65f48d8ebe8d3582138eabbf0ab3d08dbed1323c1d22c29062cac57edfca4f40",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.6300s; 180–8500 Hz EQ, gain 1.08992, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/ink0.ogg",
+    "material": "ink",
+    "source": "creature_slime_01.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "746d6ef073abfadd43fe184c50c6a2528350d4f566f2c0f54cd51ff0eb665118",
+    "file_sha256": "eddff88773605d7d3e4935394354c4c970a06188447f731f244a58faf07b73c2",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1000s; 180–8500 Hz EQ, gain 0.74088, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/ink1.ogg",
+    "material": "ink",
+    "source": "creature_slime_02.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "8c26b66076752b712dad7be704a3e4e11d3a49847fbd804ba7f858024ff33c8d",
+    "file_sha256": "6b8718b6590b7174d9e7bcedbd9fddaa3e4382f336a47ace02571b173fc14144",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0900s; 180–8500 Hz EQ, gain 0.68225, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/ink2.ogg",
+    "material": "ink",
+    "source": "creature_slime_03.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "0edd014144dbce5ff0386647c25e0c206ae3b382a16683240ab188bd926da8eb",
+    "file_sha256": "6ff9bd885f9531b302a23ea210d08ad6277f8eee8e6bc7dbc88f24611536d582",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1600s; 180–8500 Hz EQ, gain 0.90228, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/fire0.ogg",
+    "material": "fire",
+    "source": "spell_fire_01.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "02fa3a2c6e79e868e546802f45127c5cdda69aba6d5a24ac997ea66f81a816cb",
+    "file_sha256": "92b7bbb3e6186a21e2bd612619e807f1e85d68b2c3c311c51e05ea3d7a5cdd33",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1800s; 180–8500 Hz EQ, gain 4.13245, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/fire1.ogg",
+    "material": "fire",
+    "source": "spell_fire_02.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "bf1eef4993f0adb4bd3a1c1ec91f8f6e4ddeb32d922671a14561846d5b7cab98",
+    "file_sha256": "f81acb945c7afd0581da98c8e2a4032afb300a556588a3c40ce16dafa2c0e346",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1900s; 180–8500 Hz EQ, gain 8.79008, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/fire2.ogg",
+    "material": "fire",
+    "source": "spell_fire_03.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "2e4edee4ff8d7898198f1ab5213e086965e14a665cb947d53759505e28ddd3e4",
+    "file_sha256": "74ccc6add3b7d15fe06fd5e3b03d30997b3a9ebe399edc5af3ca87d54bdae487",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.4200s; 180–8500 Hz EQ, gain 2.90749, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/electric0.ogg",
+    "material": "electric",
+    "source": "hit.wav",
+    "source_url": "https://opengameart.org/content/electricity-game-sound-pack",
+    "author": "faxcorp",
+    "license": "CC0-1.0",
+    "source_sha256": "03d05a1249c45d795382f840c35563c0f151423afd47c04a4af7a81bad2f32fc",
+    "file_sha256": "de04d875f2773d5dd0082937e111f73b19230fac5b3d422d86be2e82e1071e59",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 1.12014, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/electric1.ogg",
+    "material": "electric",
+    "source": "shieldhit.wav",
+    "source_url": "https://opengameart.org/content/electricity-game-sound-pack",
+    "author": "faxcorp",
+    "license": "CC0-1.0",
+    "source_sha256": "6213e372a3aaafa0a4b33cc04e2f62ca97d20f3d91cf3506464d8cc9dc899625",
+    "file_sha256": "843c51f32ca9bd96972dae40523a0f5654144a2648bbaea9e2592b2cf8b65406",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1400s; 180–8500 Hz EQ, gain 0.62335, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/electric2.ogg",
+    "material": "electric",
+    "source": "groundhit.wav",
+    "source_url": "https://opengameart.org/content/electricity-game-sound-pack",
+    "author": "faxcorp",
+    "license": "CC0-1.0",
+    "source_sha256": "34b04cf82aa1323dbb241567b0b4a1b64669984670f42f155b552860a9554174",
+    "file_sha256": "eede84a0d32433c50843b741905cfced5906062852ec2ca576a30f87e8282a25",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.86521, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/crush0.ogg",
+    "material": "crush",
+    "source": "stones_01.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "d11ce95031c2c36ae2a00979620fa95a7a3f5c6d6f2ac86962ed292aa556be8d",
+    "file_sha256": "98d65037d7966f52917cd2b787598f39dc19d7cf463013afc28d0f079d403139",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0400s; 180–8500 Hz EQ, gain 0.51112, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/crush1.ogg",
+    "material": "crush",
+    "source": "stones_02.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "57dc6b85ee986e68ddc4b7fb2b41cc1c885151677d32439fdb299492a3103a65",
+    "file_sha256": "207bd6440a4c5ec491799e4a670865b54c0d07d7406939366928cbf7819f41ab",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.3100s; 180–8500 Hz EQ, gain 0.52928, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/crush2.ogg",
+    "material": "crush",
+    "source": "stones_03.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "b86d143d7ef4974c2b97fda9e5d1861482646eec754e15935eeb3680ea0d71da",
+    "file_sha256": "8e70f1105f281d3b0e2ce66ad78f6a9f180cd52c0067d6aafe85002ceb8a1874",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.1000s; 180–8500 Hz EQ, gain 0.48924, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/frost0.ogg",
+    "material": "frost",
+    "source": "item_gem_01.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "8a5d2964febb0c69cc4df2ee5257d173f2cae6960d9534df0001dbf356f27028",
+    "file_sha256": "63feaec152fb8163b1524ce5d5b4823bffd16fe048334efe48f525e8704194cd",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.50878, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/frost1.ogg",
+    "material": "frost",
+    "source": "item_gem_02.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "a5f4b0b3ae0e272765619289ef6709513e0dfa0785d7559e8a223176a8bcf181",
+    "file_sha256": "e77f93b616f7acedfb6546c3afa9c750589dc8ccddb2409b83bba14380a3c914",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.84961, boundary fades, mono OGG."
+  },
+  {
+    "file": "contacts/frost2.ogg",
+    "material": "frost",
+    "source": "item_gem_03.ogg",
+    "source_url": "https://opengameart.org/content/80-cc0-rpg-sfx",
+    "author": "rubberduck",
+    "license": "CC0-1.0",
+    "source_sha256": "7b29674b7c8fb0069814623d86fa56a3f370eedcde73d5ce1ecc7339be3a3cba",
+    "file_sha256": "1c83870509497317d81b6406af8425849010b5d6fd60a416b902bb48d7c6cd76",
+    "changes": "20 ms context before strongest 30 ms window; up to 200 ms excerpt at 0.0000s; 180–8500 Hz EQ, gain 0.53911, boundary fades, mono OGG."
+  }
+]
