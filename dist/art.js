@@ -17,7 +17,7 @@ function texture(g,p,bounds,color='#5a4565',count=100){g.save();g.clip(p);g.stro
 function pencil(g,d,fill,bounds,count=80,shade='#594967'){let p=path(g,d,fill,ink,waxEdition?1.35:1.1);texture(g,p,bounds,shade,count);g.save();g.translate(waxEdition?1:.7,waxEdition?-.65:-.4);g.globalAlpha=waxEdition?.38:.26;path(g,d,null,ink,waxEdition?.75:.55);if(waxEdition){g.translate(-1.55,1.1);g.globalAlpha=.20;g.setLineDash([3.5,2.5,1,3]);path(g,d,null,shade,1.25);}g.restore();return p;}
 function make(name,w,h,draw,border=1.5){seed=hash(name);let c=canvas(w*2,h*2),g=c.getContext('2d');g.scale(2,2);g.lineCap='round';g.lineJoin='round';draw(g);let mask=canvas(w*2,h*2),m=mask.getContext('2d');m.drawImage(c,0,0);m.globalCompositeOperation='source-in';m.fillStyle=paper;m.fillRect(0,0,mask.width,mask.height);let out=canvas(w*2,h*2),o=out.getContext('2d');for(let a=0;a<TAU;a+=Math.PI/4)o.drawImage(mask,Math.cos(a)*border*2,Math.sin(a)*border*2);o.drawImage(c,0,0);sprites[name]={img:out,w,h};return sprites[name];}
 function hash(str){let h=2166136261;for(let c of str)h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0;}
-function hero(g,f){let t=f/8*TAU,s=Math.sin(t),c=Math.cos(t),step=s*4;
+function hero(g,f,blink=false){let t=f/8*TAU,s=Math.sin(t),c=Math.cos(t),step=s*4;
  // A tiny star traveller: tousled golden hair, blue tailcoat and a fluttering golden scarf.
  pencil(g,`M33 38 Q21 ${34+s*4} 5 ${25+c*6} L8 ${37+c*4} Q17 ${46+s*3} 34 46Z`,'#e9bf61',[4,24,34,23],50,'#a77a47');
  line(g,[[8,31+c*5],[18,39+s*3],[30,41]],'#fff0b6',1.4);
@@ -34,13 +34,13 @@ function hero(g,f){let t=f/8*TAU,s=Math.sin(t),c=Math.cos(t),step=s*4;
  // The hair is the silhouette, not a hat; preserve little irregular pencil locks.
  pencil(g,'M24 29 L19 22 25 21 20 14 28 16 27 8 34 11 38 3 43 9 52 6 51 13 58 13 54 20 57 24 51 30 48 21 44 24 39 17 35 23 31 21 28 32Z','#edc567',[19,3,40,30],90,'#b38b45');
  line(g,[[29,17],[34,14],[39,10]],'#fff0a2',1.3);line(g,[[43,13],[49,16],[50,22]],'#ffe8a1',1.3);
- ellipse(g,33,30,1.45,2,'#3c3745',null);ellipse(g,45,30,1.45,2,'#3c3745',null);ellipse(g,30,35,2.5,1.2,'#e9b29e',null);ellipse(g,48,35,2.5,1.2,'#e9b29e',null);line(g,[[36,37],[40,38],[43,36]],'#a47c68',.8);
+ if(blink){line(g,[[31,30],[33,31],[35,30]],'#3c3745',1.3);line(g,[[43,30],[45,31],[47,30]],'#3c3745',1.3);}else{ellipse(g,33,30,1.65,2.3,'#3c3745',null);ellipse(g,45,30,1.65,2.3,'#3c3745',null);}ellipse(g,30,35,2.5,1.2,'#e9b29e',null);ellipse(g,48,35,2.5,1.2,'#e9b29e',null);line(g,[[36,37],[40,38],[43,36]],'#a47c68',.8);
  pencil(g,'M27 40 Q39 44 49 39 L50 45 Q39 49 28 45Z','#f0c75e',[26,39,25,11],25,'#ae8247');
  path(g,'M45 44 L48 51 43 52 41 46Z','#e3b85b');
  // Small sketchbook carried at the hip, with a star clasp.
  pencil(g,'M18 58 L29 60 28 71 17 69Z','#d7b1a6',[17,58,13,14],18);line(g,[[20,61],[26,62],[25,68]],'#f7e6c7');
 }
-for(let f=0;f<8;f++)make('hero'+f,76,96,g=>hero(g,f),1.6);sprites.hero=sprites.hero0;
+for(let f=0;f<8;f++)make('hero'+f,76,96,g=>hero(g,f),1.6);sprites.hero=sprites.hero0;for(let f=0;f<8;f++)make('heroBlink'+f,76,96,g=>hero(g,f,true),1.6);
 for(let f=0;f<8;f++){
  let s=Math.sin(f/8*TAU),c=Math.cos(f/8*TAU);
  make('imp'+f,62,67,g=>{

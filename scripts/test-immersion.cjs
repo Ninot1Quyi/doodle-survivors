@@ -1,0 +1,16 @@
+const assert=require('assert');
+const {run}=require('./test-harness.cjs');
+run("start();game.enemies=[];game.weapons.book=3;game.hero.x=1800;game.hero.y=-900;game.t=1.3;updateBookOrbit();");
+let center=run("({x:game.orbit.reduce((a,b)=>a+b.x,0)/game.orbit.length,y:game.orbit.reduce((a,b)=>a+b.y,0)/game.orbit.length})");
+assert(Math.abs(center.x-1800)<1e-8&&Math.abs(center.y+931)<1e-8,'orbit center follows hero torso after translation');
+run("game.hero.x=-2200;game.hero.y=1700;updateBookOrbit();");
+assert(run("game.orbit.every(b=>Math.abs(b.x+2200)<110&&Math.abs(b.y-1669)<80)"),'no book remains at former world position');
+assert(run("game.orbit.some(b=>b.y+31<game.hero.y)&&game.orbit.some(b=>b.y+31>game.hero.y)"),'books occupy both hero depth layers');
+run("for(let k in game.weapons)game.weapons[k]=0;game.weapons.book=3;game.t=1;updateBookOrbit();spawnEnemy('imp',game.orbit[0].x,game.orbit[0].y);game.enemies[0].hp=game.enemies[0].maxHp=10000;game.need=1e9;game.spawnClock=game.advancedSpawnClock=game.advancedEliteClock=999;update(.001);");
+assert(run("game.enemies[0].hp<10000"),'orbital contact applies damage at displayed position');
+run("game.enemies=[];spawnEnemy('imp',0,0);game.enemies[0].visualLift=30;");
+assert(run("actorPose(game.enemies[0]).lift>=30"),'explicit visual lift is added rather than swallowed by ternary');
+assert(run("Object.keys(enemyTypes).every(kind=>{let e={kind,frame:3,phase:1,visualLift:0,windUp:0,hitFlash:0,boss:kind.startsWith('boss')};return Object.values(actorPose(e)).every(Number.isFinite)})"));
+run("game.footfalls=[];game.hero.moving=true;for(let i=0;i<3000;i++)updateFootfalls(1/60);");
+assert(run("game.footfalls.length<=28"),'footprints remain bounded');
+console.log('PASS: translated orbit centering/depth/contact; additive visual lift; finite poses for all enemies; bounded footfalls.');
