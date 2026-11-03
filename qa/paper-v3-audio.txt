@@ -1,4 +1,4 @@
-Input #0, matroska,webm, from '/Users/quyi/NinotQuyi/doodle-survivors/qa/paper.webm':
+Input #0, matroska,webm, from 'qa/paper.webm':
   Metadata:
     encoder         : Chrome
   Duration: N/A, start: 0.000000, bitrate: N/A

@@ -8,3 +8,14 @@
 /qa/*.mp4
 /scripts/expand.py
 /scripts/ui-expand.py
+
+# Private deployment/account configuration and local capture files
+/.openai/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.webm
+*.mp4
+*.mov

@@ -1,11 +1,19 @@
 # 星纸漫游 · Paper Stargazer
 
-A single-player, hand-drawn paper survival game. Original Canvas 2D artwork, vanilla JavaScript, sampled Foley and licensed instrumental music. No build step or application dependencies.
+A single-player, hand-drawn paper survival game.
+
+Source: https://github.com/Ninot1Quyi/doodle-survivors
+
+Game source and original procedural artwork are MIT-licensed; bundled music, sound recordings and fonts retain their separate licenses. See [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Original Canvas 2D artwork, vanilla JavaScript, sampled Foley and licensed instrumental music. No build step or application dependencies.
 
 ## Play locally
 
 ```sh
-python3 -m http.server 4174 --directory dist
+git clone https://github.com/Ninot1Quyi/doodle-survivors.git
+cd doodle-survivors
+python3 -m http.server 4174 --bind 127.0.0.1 --directory dist
 ```
 
 - Adventure edition: `http://localhost:4174/?edition=adventure`
@@ -43,11 +51,11 @@ Six authored regions have distinct large landmarks, plants and passive fantasy a
 
 ## Git and rollback
 
-This is the permanent local Git repository at `/Users/quyi/NinotQuyi/doodle-survivors`. Sites source synchronization preserves its commit history remotely. No separate GitHub repository has been created.
+The public GitHub repository preserves the original development commits and release tags. Deployment-specific configuration is not needed to run the game locally. The source is served directly from `dist/`; no bundler is required.
 
-Tags: `original-2026-11-03`, `adventure-v1`, `paper-v2` (when the second edition is finalized). Use `git log --oneline --decorate` to see checkpoints. To inspect an earlier version without losing current work, create a branch from its tag in a separate checkout. Do not hard-reset active work.
+Tags: `original-2026-11-03`, `adventure-v1`, `paper-v2`. Use `git log --oneline --decorate` to see checkpoints. To inspect an earlier version without losing current work, create a branch from its tag in a separate checkout. Do not hard-reset active work.
 
-## Verification and footage
+## Verification
 
 ```sh
 node test-mechanics.cjs
@@ -59,10 +67,16 @@ node scripts/balance.cjs
 
 Mechanics cover all fusion prerequisites, ingredient consumption, three extra levels, every new weapon actually dealing damage, unbounded movement, world event idempotence, boss timings, win gating and complete six-minute simulation. A separate normal-health scripted controller checks three seeded runs. These are simulation tests, not evidence of human completion or universally balanced difficulty.
 
-`qa/` contains local browser footage, screenshots and measurements. Capture clips are explicitly labeled **preset mid-game equipment**, and test progression/fusion/Boss feedback rather than showing equipment earned through a normal run. They record the actual Canvas game and mixed game audio; the small QA overlay is added by the recording harness. They are not included in the production website.
+`qa/` contains game screenshots, reproducible capture helpers and historical measurements. Reference videos and gameplay recordings are excluded from the repository. Some screenshots and measurements use preset mid-game equipment; they do not prove equipment was earned in normal play. The latest frame-pacing checks are synthetic timestamp tests, not a new live-browser FPS measurement. See the dated QA documents for the validation boundary of each change.
 
 See `docs/CHANGELOG.md` and `docs/QA.md` for scope and findings.
 
 ## Credits
 
 Visual inspiration: the paper-world combat presentation of Rakuworld by SETO, and the user's request for a little-prince-like traveler. This independent game does not use the original game's code, extracted assets or branding. All visual assets are drawn procedurally; no image-generation tools were used. Audio source licenses remain in the distribution and in the in-game sound settings.
+
+## Development and contributions
+
+Requires a modern browser with Canvas 2D and Web Audio. Python 3 is sufficient for local serving; Node.js runs the simulation checks. Optional font rebuilding requires Python `fonttools` and `brotli` as documented in `dist/fonts/README.md`. Audio reprocessing scripts require their documented source pack and local audio tooling; neither is needed to play the included distribution.
+
+This project was developed with AI coding assistance. Contributions should preserve third-party notices, keep simulation and presentation checks distinct, and describe any browser testing actually performed. Do not commit credentials, deployment account configuration, reference footage or captured gameplay recordings.
