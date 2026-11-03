@@ -14,6 +14,13 @@ assert(damage>0, k+' must damage targets via its simulated behavior');assert(run
 }
 run("start();game.enemies=[];spawnEnemy('imp',10,70);hit(game.enemies[0],999,0,0,50,false,'burn')");assert.equal(run('game.deathCauses.burn'),1);
 run("start();game.coins=50;game.nearShop={id:'test'};toggleShop()");assert.equal(run('state'),'shop');assert(run("buyOffer('ticket')"));assert.equal(run('game.coins'),38);run("game.coins=0");assert.equal(run("buyOffer('ticket')"),false);run('toggleShop()');assert.equal(run('state'),'playing');
-run('start();game.t=330;updateEncounters(.01)');assert(run('game.enemies.some(e=>e.kind===game.finalBossKind&&e.finalBoss)'));run('game.t=361;bossDefeated(game.enemies.find(e=>e.finalBoss))');assert.equal(run('state'),'ended');
+run('start();game.t=361;game.enemies=[]');
+for(const [i,kind] of ['bossRose','bossCrab','bossOwl','bossClock','bossMoon'].entries()){
+ run('updateEncounters(.01)');assert.equal(run('game.enemies.filter(e=>e.boss&&e.hp>0).length'),1);
+ assert.equal(run('game.enemies.find(e=>e.boss&&e.hp>0).kind'),kind,'default bosses have a fixed, distinct five-stage order');
+ assert.equal(run('game.enemies.find(e=>e.boss&&e.hp>0).finalBoss'),i===4);
+ run('(()=>{const e=game.enemies.find(e=>e.boss&&e.hp>0);e.hp=0;bossDefeated(e)})()');
+ assert.equal(run('state'),i===4?'ended':'playing','all five bosses are required for victory');
+}
 run("start();game.enemies=[];spawnEnemy('bossMoon',0,0);game.hero.x=10000;game.hero.y=10000;game.hero.inv=100;update(.016)");assert(run("game.enemies.some(e=>e.boss&&distance(e,game.hero)<1500)"),'boss must pursue across infinite-world cells');
 require('fs').writeFileSync(__dirname+'/../qa/weapon-verification.json',JSON.stringify(results,null,2));console.log('PASS: 42 base weapons + 21 evolutions each deal damage; all 21 fusion routes consume materials; 39 items / 36 normals / 9 bosses; causes, shop pricing and final boss identity.');

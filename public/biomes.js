@@ -130,7 +130,7 @@ const PaperBiomes=(()=>{
   if(typeof visible==='function'&&!visible(x,y,85))continue;
   let hop=Math.max(0,Math.sin(t*(a.type===4?5:3)+a.phase)),bob=flying?8+Math.sin(t*3+a.phase)*5:a.type===0?0:hop*6;
   Art.shadow(ctx,x,y,16*a.scale,5*a.scale);
-  ctx.save();ctx.translate(x,y-bob);ctx.scale(flying?1:1+hop*.04,flying&&a.type!==1?.82+Math.abs(Math.sin(t*7+a.phase))*.25:1-hop*.04);
+  ctx.save();ctx.translate(x,y-PaperCamera.height(bob));ctx.scale(flying?1:1+hop*.04,flying&&a.type!==1?.82+Math.abs(Math.sin(t*7+a.phase))*.25:1-hop*.04);
   Art.image(ctx,a.name,0,0,a.scale,Math.cos(phase)<0?-1:1,flying?Math.sin(t*2+a.phase)*.08:Math.sin(phase)*.04,.92);ctx.restore();
  }
  for(let c of active){

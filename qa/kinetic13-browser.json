@@ -20,9 +20,9 @@
     "musicReady": 4,
     "musicVolume": 0.38,
     "sfxVolume": 0.56,
-    "activeVoices": 0,
+    "activeVoices": 1,
     "weaponIdentities": 63,
-    "activeWeaponVoices": 0,
+    "activeWeaponVoices": 1,
     "activeImpactVoices": 0,
     "contactMix": {
       "emitted": 0,
@@ -34,13 +34,13 @@
       "budgetSkipped": 0,
       "emitted": 0
     },
-    "samples": 135,
+    "samples": 153,
     "failed": [],
     "played": {
       "pencil": 1
     },
-    "outputRms": 0.0000018009238281985094,
-    "outputPeak": 0.000005079985839984147
+    "outputRms": 0.02878156127461397,
+    "outputPeak": 0.0679832324385643
   },
   "simultaneous": {
     "keys": [
@@ -60,9 +60,9 @@
   "sustainRms": [
     0.024906107106211935,
     0.025374649476527747,
-    0.02707333650081384,
-    0.025911133181504488,
-    0.024340431109609498,
+    0.026731877449692926,
+    0.024901143594841923,
+    0.025112348542624438,
     0.024988248774558915,
     0.025455074686605517,
     0.021536588990671457,

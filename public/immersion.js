@@ -11,18 +11,18 @@ function updateBookOrbit(){
 }
 function drawCenteredSprite(name,x,y,scale,angle=0,alpha=1){
  const s=Art.sprites[name];if(!s)return;
- ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.globalAlpha=alpha;
- ctx.drawImage(s.img,-s.w*scale/2,-s.h*scale/2,s.w*scale,s.h*scale);ctx.restore();
+ PaperCamera.upright(ctx,x,y,()=>{ctx.rotate(angle);ctx.globalAlpha=alpha;
+ ctx.drawImage(s.img,-s.w*scale/2,-s.h*scale/2,s.w*scale,s.h*scale);});
 }
 function renderLoosePage(x,y,size,angle,fold,alpha=1){
- ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.globalAlpha*=alpha;
+ PaperCamera.upright(ctx,x,y,()=>{ctx.rotate(angle);ctx.globalAlpha*=alpha;
  const w=size,h=size*.72,curve=Math.sin(fold)*h*.45;
  ctx.beginPath();ctx.moveTo(-w,-h);ctx.quadraticCurveTo(0,-h+curve,w,-h*.8);ctx.lineTo(w*.82,h);ctx.quadraticCurveTo(0,h+curve,-w*.9,h*.8);ctx.closePath();ctx.fillStyle='#eee0bc';ctx.fill();ctx.strokeStyle='#947a9c';ctx.lineWidth=.9;ctx.stroke();
  ctx.beginPath();ctx.moveTo(w,-h*.8);ctx.lineTo(w*.5,-h*.4);ctx.lineTo(w*.82,h);ctx.closePath();ctx.fillStyle='#b4a0c7';ctx.fill();
  ctx.beginPath();ctx.moveTo(-w*.9,-h*.9);ctx.quadraticCurveTo(0,-h*.9+curve,w*.52,-h*.7);ctx.lineTo(w*.45,-h*.3);ctx.quadraticCurveTo(-w*.1,-h*.5+curve,-w*.85,-h*.5);ctx.closePath();ctx.fillStyle='#fff3d6';ctx.fill();
  // Tiny ink marks belong to the sheet face, never to an orbit guide line.
  for(let j=0;j<2;j++){ctx.fillStyle='#a58ca6';ctx.fillRect(-w*.55,-h*.2+j*h*.45,w*(j?.7:1),Math.max(.7,size*.065));}
- ctx.restore();
+ });
 }
 function renderOrbitBook(b){
  if(b.sweep>.3){ctx.save();ctx.translate(b.cx,b.cy);ctx.scale(1,b.ry/b.rx);ctx.strokeStyle='#c7b1e5';ctx.lineWidth=8;ctx.globalAlpha=.28+b.sweep*.22;ctx.beginPath();ctx.arc(0,0,b.rx,b.a-.6,b.a);ctx.stroke();ctx.strokeStyle='#fff3cb';ctx.lineWidth=2;ctx.stroke();ctx.restore();}
@@ -30,9 +30,9 @@ function renderOrbitBook(b){
  for(let j=n;j>=1;j--){let age=j/n,a=b.a-.11-j*.105,drift=Math.sin(game.t*4+j+b.a)*3*age,x=b.cx+Math.cos(a)*(b.rx+age*7),y=b.cy+Math.sin(a)*(b.ry+age*4)-age*5+drift,tangent=Math.atan2(Math.cos(a)*b.ry,-Math.sin(a)*b.rx);renderLoosePage(x,y,7.5-age*3,tangent+Math.sin(game.t*5+j)*.3,game.t*7+j,.68*(1-age*.72));}
  const flap=Math.sin(game.t*9+b.a),s=.65+Math.sin(b.a)*.06;
  drawCenteredSprite('book',b.x,b.y,s,Math.sin(b.a)*.28);
- ctx.save();ctx.translate(b.x,b.y);ctx.rotate(Math.sin(b.a)*.28);ctx.scale(1,.8+flap*.13);
+ PaperCamera.upright(ctx,b.x,b.y,()=>{ctx.rotate(Math.sin(b.a)*.28);ctx.scale(1,.8+flap*.13);
  Art.path(ctx,'M0 10Q-9 -9 -19 -12L-17 6Q-6 1 0 10M0 10Q9 -9 19 -12L17 6Q6 1 0 10','#fff6da','#b9a0bc',.9);
- ctx.restore();
+ });
 }
 const actorPoseKinds=new Map();
 function actorPose(e,hero=false){
@@ -57,16 +57,18 @@ function actorPose(e,hero=false){
   if(e.hitPulse>0||e.hitFlash>0){let recoil=Math.max(e.hitPulse||0,e.hitFlash)/.18;sx*=1+recoil*.15;sy*=1-recoil*.14;tilt+=Math.sin(e.id)*recoil*.12;}
  }
  const intensity=typeof reducedEffects!=='undefined'&&reducedEffects?.4:1;
- return{lift:lift*intensity,sx:1+(sx-1)*intensity,sy:1+(sy-1)*intensity,tilt:tilt*intensity};
+ const pose={lift:lift*intensity,sx:1+(sx-1)*intensity,sy:1+(sy-1)*intensity,tilt:tilt*intensity};
+ if(!hero&&e.boss&&typeof bossChoreographyPose==='function'){const cast=bossChoreographyPose(e);pose.sx*=cast.sx;pose.sy*=cast.sy;pose.tilt+=cast.tilt;pose.lift+=cast.lift;}
+ return pose;
 }
 function renderActor(name,e,scale,flip,hero=false){
  const s=Art.sprites[name];if(!s)return;const pose=actorPose(e,hero);
  castShadow(name,e.x,e.y,scale*(1-pose.lift*.009),hero?.18:.14);
- ctx.save();ctx.translate(e.x,e.y-pose.lift);ctx.rotate(pose.tilt);ctx.scale(flip*pose.sx,pose.sy);
+ PaperCamera.upright(ctx,e.x,e.y,()=>{ctx.translate(0,-pose.lift);ctx.rotate(pose.tilt);ctx.scale(flip*pose.sx,pose.sy);
  ctx.globalAlpha=hero&&e.inv>0?.55+.45*Math.sin(game.t*30)**2:e.kind==='ghost'?.86:1;
  ctx.drawImage(s.img,-s.w*scale/2,-s.h*scale,s.w*scale,s.h*scale);
  if(!hero&&e.hitFlash>0&&flashImages[name]){ctx.globalAlpha=e.hitFlash/.1*.65;ctx.drawImage(flashImages[name],-s.w*scale/2,-s.h*scale,s.w*scale,s.h*scale);}
- ctx.restore();
+ });
 }
 function renderProjectileRibbon(b){
  const speed=Math.hypot(b.vx,b.vy)||1,dx=b.vx/speed,dy=b.vy/speed,length=Math.min(88,speed*.14),col=b.kind==='fire'?'#e59368':PALETTE[b.id%5];
@@ -142,12 +144,12 @@ function renderAlignedLine(o,ready){
 }
 function renderMovingWeapon(o){
  const dx=o.x-(o.px??o.x),dy=o.y-(o.py??o.y),heading=Math.hypot(dx,dy)>.01?Math.atan2(dy,dx):o.a;
- let angle=heading,scale=.65;
+ let angle=PaperCamera.heading(heading),scale=.65;
  if(o.mode==='rocket')angle+=Math.PI/2-.5;
  else if(o.mode==='leaf')angle+=1.05;
  else if(o.mode==='gear'||o.mode==='bounce'||o.mode==='yoyo')angle=o.age*9;
  else if(o.mode==='notes')angle=Math.sin(o.age*7)*.12;
- if(o.mode==='rocket'){ctx.save();ctx.translate(o.x,o.y);ctx.rotate(heading);ctx.fillStyle='#e7ac6c';ctx.beginPath();ctx.moveTo(-18,-7);ctx.lineTo(-42-Math.sin(o.age*40)*8,0);ctx.lineTo(-18,7);ctx.closePath();ctx.fill();ctx.restore();}
+ if(o.mode==='rocket'){const facing=PaperCamera.heading(heading);PaperCamera.upright(ctx,o.x,o.y,()=>{ctx.rotate(facing);ctx.fillStyle='#e7ac6c';ctx.beginPath();ctx.moveTo(-18,-7);ctx.lineTo(-42-Math.sin(o.age*40)*8,0);ctx.lineTo(-18,7);ctx.closePath();ctx.fill();});}
  drawCenteredSprite(weaponData[o.kind]?.art||o.kind,o.x,o.y,scale,angle);
 }
 function renderMine(o){

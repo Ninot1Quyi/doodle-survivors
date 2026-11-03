@@ -5,7 +5,7 @@ function setup(kind='bossRose'){
  const g={enemies:[e],hero:{x:280,y:0,r:16},enemyBullets:[],enemyShotSerial:1,buffs:{freeze:0}};
  const painter=new Proxy({},{get:()=>()=>{},set:()=>true});
  const box={game:g,state:'playing',reducedEffects:false,ctx:painter,Math,Sound:{bossAction:(...a)=>sounds.push(a),sustain(){}},playerHurt:(...a)=>hits.push(a)};
- vm.createContext(box);vm.runInContext(source,box);box.bossCombatBehavior(e,0,280,0,280);
+ vm.createContext(box);for(const name of ['kinetic-art','boss-choreography-art'])vm.runInContext(fs.readFileSync(__dirname+'/../public/'+name+'.js','utf8'),box);vm.runInContext(source,box);box.bossCombatBehavior(e,0,280,0,280);
  return {box,g,e,hits,sounds,tick:n=>{for(let i=0;i<n;i++)box.updateBossChoreography(.025);}};
 }
 const kinds=['bossRose','bossCrab','bossOwl','bossClock','bossMoon'];
@@ -43,7 +43,22 @@ for(const kind of kinds){
  const disk={...base,type:'disk',spots:[{x:200,y:200,r:51}]};assert.equal(box.bossChoreographyContains(disk,{x:200,y:200,r:0}),true);assert.equal(box.bossChoreographyContains(disk,{x:0,y:0,r:0}),false);
  const rush={...base,type:'rush',lastDt:.1};assert.equal(box.bossChoreographyContains(rush,{x:220,y:0,r:0}),true);assert.equal(box.bossChoreographyContains(rush,{x:450,y:0,r:0}),false,'rush collision follows body, not whole preview');
  tick(43);const q=e.choreography,angle=q.action.a;g.hero.x=-500;g.hero.y=500;tick(10);assert.equal(q.action.a,angle,'aim locks for the whole warning');
+ const anchor=[q.anchorX,q.anchorY];e.x+=150;e.y-=120;e.kx=800;e.ky=600;tick(1);assert.deepEqual([e.x,e.y],anchor,'external push cannot move the locked warning origin');assert.deepEqual([e.kx,e.ky],[0,0]);
+ g.enemyBullets.push({bossOwner:e,life:2});e.x=800;e.y=500;box.cancelBossChoreography(e);assert.equal(g.bossChoreography.objects.length,0);assert.equal(g.enemyBullets.length,0);assert.equal(q.phase,'approach');assert.deepEqual([e.x,e.y],[800,500],'teleport cancellation preserves the new position');
  box.resetBossChoreography();assert.equal(g.bossChoreography.objects.length,0);assert.equal(e.choreography,undefined);
 }
 for(const kind of ['boss','bossFrog','bossCloud','bossSerpent','bossGolem','bossMoth','bossJelly','bossDragon','bossInk']){const {tick,e}=setup(kind);tick(200);assert.ok(e.choreography.turn>0,'legacy bosses must retain functioning attacks');}
+// Exercise the real update loop as well as the isolated geometry/state machine.
+{
+ const {run}=require('./test-harness.cjs');
+ for(const kind of kinds){
+  run(`start();game.enemies=[];game.spawnClock=game.advancedSpawnClock=game.advancedEliteClock=999;game.need=1e9;game.hero.inv=999;for(const k in game.weapons)game.weapons[k]=0;spawnEnemy('${kind}',240,70);game.enemies[0].hp=game.enemies[0].maxHp=100000;`);
+  const seen=run(`(()=>{const seen=new Set();for(let i=0;i<1600;i++){update(1/60);const q=game.enemies.find(e=>e.boss)?.choreography;if(q?.action)seen.add(q.action.type);}return Array.from(seen)})()`);
+  assert.equal(seen.length,4,kind+' must reach all four actions through the real game loop');
+  assert.equal(run('game.enemies.find(e=>e.boss).intent'),null,'legacy intents cannot run alongside choreography');
+  run('(()=>{const e=game.enemies.find(e=>e.boss);game.enemyBullets.push({bossOwner:e,life:2});hit(e,1e9,0,0,0)})()');
+  assert.equal(run('game.bossChoreography.objects.length'),0,'death clears active attacks in the same frame');
+  assert.equal(run('game.enemyBullets.filter(b=>b.bossOwner).length'),0,'death clears fired boss bullets in the same frame');
+ }
+}
 console.log('Boss choreography: five distinct four-action rosters, rage, finite collision, safe gaps, locked aim, recovery, pause/freeze, caps and owner cleanup pass.');

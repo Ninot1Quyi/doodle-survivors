@@ -1,0 +1,57 @@
+{
+  "samples": 153,
+  "played": {
+    "pencil": 7,
+    "impactPencil": 30,
+    "heavyhit": 17,
+    "book": 2,
+    "hit": 15,
+    "hurt": 1,
+    "scissors": 2,
+    "impactCut": 34,
+    "whip": 2,
+    "impactFire": 21,
+    "firecracker": 7,
+    "rainbowLaser": 1,
+    "impactErase": 47
+  },
+  "bosses": [
+    {
+      "kind": "bossRose",
+      "phase": "windup",
+      "action": "荆棘花圃",
+      "objects": 1
+    },
+    {
+      "kind": "bossCrab",
+      "phase": "windup",
+      "action": "双钳夹击",
+      "objects": 1
+    },
+    {
+      "kind": "bossOwl",
+      "phase": "windup",
+      "action": "羽页齐射",
+      "objects": 1
+    },
+    {
+      "kind": "bossClock",
+      "phase": "windup",
+      "action": "分针扫射",
+      "objects": 1
+    },
+    {
+      "kind": "bossMoon",
+      "phase": "windup",
+      "action": "月蚀光束",
+      "objects": 1
+    }
+  ],
+  "matrix": {
+    "ground": 0.7400000095367432,
+    "u": 1,
+    "k": 0.74,
+    "viewRatio": 1.3513513513513513
+  },
+  "errors": []
+}

@@ -12,6 +12,14 @@ function bossChoreographyProfile(e){return BOSS_CHOREOGRAPHY[e.kind]||BOSS_CHORE
 function bossChoreographyActive(){return typeof state==='undefined'||state==='playing'||state==='menu';}
 function resetBossChoreography(){if(!game)return;game.bossChoreography={objects:[],serial:0};game.enemyBullets=(game.enemyBullets||[]).filter(b=>!b.bossOwner);for(const e of game.enemies||[])delete e.choreography;if(typeof Sound!=='undefined')Sound.sustain?.('bossLaser',0);}
 function bossChoreographySound(e,phase){if(typeof Sound!=='undefined')Sound.bossAction?.(e.kind,phase);}
+function cancelBossChoreography(e){
+ if(!game?.bossChoreography)return;
+ game.bossChoreography.objects=game.bossChoreography.objects.filter(o=>o.owner!==e);
+ game.enemyBullets=game.enemyBullets.filter(b=>b.bossOwner!==e);
+ if(e.choreography){const q=e.choreography;q.phase='approach';q.age=0;q.duration=1.05;q.action=null;delete q.anchorX;delete q.anchorY;}
+ e.intent=null;e.kx=0;e.ky=0;
+ if(typeof Sound!=='undefined'&&!game.bossChoreography.objects.some(o=>o.type==='beam'&&o.age>=0&&o.owner.hp>0))Sound.sustain?.('bossLaser',0);
+}
 function bossCombatBehavior(e,dt,dx,dy,d){
  if(!e.boss)return false;
  if(!game.bossChoreography)resetBossChoreography();
@@ -32,7 +40,7 @@ function bossChoreographyBegin(e){
   for(let i=0;i<n;i++){const off=i-(n-1)/2;o.spots.push({x:tx+Math.cos(a+Math.PI/2)*off*103,y:ty+Math.sin(a+Math.PI/2)*off*103,r:q.rage?56:51,delay:0});}
  }
  if(type==='volley'){o.count=q.rage?9:7;o.spread=q.rage?1.65:1.35;o.length=450;o.width=7;}
- q.phase='windup';q.age=0;q.duration=windup;q.action=o;e.intent=null;e.kx=0;e.ky=0;
+ q.phase='windup';q.age=0;q.duration=windup;q.action=o;q.anchorX=e.x;q.anchorY=e.y;e.intent=null;e.kx=0;e.ky=0;
  if(game.bossChoreography.objects.length<24)game.bossChoreography.objects.push(o);
  else {q.phase='recover';q.duration=.9;q.action=null;}
  bossChoreographySound(e,'tell');
@@ -69,13 +77,16 @@ function updateBossChoreography(dt){
  dt=Math.min(dt,.1);
  for(const e of game.enemies){
   const q=e.choreography;if(!q||e.hp<=0)continue;
-  q.age+=dt;
+  // A paper weapon may add knockback during the enemy loop. Actions stay at the
+  // location that was previewed, including the stationary recovery after a rush.
+  if(q.phase!=='approach'&&q.anchorX!==undefined&&!(q.phase==='cast'&&q.action?.type==='rush')){e.x=q.anchorX;e.y=q.anchorY;}
+  e.kx=0;e.ky=0;q.age+=dt;
   if(q.phase==='approach'){
    const dx=game.hero.x-e.x,dy=game.hero.y-e.y,d=Math.hypot(dx,dy);
    if(d>240){const move=Math.min(d-240,(e.speed||25)*1.1*dt);e.x+=dx/d*move;e.y+=dy/d*move;}
    if(q.age>=q.duration)bossChoreographyBegin(e);
   }else if(q.phase==='windup'&&q.age>=q.duration){q.phase='cast';q.age=0;q.duration=q.action.duration;q.action.age=0;bossChoreographySound(e,'cast');}
-  else if(q.phase==='cast'&&q.age>=q.duration){if(q.action.type==='rush'){const o=q.action;e.x=o.x+Math.cos(o.a)*o.length;e.y=o.y+Math.sin(o.a)*o.length;}q.phase='recover';q.age=0;q.duration=q.rage?.85:1.1;q.action=null;}
+  else if(q.phase==='cast'&&q.age>=q.duration){if(q.action.type==='rush'){const o=q.action;e.x=o.x+Math.cos(o.a)*o.length;e.y=o.y+Math.sin(o.a)*o.length;}q.anchorX=e.x;q.anchorY=e.y;q.phase='recover';q.age=0;q.duration=q.rage?.85:1.1;q.action=null;}
   else if(q.phase==='recover'&&q.age>=q.duration){q.phase='approach';q.age=0;q.duration=q.rage?.4:.65;}
  }
  let laser=false;
@@ -117,12 +128,15 @@ function renderBossChoreography(){
  if(!game?.bossChoreography)return;
  const reduced=typeof reducedEffects!=='undefined'&&reducedEffects;
  for(const o of game.bossChoreography.objects){
+  if(o.owner.hp<=0||!game.enemies.includes(o.owner))continue;
   const warning=o.age<0;ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
   if(warning){
    ctx.setLineDash([8,6]);ctx.strokeStyle='#c73d52';ctx.lineWidth=2.5;ctx.globalAlpha=.75;
    if(o.type==='beam'||o.type==='rush'){bossChoreographyPath(o,true);ctx.lineWidth=o.width*2;ctx.globalAlpha=.13;ctx.stroke();ctx.lineWidth=2.5;ctx.globalAlpha=.9;const nx=-Math.sin(o.a)*o.width,ny=Math.cos(o.a)*o.width;for(const side of [-1,1]){ctx.beginPath();ctx.moveTo(o.x+nx*side,o.y+ny*side);ctx.lineTo(o.x+Math.cos(o.a)*o.length+nx*side,o.y+Math.sin(o.a)*o.length+ny*side);ctx.stroke();}}
    else {bossChoreographyPath(o,true);if(o.type==='disk'||o.type==='sweep'){ctx.fillStyle='#d94a60';ctx.globalAlpha=.09;ctx.fill();ctx.globalAlpha=.8;}ctx.stroke();}
-   ctx.setLineDash([]);ctx.fillStyle='#a33449';ctx.globalAlpha=.92;ctx.font='bold 13px "PaperHand",sans-serif';ctx.textAlign='center';ctx.fillText(o.name,o.owner.x,o.owner.y-o.owner.r*2-28);
+   ctx.setLineDash([]);ctx.fillStyle='#a33449';ctx.globalAlpha=.92;ctx.font='bold 13px "PaperHand",sans-serif';ctx.textAlign='center';
+   const label=()=>ctx.fillText(o.name,0,-o.owner.r*2-28);
+   if(typeof PaperCamera!=='undefined')PaperCamera.upright(ctx,o.owner.x,o.owner.y,label);else {ctx.save();ctx.translate(o.owner.x,o.owner.y);label();ctx.restore();}
   }else if(o.type!=='volley'){
    if(o.type==='disk'&&typeof BossChoreographyArt!=='undefined')BossChoreographyArt.attack(ctx,{...o,angle:o.a,reduced});
    else if(o.type==='beam'&&typeof KineticArt!=='undefined')KineticArt.beam(ctx,{x:o.x,y:o.y,x2:o.x+Math.cos(o.a)*o.length,y2:o.y+Math.sin(o.a)*o.length,width:o.width*2,age:o.age,color:o.color,reduced});
@@ -131,5 +145,5 @@ function renderBossChoreography(){
   }
   ctx.restore();
  }
- if(typeof BossChoreographyArt!=='undefined')for(const e of game.enemies){const q=e.choreography;if(e.hp>0&&q&&q.phase!=='approach')BossChoreographyArt.pose(ctx,{kind:e.kind,x:e.x,y:e.y,phase:q.phase,progress:q.age/q.duration,scale:.72,facing:e.facing||1,reduced});}
+ if(typeof BossChoreographyArt!=='undefined')for(const e of game.enemies){const q=e.choreography;if(e.hp<=0||!q||q.phase==='approach')continue;const pose=()=>BossChoreographyArt.pose(ctx,{kind:e.kind,x:0,y:0,phase:q.phase,progress:q.age/q.duration,scale:.72,facing:e.facing||1,reduced});if(typeof PaperCamera!=='undefined')PaperCamera.upright(ctx,e.x,e.y,pose);else {ctx.save();ctx.translate(e.x,e.y);pose();ctx.restore();}}
 }

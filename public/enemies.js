@@ -36,6 +36,7 @@ function tickVariant(e,dt,d){if(!e.variant)return;e.variantClock-=dt;if(e.varian
  if(kind==='summoner')enemyWarn(e,'summon',1,{kind:'puff',color:'#cdb784'});
 }
 function advancedEnemyBehavior(e,dt,dx,dy,d){
+ if(e.boss&&typeof bossCombatBehavior==='function'){bossCombatBehavior(e,dt,dx,dy,d);return 0;}
  const spec=MORE_ENEMIES[e.kind];if(!spec&&!e.variant)return null;
  if(game.buffs?.freeze>0){e.attackCd=Math.max(.2,e.attackCd);return 0;}
  const slow=game.buffs?.slow>0?.55:1;d=Math.max(1,d);tickVariant(e,dt,d);
@@ -65,7 +66,7 @@ function advancedEnemyBehavior(e,dt,dx,dy,d){
  if(e.variant==='berserker'&&e.hp<e.maxHp*.4)m*=1.65;
  return e.intent?0:m*slow;
 }
-function advancedBossBehavior(e,dt,dx,dy,d){if(!e.boss)return false;if(game.buffs?.freeze>0)return true; if(e.attackCd>0)return true;const rage=e.hp<e.maxHp*.5;e.attackCd=rage?2.9:4.6;const turn=e.aiTick++%3,at={x:game.hero.x,y:game.hero.y};
+function advancedBossBehavior(e,dt,dx,dy,d){if(!e.boss)return false;if(typeof bossCombatBehavior==='function')return bossCombatBehavior(e,dt,dx,dy,d);if(game.buffs?.freeze>0)return true; if(e.attackCd>0)return true;const rage=e.hp<e.maxHp*.5;e.attackCd=rage?2.9:4.6;const turn=e.aiTick++%3,at={x:game.hero.x,y:game.hero.y};
  if(e.kind==='bossCrab')enemyWarn(e,turn===1?'stomp':'fan',1,{...at,n:rage?7:5,speed:135,r:85,color:'#daa795'});
  else if(e.kind==='bossOwl')enemyWarn(e,turn===2?'summon':'fan',1.1,{n:rage?9:5,speed:150,kind:'owl',color:'#b8a5c7'});
  else if(e.kind==='bossFrog')enemyWarn(e,turn===1?'radial':'leap',1,{...at,n:12,speed:100,r:80,color:'#b4c599'});
@@ -85,6 +86,7 @@ function updateAdvancedEncounters(dt){if(!game.creatureSeen)initEnemyExpansion()
  if(game.bossesDefeated>=game.bossGoal&&game.finalBossKind&&!game.bossKilled&&game.enemies.some(e=>e.finalBoss&&e.hp<=0))game.bossKilled=true;
 }
 function renderEnemyVariant(e){if(e.hp<=0)return;const v=ELITE_VARIANTS[e.variant],q=e.intent;ctx.save();
- if(v){ctx.strokeStyle=v.color;ctx.lineWidth=2.2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(e.x,e.y+2,e.r+9,(e.r+9)*.55,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);ctx.font='bold 11px "PaperHand","Kaiti SC",serif';ctx.textAlign='center';ctx.strokeStyle='#fff1db';ctx.lineWidth=3;ctx.strokeText(v.name,e.x,e.y-e.r*2-12);ctx.fillStyle='#776178';ctx.fillText(v.name,e.x,e.y-e.r*2-12);}
- if(q){ctx.font='bold 20px PaperHand';ctx.textAlign='center';ctx.fillStyle=['mend','summon'].includes(q.type)?q.color:'#c73d52';ctx.fillText(q.type==='summon'?'♪':q.type==='mend'?'+':'!',e.x,e.y-e.r*2-8);}
+ if(v){ctx.strokeStyle=v.color;ctx.lineWidth=2.2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(e.x,e.y+2,e.r+9,(e.r+9)*.55,0,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);}
+ const labels=()=>{if(v){ctx.font='bold 11px "PaperHand","Kaiti SC",serif';ctx.textAlign='center';ctx.strokeStyle='#fff1db';ctx.lineWidth=3;ctx.strokeText(v.name,0,-e.r*2-12);ctx.fillStyle='#776178';ctx.fillText(v.name,0,-e.r*2-12);}if(q){ctx.font='bold 20px PaperHand';ctx.textAlign='center';ctx.fillStyle=['mend','summon'].includes(q.type)?q.color:'#c73d52';ctx.fillText(q.type==='summon'?'♪':q.type==='mend'?'+':'!',0,-e.r*2-8);}};
+ if(typeof PaperCamera!=='undefined')PaperCamera.upright(ctx,e.x,e.y,labels);else {ctx.translate(e.x,e.y);labels();}
  ctx.restore();}
