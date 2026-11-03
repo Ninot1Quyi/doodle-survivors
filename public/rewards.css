@@ -46,3 +46,5 @@
 
 #boss-health-text{position:absolute;z-index:1;width:100%;text-align:center}
 .rewards-ready #chest-stage{display:none}
+
+#upgrades.jackpot-won #choices,#upgrades.jackpot-won .upgrade-actions,#upgrades.jackpot-won #skip-chest{display:none}#upgrades.jackpot-won #chest-stage{display:block!important}#upgrades.jackpot-won .up-top h2{color:#ffdb88;text-shadow:2px 3px #8d637c}#upgrades.jackpot-won #reward-status{font-size:20px;color:#ffe0a1}#upgrades.jackpot-won #reward-subtitle{font-size:18px;color:#ffebc1}#upgrades.jackpot-won #chest-cinema{filter:drop-shadow(0 0 20px #edc46544)}

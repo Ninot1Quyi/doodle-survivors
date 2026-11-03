@@ -17,3 +17,10 @@
 @media(max-width:480px){#pause-menu .field-note,#settings .field-note,#end .field-note{padding:29px 25px 25px;width:94vw}.field-note h2{font-size:29px}.field-note .note-sticker{width:72px;height:72px}#settings .field-note{padding-top:34px}#settings .field-note h2{font-size:24px}.field-note.settings label{font-size:12px}}
 @media(max-height:580px){#pause-menu .field-note,#settings .field-note,#end .field-note{padding-block:24px;max-height:94dvh}.field-note .note-sticker{width:48px;height:48px}.field-note h2{font-size:27px;margin-block:7px}.field-note .note-caption{margin:4px 0;font-size:9px}.field-note>p{margin-bottom:10px}#pause-menu .primary,#settings .primary,#end .primary{min-height:46px;padding:10px 22px}.field-note .text-button{margin-top:11px}}
 @media(prefers-reduced-motion:reduce){.field-note button{transition:none!important;translate:none!important}}
+
+/* Author's small ink stamp belongs to the same paper palette. */
+.github-note{display:flex;align-items:center;justify-content:center;gap:10px;width:max-content;max-width:100%;margin:17px auto 5px;padding:9px 16px;color:#806a84;text-decoration:none;background:#e8dcc654;border:1px dashed #b7a0b2;border-radius:48% 6% 42% 8% / 5% 43% 6% 38%;transform:rotate(-1deg);transition:transform .15s,background .15s;font-family:inherit}
+.github-note svg{width:25px;height:25px;flex:none;opacity:.86}.github-note span{text-align:left}.github-note b{display:block;font-size:13px;font-weight:500;letter-spacing:1px}.github-note small{display:block;font-size:10px;line-height:1.6;letter-spacing:.5px;color:#a08996}.github-note:hover{transform:rotate(1deg);background:#ead9c7aa}.github-note:focus-visible{outline:2px dashed #906d99;outline-offset:4px}
+#menu .github-note{margin-top:12px;padding:7px 14px}#end .github-note{margin-top:15px}#pause-home{color:#997a8c}
+@media(max-height:660px){.github-note{margin-top:9px;padding:5px 12px}.github-note svg{width:21px;height:21px}}
+@media(prefers-reduced-motion:reduce){.github-note{transition:none}}

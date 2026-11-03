@@ -75,3 +75,14 @@ Node.js >=22.13.0 is required. Run `npm ci`, `npm run build`, apply the SQL migr
 node scripts/test-global-stats.mjs
 node scripts/test-impact-audio.cjs
 ```
+
+## Weapon voices and slot rewards
+
+All 63 active weapons have their own authored CC0 sample identity. Chest reels use a rhythmic spin, rising stop notes and a separate jackpot jingle. Three matching upgradeable results automatically grant three levels, capped by the item's maximum. Escape opens a pause menu with a return-to-main-menu button.
+
+Source licenses and per-file provenance are in `public/audio/`; design research and validation are in `docs/AUDIO_WEAPON_IDENTITIES.md`.
+
+```sh
+node scripts/test-weapon-voices.cjs
+node scripts/test-rewards.cjs
+```

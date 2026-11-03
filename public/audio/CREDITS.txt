@@ -37,9 +37,20 @@ WARM-IMPACT-PROVENANCE.json records sources, checksums, mix gains and metrics.
 Normal, critical and defeat impacts are mutually exclusive, with a 14 ms
 collection window and shared 105 ms pacing. Original BGM is unchanged.
 
-REPEATED CAST AND COLLECTION ROUTING (2026-11-03)
-The same warm CC0 palette now supplies repeated spell-cast and collection cues.
-Old pickup/lightning clips no longer serve star, marble, bell or lightning casts.
-Repeated casts share a 120 ms pacing budget; collection uses 180 ms; individual
-combat groups have voice caps and a 4.2 kHz low-pass. Recorded BGM and one-off
-chest celebration cues are unchanged. No reference-game audio is redistributed.
+WEAPON IDENTITIES AND SLOT REWARDS (2026-11-03, voices12)
+63 distinct authored weapon sources, plus two alternate book-page takes.
+Kenney RPG Audio, Digital Audio, Sci-fi Sounds, Music Jingles — CC0:
+https://kenney.nl/assets/rpg-audio
+https://kenney.nl/assets/digital-audio
+https://kenney.nl/assets/sci-fi-sounds
+https://kenney.nl/assets/music-jingles
+Dustyroom Free Casual Game Sounds — CC0:
+https://dustyroom.com/free-casual-game-sounds/
+The original licenses are included beside this file.
+WEAPON-AUDIO-PROVENANCE.json lists source filenames, SHA-256 and simple gain/trim
+processing. Single authored attack voices preserve source timbre. Weapon voices
+have individual pacing and a six-voice budget, independent from enemy impacts.
+Enemy impacts remain aggregated and quieter; attacks bypass their 4.2 kHz filter.
+Slot spin, three rising stop notes, reveal and jackpot use designer samples;
+old wood/metal/glass chest layers are removed. Jackpot includes a recorded
+pizzicato jingle followed by a short recorded reward cue. BGM is unchanged.

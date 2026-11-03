@@ -29,3 +29,21 @@ run("start();game.enemies=[];spawnEnemy('snail',0,70);game.hitStop=0;game.shake=
 assert.equal(run('game.hitStop'),0);assert.equal(run('game.shake'),0);assert(run('game.enemies[0].hitPulse>0'));
 run("hitFeedback(game.enemies[0],true,150,'confetti',0,0,150)");assert(run('game.hitStop<=.018&&game.shake<=1.6'));assert.equal(run('game.impactCooldown'),.55);
 console.log('PASS: actual draft diversity, all weapon roles, mature fusion stage, late partners, emergency recovery, and local-only ordinary impacts.');
+
+// Jackpot is awarded once, at reveal, with no click or timer double-grant.
+run("start();game.weapons.pencil=1;openUpgrade(true);upgradeChoices=['pencil','pencil','pencil'];upgradeRarity=[2,2,2];updateRewardSession(3.06)");
+assert.equal(run('game.weapons.pencil'),4);assert.equal(run('rewardSession.jackpot.gain'),3);assert.equal(run('state'),'upgrade');
+run('chooseUpgrade(0);updateRewardSession(.2)');assert.equal(run('game.weapons.pencil'),4,'cannot claim an extra card while jackpot is showing');
+run('document.hidden=true;updateRewardSession(10)');assert.equal(run('state'),'upgrade');
+run('document.hidden=false;updateRewardSession(2.3)');assert.equal(run('state'),'playing');assert.equal(run('rewardSession'),null);assert.equal(run('game.weapons.pencil'),4);
+run("openUpgrade(true);upgradeChoices=['pencil','pencil','pencil'];updateRewardSession(3.1)");assert.equal(run('game.weapons.pencil'),5);assert.equal(run('rewardSession.jackpot.gain'),1,'honor the level cap');
+run("start();game.weapons.comet=5;game.fusions=['comet'];openUpgrade(true);upgradeChoices=['comet','comet','comet'];updateRewardSession(3.1)");assert.equal(run('game.weapons.comet'),8);
+run("start();openUpgrade(true);upgradeChoices=['heart','heart','heart'];game.weapons.heart=0;var priorHP=game.hero.maxHp;updateRewardSession(3.1)");assert.equal(run('game.hero.maxHp'),run('priorHP')+75,'passive side effects happen exactly three times');
+run("start();openUpgrade(true);upgradeChoices=['pencil','pencil','book'];updateRewardSession(3.66)");assert.equal(run('rewardSession.jackpot'),null,'two matching symbols are not a jackpot');
+run("start();openUpgrade(true);upgradeChoices=['fusion:comet','fusion:comet','fusion:comet'];updateRewardSession(3.1)");assert.equal(run('rewardSession.jackpot'),null,'fusion cards do not bypass material requirements');
+run("start();openUpgrade(true);upgradeChoices=['pencil','pencil','pencil'];rewardSession.skip=true;rewardSession.age=3.65;updateRewardSession(0)");assert.equal(run('game.weapons.pencil'),4,'skipping the cinematic still awards once');
+run('start();updateRewardSession(10)');assert.equal(run('game.weapons.pencil'),1,'new run cancels the old presentation');
+// Replacement sampling makes triples possible only for chest reels.
+run('start();var oldRandom=Math.random;Math.random=()=>0;openUpgrade(true)');assert.equal(run('upgradeChoices.length'),3);assert.equal(run('new Set(upgradeChoices).size'),1);
+run('start();openUpgrade(false)');assert.equal(run('new Set(upgradeChoices).size'),run('upgradeChoices.length'));run('Math.random=oldRandom');
+console.log('PASS: triple +3, exactly-once grant, caps, evolved weapons, passive effects, hidden pause, two-match/fusion exclusions, skip/reset, chest replacement sampling and distinct ordinary upgrades.');

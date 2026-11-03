@@ -1,0 +1,530 @@
+{
+  "loaded": {
+    "started": true,
+    "muted": false,
+    "contextState": "running",
+    "musicPaused": false,
+    "musicTrack": "Master of the Feast",
+    "musicLoopEnd": 220.7,
+    "loopTransitions": 0,
+    "crossfading": false,
+    "sfxLowpass": 11200,
+    "combatLowpass": 4200,
+    "musicReady": 4,
+    "musicVolume": 0.38,
+    "sfxVolume": 0.56,
+    "activeVoices": 1,
+    "weaponIdentities": 63,
+    "activeWeaponVoices": 0,
+    "activeImpactVoices": 1,
+    "impactMix": {
+      "merged": 0,
+      "budgetSkipped": 0,
+      "emitted": 1
+    },
+    "samples": 123,
+    "failed": [],
+    "played": {
+      "pencil": 1,
+      "impactPencil": 1
+    },
+    "outputRms": 0.10312978394785473,
+    "outputPeak": 0.17588406801223755
+  },
+  "audit": {
+    "rows": [
+      {
+        "key": "pencil",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.02107054367661476
+      },
+      {
+        "key": "book",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.002180800773203373
+      },
+      {
+        "key": "lightning",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.22603338956832886
+      },
+      {
+        "key": "tornado",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.021193349733948708
+      },
+      {
+        "key": "fire",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.028255615383386612
+      },
+      {
+        "key": "scissors",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.032630931586027145
+      },
+      {
+        "key": "ink",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.032702360302209854
+      },
+      {
+        "key": "rose",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.00875298772007227
+      },
+      {
+        "key": "star",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.1583251953125
+      },
+      {
+        "key": "plane",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.008690166287124157
+      },
+      {
+        "key": "bubble",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.02806590311229229
+      },
+      {
+        "key": "bell",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.007095243316143751
+      },
+      {
+        "key": "ribbon",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.072067491710186
+      },
+      {
+        "key": "frost",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.020195985212922096
+      },
+      {
+        "key": "saber",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.03502682223916054
+      },
+      {
+        "key": "lance",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.05228808522224426
+      },
+      {
+        "key": "marble",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.0792655348777771
+      },
+      {
+        "key": "yoyo",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.15969683229923248
+      },
+      {
+        "key": "rocket",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.03278139978647232
+      },
+      {
+        "key": "firecracker",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.1358434557914734
+      },
+      {
+        "key": "ruler",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.16559788584709167
+      },
+      {
+        "key": "prism",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.133771151304245
+      },
+      {
+        "key": "turret",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.022776542231440544
+      },
+      {
+        "key": "foxspirit",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.0865011140704155
+      },
+      {
+        "key": "mine",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.000013751488950219937
+      },
+      {
+        "key": "stamp",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.03633721545338631
+      },
+      {
+        "key": "whip",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.010020755231380463
+      },
+      {
+        "key": "thread",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.036650605499744415
+      },
+      {
+        "key": "roller",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.09089034795761108
+      },
+      {
+        "key": "chalk",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.06744060665369034
+      },
+      {
+        "key": "camera",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.02222372218966484
+      },
+      {
+        "key": "music",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.1713169515132904
+      },
+      {
+        "key": "meteor",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.10162639617919922
+      },
+      {
+        "key": "compass",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.10556157678365707
+      },
+      {
+        "key": "magnetArm",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.12341023236513138
+      },
+      {
+        "key": "gear",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.0014881114475429058
+      },
+      {
+        "key": "umbrella",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.014568761922419071
+      },
+      {
+        "key": "kite",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.0449909046292305
+      },
+      {
+        "key": "leaf",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.05104043334722519
+      },
+      {
+        "key": "shield",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.14548037946224213
+      },
+      {
+        "key": "portal",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.16262060403823853
+      },
+      {
+        "key": "void",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.15869294106960297
+      },
+      {
+        "key": "comet",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.16719487309455872
+      },
+      {
+        "key": "garden",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.06362366676330566
+      },
+      {
+        "key": "aurora",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.3015173077583313
+      },
+      {
+        "key": "tempest",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.20174771547317505
+      },
+      {
+        "key": "nova",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.3497169315814972
+      },
+      {
+        "key": "dragon",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.221684992313385
+      },
+      {
+        "key": "mirror",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.1529063731431961
+      },
+      {
+        "key": "paladin",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.11935820430517197
+      },
+      {
+        "key": "pinball",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.03643783554434776
+      },
+      {
+        "key": "festival",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.029626114293932915
+      },
+      {
+        "key": "rainbowLaser",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.18569441139698029
+      },
+      {
+        "key": "clockwork",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.13928858935832977
+      },
+      {
+        "key": "printingPress",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.05235917866230011
+      },
+      {
+        "key": "loom",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.12948451936244965
+      },
+      {
+        "key": "livingMural",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.11066750437021255
+      },
+      {
+        "key": "spotlight",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.1997012495994568
+      },
+      {
+        "key": "orrery",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.12643849849700928
+      },
+      {
+        "key": "scrapColossus",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.2426244169473648
+      },
+      {
+        "key": "skyWhale",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.138957217335701
+      },
+      {
+        "key": "autumnGuardian",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.154208242893219
+      },
+      {
+        "key": "paperCosmos",
+        "accepted": true,
+        "emitted": true,
+        "peak": 0.20083071291446686
+      }
+    ],
+    "diagnostics": {
+      "started": true,
+      "muted": false,
+      "contextState": "running",
+      "musicPaused": false,
+      "musicTrack": "Master of the Feast",
+      "musicLoopEnd": 220.7,
+      "loopTransitions": 0,
+      "crossfading": false,
+      "sfxLowpass": 11200,
+      "combatLowpass": 4200,
+      "musicReady": 4,
+      "musicVolume": 0,
+      "sfxVolume": 0.56,
+      "activeVoices": 1,
+      "weaponIdentities": 63,
+      "activeWeaponVoices": 1,
+      "activeImpactVoices": 0,
+      "impactMix": {
+        "merged": 0,
+        "budgetSkipped": 0,
+        "emitted": 1
+      },
+      "samples": 123,
+      "failed": [],
+      "played": {
+        "pencil": 2,
+        "impactPencil": 1,
+        "chestRise": 1,
+        "reelTick": 19,
+        "reelStop0": 1,
+        "reelStop1": 1,
+        "reelStop2": 1,
+        "jackpot": 1,
+        "victory": 1,
+        "hurt": 1,
+        "book": 1,
+        "lightning": 1,
+        "tornado": 1,
+        "fire": 1,
+        "scissors": 1,
+        "ink": 1,
+        "rose": 1,
+        "star": 1,
+        "plane": 1,
+        "bubble": 1,
+        "bell": 1,
+        "ribbon": 1,
+        "frost": 1,
+        "saber": 1,
+        "lance": 1,
+        "marble": 1,
+        "yoyo": 1,
+        "rocket": 1,
+        "firecracker": 1,
+        "ruler": 1,
+        "prism": 1,
+        "turret": 1,
+        "foxspirit": 1,
+        "mine": 1,
+        "stamp": 1,
+        "whip": 1,
+        "thread": 1,
+        "roller": 1,
+        "chalk": 1,
+        "camera": 1,
+        "music": 1,
+        "meteor": 1,
+        "compass": 1,
+        "magnetArm": 1,
+        "gear": 1,
+        "umbrella": 1,
+        "kite": 1,
+        "leaf": 1,
+        "shield": 1,
+        "portal": 1,
+        "void": 1,
+        "comet": 1,
+        "garden": 1,
+        "aurora": 1,
+        "tempest": 1,
+        "nova": 1,
+        "dragon": 1,
+        "mirror": 1,
+        "paladin": 1,
+        "pinball": 1,
+        "festival": 1,
+        "rainbowLaser": 1,
+        "clockwork": 1,
+        "printingPress": 1,
+        "loom": 1,
+        "livingMural": 1,
+        "spotlight": 1,
+        "orrery": 1,
+        "scrapColossus": 1,
+        "skyWhale": 1,
+        "autumnGuardian": 1,
+        "paperCosmos": 1
+      },
+      "outputRms": 0.0382500009766555,
+      "outputPeak": 0.06317619979381561
+    }
+  },
+  "errors": [],
+  "runPosts": 17,
+  "verified": [
+    "pause-home",
+    "home author link",
+    "victory author link",
+    "death author link",
+    "triple immediate award",
+    "triple exactly once",
+    "63 decoded weapon cues",
+    "mobile portrait/landscape"
+  ]
+}

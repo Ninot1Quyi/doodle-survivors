@@ -1,0 +1,716 @@
+{
+  "processing": "Only leading silence trim, gain adjustment, 3ms fade-in and OGG encoding. Runtime preserves source timbre; no synthesized/layered attacks.",
+  "sources": {
+    "jingles": "https://kenney.nl/assets/music-jingles",
+    "scifi": "https://kenney.nl/assets/sci-fi-sounds",
+    "rpg": "https://kenney.nl/assets/rpg-audio",
+    "digital": "https://kenney.nl/assets/digital-audio",
+    "impact": "https://kenney.nl/assets/impact-sounds",
+    "dusty": "https://dustyroom.com/free-casual-game-sounds/"
+  },
+  "license": "CC0-1.0",
+  "samples": [
+    {
+      "weapon": "pencil",
+      "pack": "impact",
+      "source": "impactWood_light_000.ogg",
+      "file": "weapons/pencil.ogg",
+      "description": "短木质笔尖发射",
+      "source_sha256": "eb45e35b4bed784d3f120de4afec4b0d6ac09d9e143cce8cfcb7d739e1b1f3c3",
+      "file_sha256": "0ab15f034e06776bb616611388628e04fbc026a56deaba568a4e1ecce7f72a09",
+      "gain": 0.579059
+    },
+    {
+      "weapon": "book",
+      "pack": "rpg",
+      "source": "bookFlip1.ogg",
+      "file": "weapons/book.ogg",
+      "description": "纸页翻动",
+      "source_sha256": "fa81ac2fedc8c641661b87e349630a36c9800e795e0c800e029214efdbe26a7d",
+      "file_sha256": "83dad06d688f57b9ff78d6f387c9f9e2b43aacbc49e43f55457dabb90d8b19c7",
+      "gain": 0.471284
+    },
+    {
+      "weapon": "lightning",
+      "pack": "digital",
+      "source": "zap1.ogg",
+      "file": "weapons/lightning.ogg",
+      "description": "短电弧",
+      "source_sha256": "4e4bf11c671a4be0723022a7177f8e122329fa32a0c59555581f4193ed111585",
+      "file_sha256": "a5637bfb6749a2e9d76389c3891919912fb76c2fd0943dd1acce3500bae730b9",
+      "gain": 0.709318
+    },
+    {
+      "weapon": "tornado",
+      "pack": "rpg",
+      "source": "cloth4.ogg",
+      "file": "weapons/tornado.ogg",
+      "description": "宽布料掠风",
+      "source_sha256": "e7ab9a6c4466dea874196c61f59bf1da05cfe58748f42fadd695d441a154a99b",
+      "file_sha256": "c61b64157f1ff7ed0214ddb79cabc288dcd322d3c3baa402186580dc20954f27",
+      "gain": 2.5
+    },
+    {
+      "weapon": "fire",
+      "pack": "scifi",
+      "source": "thrusterFire_000.ogg",
+      "file": "weapons/fire.ogg",
+      "description": "低沉火球喷发",
+      "source_sha256": "0fdc474d93f209debf1fc4ea77765a669dcb7676db31b4d8a0a509685bccf374",
+      "file_sha256": "d106d4754f4c751f4cace9728133d53fb9fcf42000af780a697c4a07ca5c9dd5",
+      "gain": 0.808036
+    },
+    {
+      "weapon": "scissors",
+      "pack": "rpg",
+      "source": "drawKnife1.ogg",
+      "file": "weapons/scissors.ogg",
+      "description": "剪刃抽动",
+      "source_sha256": "276403e72c3b71c47bc24db3083970c23f8e5551ffa78f436f83483c56f3f0bb",
+      "file_sha256": "5d8c7616bfaa0795d47ee3681405dec5099d7998d1dbbb199373f6b7d1c8cfe6",
+      "gain": 2.5
+    },
+    {
+      "weapon": "ink",
+      "pack": "scifi",
+      "source": "slime_000.ogg",
+      "file": "weapons/ink.ogg",
+      "description": "下沉墨滴",
+      "source_sha256": "480ee82b690136ea9db6966a3c3033356b8274752795c4e37afd6b6defcfacff",
+      "file_sha256": "0538da0ba85d3bbb3921b772b6fa4573bd9edc8b79e7fe913e095a833b342d9d",
+      "gain": 0.803552
+    },
+    {
+      "weapon": "rose",
+      "pack": "rpg",
+      "source": "clothBelt.ogg",
+      "file": "weapons/rose.ogg",
+      "description": "叶片展开",
+      "source_sha256": "f29560a2aea95bbfeb643e1e8f56ec2b6f7e32f32ce4e140645a36db81de3253",
+      "file_sha256": "4a6c6121e8aeb4a9be08cba7def2395d2b20253b750352fa26e2751add9c4fa9",
+      "gain": 0.839563
+    },
+    {
+      "weapon": "star",
+      "pack": "digital",
+      "source": "pepSound1.ogg",
+      "file": "weapons/star.ogg",
+      "description": "上扬星点",
+      "source_sha256": "f2f44effce087e47683f0fea05a71002bd8dca78fb10bf93d9f0b38d49f9590e",
+      "file_sha256": "c00546bcad5744fd33f9197666cfc6d7084247b4f44048707a835b60eab42ab5",
+      "gain": 0.808787
+    },
+    {
+      "weapon": "plane",
+      "pack": "rpg",
+      "source": "cloth1.ogg",
+      "file": "weapons/plane.ogg",
+      "description": "轻纸翼掠过",
+      "source_sha256": "ddb93a3671233f95da0e0b10367f082f7eb42fa6caaddcf776410aa8833c747d",
+      "file_sha256": "42d55c02ebe7bf5f2f38d69120fd5b8986a9cc485face046ba97fb8def59915c",
+      "gain": 0.808705
+    },
+    {
+      "weapon": "bubble",
+      "pack": "scifi",
+      "source": "slime_001.ogg",
+      "file": "weapons/bubble.ogg",
+      "description": "弹性泡泡",
+      "source_sha256": "822ca475d71e18ef6bba707dbe6bff2bd493d3457b2552f7473d23022c1257ca",
+      "file_sha256": "48a8634d7a9fdedadd59fa8efb4f852380441ed517168799be6eab29402a33b3",
+      "gain": 0.80334
+    },
+    {
+      "weapon": "bell",
+      "pack": "dusty",
+      "source": "DM-CGS-34.wav",
+      "file": "weapons/bell.ogg",
+      "description": "短铃音",
+      "source_sha256": "4f5ef6d809fa9aba82214b5ccd25f15da717e4509a74765040fe416a246b5e8d",
+      "file_sha256": "d1ef7f69027f2366798c30a9b0476a19fdcc536ad7045171c93558099787a1ae",
+      "gain": 0.534091
+    },
+    {
+      "weapon": "ribbon",
+      "pack": "rpg",
+      "source": "cloth2.ogg",
+      "file": "weapons/ribbon.ogg",
+      "description": "丝带滑动",
+      "source_sha256": "8a7451193c38bc05483aec25dd193e163a15d44cf7fff04ac7912573231b0201",
+      "file_sha256": "7985a7888af608cfbb93c58ade9aad8c4e6426a7393d1da51539ec0ee051aaa8",
+      "gain": 1.671981
+    },
+    {
+      "weapon": "frost",
+      "pack": "digital",
+      "source": "spaceTrash1.ogg",
+      "file": "weapons/frost.ogg",
+      "description": "冰晶碎光",
+      "source_sha256": "8f702781627c95cf9f91724dab3bcdb46bb87cc0ccf2a350748798dba6bc82aa",
+      "file_sha256": "aea4851a2b3994bfc574359e7904bdbb7adc0d051fd27e9153e972bb19869560",
+      "gain": 0.828461
+    },
+    {
+      "weapon": "saber",
+      "pack": "rpg",
+      "source": "knifeSlice.ogg",
+      "file": "weapons/saber.ogg",
+      "description": "宽刃切风",
+      "source_sha256": "4cd96dc630bed9840c15f1dd2306da2cc56a4da26a5d3f1a03c5a7265ac5e54f",
+      "file_sha256": "ba0c4720ec8c6359c6bbabace8eaa06cec710b18c77e136c75872c5f4a7aa296",
+      "gain": 0.706831
+    },
+    {
+      "weapon": "lance",
+      "pack": "rpg",
+      "source": "drawKnife3.ogg",
+      "file": "weapons/lance.ogg",
+      "description": "尖锐突刺",
+      "source_sha256": "a11ae62fb1a628425769d11a9de394980ad8909c31f4c9a4316f226963e21caf",
+      "file_sha256": "8dac06caea9e9eb7ba7d0c1dcac8e0703355d0eeaa807db098c88cd94bcdf5f6",
+      "gain": 2.088046
+    },
+    {
+      "weapon": "marble",
+      "pack": "rpg",
+      "source": "metalPot1.ogg",
+      "file": "weapons/marble.ogg",
+      "description": "圆润小珠敲击",
+      "source_sha256": "159def979e8e386c2c539f5e99cc30a080eb2dcb6c911fa2e4ccc0785b2522fd",
+      "file_sha256": "48487ec3979a8b3628f616208429f05b1e0d2e397ed3563bd9687faf1b97b03d",
+      "gain": 0.477255
+    },
+    {
+      "weapon": "yoyo",
+      "pack": "digital",
+      "source": "phaserDown1.ogg",
+      "file": "weapons/yoyo.ogg",
+      "description": "回旋滑音",
+      "source_sha256": "d2d046cd0247045f8819905fc9719a7237ccbd590b3128ce58a61a81f50d208b",
+      "file_sha256": "046de275a274d1685f7951350952125d9696bf91c87a0045b61ef79d5a23a2eb",
+      "gain": 0.838542
+    },
+    {
+      "weapon": "rocket",
+      "pack": "scifi",
+      "source": "thrusterFire_003.ogg",
+      "file": "weapons/rocket.ogg",
+      "description": "加速升调",
+      "source_sha256": "04f558ca5abf30788e49ed4370289dfd7e38c7f054d2ea35c2a013210374f1e5",
+      "file_sha256": "788f7f0d17a41bda46cd9cd0f50927885980fe1002e70ac1a0de2da55fecc29e",
+      "gain": 0.803225
+    },
+    {
+      "weapon": "firecracker",
+      "pack": "digital",
+      "source": "laser7.ogg",
+      "file": "weapons/firecracker.ogg",
+      "description": "短促爆豆",
+      "source_sha256": "ec67a33a99dce15b93d74ee4d32c903150dcd04b822853f417eafd526ca041fd",
+      "file_sha256": "b908214f97af21cedec0617e3169114d8e645231fbd067b4f46d58d8ed09df48",
+      "gain": 0.774368
+    },
+    {
+      "weapon": "ruler",
+      "pack": "digital",
+      "source": "laser1.ogg",
+      "file": "weapons/ruler.ogg",
+      "description": "直线光束",
+      "source_sha256": "0bf468769b48a834dc1c6e38e457f2c71159b010225a9aedf84316795e8cc3e5",
+      "file_sha256": "3fe251176e9c4c44227e62e9f22ef4b143a5bcea5b906f4eb1a9f891e01136d1",
+      "gain": 0.788099
+    },
+    {
+      "weapon": "prism",
+      "pack": "digital",
+      "source": "laser2.ogg",
+      "file": "weapons/prism.ogg",
+      "description": "折射脉冲",
+      "source_sha256": "50470d64f9397855e5d9a334484da9c5232b3e0524c52f088b8a73822bd89f45",
+      "file_sha256": "0615fb4830269aa0b9043e826d4c937a2e70f0cf460db40e947fc774683a2ca4",
+      "gain": 0.798906
+    },
+    {
+      "weapon": "turret",
+      "pack": "rpg",
+      "source": "metalClick.ogg",
+      "file": "weapons/turret.ogg",
+      "description": "哨塔扳机",
+      "source_sha256": "9851a69d0c613e13bceef08060ecc4148f098ef487927cbebe270d642398a3b3",
+      "file_sha256": "1c627ef95dcca643cdffc0aad5b2e26ddb3b3befcebf258b909cb231cf2948fb",
+      "gain": 1.304648
+    },
+    {
+      "weapon": "foxspirit",
+      "pack": "rpg",
+      "source": "cloth3.ogg",
+      "file": "weapons/foxspirit.ogg",
+      "description": "狐狸扑跃",
+      "source_sha256": "a48632d17a4f1416541d261a32a31612e01267144c407fa3ecab3ff410f0085b",
+      "file_sha256": "fc811b39cf3ece6f21b3449a098cebd940b00d3c739b74317ba034edb796f0b4",
+      "gain": 1.949197
+    },
+    {
+      "weapon": "mine",
+      "pack": "dusty",
+      "source": "DM-CGS-21.wav",
+      "file": "weapons/mine.ogg",
+      "description": "地雷短爆",
+      "source_sha256": "c370437cb08ef19de05ea89a0c59d336bc85c26f3e46459139e9848ef295822f",
+      "file_sha256": "bd6e4602590e47a70c3f247f592c36e43e48cbd4fcdad08ac7bdfbdc3ec844aa",
+      "gain": 0.515875
+    },
+    {
+      "weapon": "stamp",
+      "pack": "rpg",
+      "source": "bookPlace3.ogg",
+      "file": "weapons/stamp.ogg",
+      "description": "厚重印章落地",
+      "source_sha256": "b1afa711e1cabfe5b2c56e20e20e0f9d82142d067727447fa992ddc43dbdb06e",
+      "file_sha256": "84b70692be636104e3ae597a55d4d9dddc24947d9129b4405eb0a37b57d888df",
+      "gain": 0.481794
+    },
+    {
+      "weapon": "whip",
+      "pack": "rpg",
+      "source": "knifeSlice2.ogg",
+      "file": "weapons/whip.ogg",
+      "description": "细鞭抽风",
+      "source_sha256": "6c2064d0ef988d1ec3d56868e823ea8823a5cac00f2742560052633529407def",
+      "file_sha256": "034d113839b6878bc5d2b8ee7ae554570dbef1ba0c880b815d0a8647c0cb806e",
+      "gain": 0.483511
+    },
+    {
+      "weapon": "thread",
+      "pack": "rpg",
+      "source": "beltHandle1.ogg",
+      "file": "weapons/thread.ogg",
+      "description": "针线拉紧",
+      "source_sha256": "2ef665bd8b65dbe669f4560be38a6d8f04a162e618b15a49e3e71b58e558aab0",
+      "file_sha256": "4184f45a6e1fac19bd9b1bae0ef241a02883c611a88ad6382cd21e5e8928d5a1",
+      "gain": 0.824075
+    },
+    {
+      "weapon": "roller",
+      "pack": "rpg",
+      "source": "handleSmallLeather.ogg",
+      "file": "weapons/roller.ogg",
+      "description": "滚筒擦纸",
+      "source_sha256": "ae3cbf695aa0a8b98b5a80a835be5a3ccbd5446a24db2235cd4c3cd6fc92ed96",
+      "file_sha256": "cad2fc3dacc59b7f30052795eed4c4a8907f52b3efc4f7f6fb2f4fe3a31e6ac3",
+      "gain": 2.5
+    },
+    {
+      "weapon": "chalk",
+      "pack": "rpg",
+      "source": "handleSmallLeather2.ogg",
+      "file": "weapons/chalk.ogg",
+      "description": "粉笔摩擦",
+      "source_sha256": "a66f6db5918ad016c28a9f2768f127a7f39b5fa04481e5a3b4e78ebe2a1c282d",
+      "file_sha256": "538669137ab518e2d0c9ebc93b9e0ae9833198d2d296bb8eee16ed53e26b2baa",
+      "gain": 2.5
+    },
+    {
+      "weapon": "camera",
+      "pack": "rpg",
+      "source": "metalLatch.ogg",
+      "file": "weapons/camera.ogg",
+      "description": "相机快门",
+      "source_sha256": "ba9ba60b172b3ebc131a940f25793cd2e207aca7af73dc80d637277f060f1708",
+      "file_sha256": "9fdfb5ac6b2a4b4e7743b901dd7bfb68d061590d2cf00f526551b5bcc37129fb",
+      "gain": 0.472294
+    },
+    {
+      "weapon": "music",
+      "pack": "digital",
+      "source": "threeTone1.ogg",
+      "file": "weapons/music.ogg",
+      "description": "八音琴三音",
+      "source_sha256": "bdf21eb12e65507f091d074886fdac820e1ccae51d060caa168e5567acadb84b",
+      "file_sha256": "ee94341748f91b2e397ab5ff043b3770a6f50e11671da793d279efcda0fd8aa9",
+      "gain": 0.809346
+    },
+    {
+      "weapon": "meteor",
+      "pack": "scifi",
+      "source": "lowFrequency_explosion_001.ogg",
+      "file": "weapons/meteor.ogg",
+      "description": "陨星落地",
+      "source_sha256": "cdda50600a4928f2f1b8371224d53c171ac799c1cf2c30b11999508985250b3b",
+      "file_sha256": "e587f4311ac0ed2f1bb54ad17c6ed6864fd6f2ba3254eb5058a614f63717c6bd",
+      "gain": 0.560284
+    },
+    {
+      "weapon": "compass",
+      "pack": "digital",
+      "source": "pepSound4.ogg",
+      "file": "weapons/compass.ogg",
+      "description": "罗盘锁定提示",
+      "source_sha256": "8afd1776651eb3155e1b588f26d6c9b5cc183e9c53297685763f51ac63e63673",
+      "file_sha256": "a316b307a66e638815124784d2922dfe304a9a407ba44da58e5d4e9bed0944e4",
+      "gain": 0.791559
+    },
+    {
+      "weapon": "magnetArm",
+      "pack": "digital",
+      "source": "phaserDown3.ogg",
+      "file": "weapons/magnetArm.ogg",
+      "description": "磁吸下滑音",
+      "source_sha256": "19fd2f5bb8448e022381f1a72c36117d4adcb521ebeb697e888bfaf7945cfa56",
+      "file_sha256": "7d04d5e22b05e585f4dc50cc6357b8c472cb095df8575b76b5969177e2d60829",
+      "gain": 0.880207
+    },
+    {
+      "weapon": "gear",
+      "pack": "rpg",
+      "source": "beltHandle2.ogg",
+      "file": "weapons/gear.ogg",
+      "description": "齿轮扣动",
+      "source_sha256": "f3b692d5c83263c25bce779805b212dbab515d18a603c695fc6a1e8650cf5366",
+      "file_sha256": "79ad31acd4ec8b1f458d625b82488d808134449b6e9b05f876cbf86f2a447c3d",
+      "gain": 0.86232
+    },
+    {
+      "weapon": "umbrella",
+      "pack": "rpg",
+      "source": "bookOpen.ogg",
+      "file": "weapons/umbrella.ogg",
+      "description": "纸伞撑开",
+      "source_sha256": "953390534377222bee89ac8cd9e60a58fdc037c71a4d7c18c43cd647c7f34ba8",
+      "file_sha256": "0c05f27c8d05dadb17cf912b0fd3001a55f669d6dff43b015def2adc85ee827b",
+      "gain": 2.410087
+    },
+    {
+      "weapon": "kite",
+      "pack": "rpg",
+      "source": "clothBelt2.ogg",
+      "file": "weapons/kite.ogg",
+      "description": "风筝牵线",
+      "source_sha256": "d545b1d9f20e6188140aaf551a96f1e82fe0d15f7ca066fac8b065e1231e0038",
+      "file_sha256": "d052e96abaeae4752e060d75f14e535dc8b6974cbb985f0b096683e6347e1a71",
+      "gain": 1.148647
+    },
+    {
+      "weapon": "leaf",
+      "pack": "rpg",
+      "source": "drawKnife2.ogg",
+      "file": "weapons/leaf.ogg",
+      "description": "叶片切风",
+      "source_sha256": "d5df6a4130cbb016f97b4883769a418917b9629cb4c21717030b186e0c73281a",
+      "file_sha256": "a72d902219b822ab69805c55bcda2d1b7a039b5036f3bda0b495a61b0ca54874",
+      "gain": 2.5
+    },
+    {
+      "weapon": "shield",
+      "pack": "scifi",
+      "source": "forceField_000.ogg",
+      "file": "weapons/shield.ogg",
+      "description": "盾面共鸣",
+      "source_sha256": "c2916f2a062c8ddd1aca2826d134fe90847037db31342726ffb0f9097afe339c",
+      "file_sha256": "49ba1c9674065748dfca061068db91634e39324789fd3386c9bb75497e50d087",
+      "gain": 0.797774
+    },
+    {
+      "weapon": "portal",
+      "pack": "scifi",
+      "source": "forceField_002.ogg",
+      "file": "weapons/portal.ogg",
+      "description": "折门跃迁",
+      "source_sha256": "051b0eafc479695af4ca3607d41fd4be41bae7c21f4f9508d004722b09f1bd63",
+      "file_sha256": "cd07764c749ca50886acee1d5ddf1518c6a02099b1dd64b0430980d7ba2e9105",
+      "gain": 0.802278
+    },
+    {
+      "weapon": "void",
+      "pack": "scifi",
+      "source": "forceField_003.ogg",
+      "file": "weapons/void.ogg",
+      "description": "墨洞吸入",
+      "source_sha256": "15e3fe971ffd3415e5ab641d3a4d043fb31f6712b0956315b524ba29c3889cda",
+      "file_sha256": "1d394a5a41311c73fc4af6411a0aa053516661c692432420da5533ab3c2d1dd7",
+      "gain": 0.800168
+    },
+    {
+      "weapon": "comet",
+      "pack": "digital",
+      "source": "powerUp1.ogg",
+      "file": "weapons/comet.ogg",
+      "description": "彗星连奏",
+      "source_sha256": "8c361b624b560c0bc30ea3063b71212bc30caebf425c9df2481c13b25561485c",
+      "file_sha256": "9b44a62d57c1f5054616ae2275b6df0e7e7d891a325ef533b05439290a0d04a4",
+      "gain": 0.774262
+    },
+    {
+      "weapon": "garden",
+      "pack": "dusty",
+      "source": "DM-CGS-33.wav",
+      "file": "weapons/garden.ogg",
+      "description": "花园渐盛",
+      "source_sha256": "a03ab0e5cbdb258d2a286b5f935c1e0d1a012fe5b89002e26a2c0597d76716bb",
+      "file_sha256": "d73da0d11a2869ff73b9e0a58b0d9b27f78a26e0ca29cf0c2ca171fa62e37f44",
+      "gain": 0.515647
+    },
+    {
+      "weapon": "aurora",
+      "pack": "digital",
+      "source": "zapThreeToneUp.ogg",
+      "file": "weapons/aurora.ogg",
+      "description": "极光电音上行",
+      "source_sha256": "52da0ff5e219179df4521b38276abde0ed6ba27e0cf030b0d1209b8857406eff",
+      "file_sha256": "3f808d8ee16f57a674ad123e5b0264bb9bb10e294e0b4b32e0cef4402f2ca3d0",
+      "gain": 0.725404
+    },
+    {
+      "weapon": "tempest",
+      "pack": "scifi",
+      "source": "engineCircular_002.ogg",
+      "file": "weapons/tempest.ogg",
+      "description": "纸风暴旋涡",
+      "source_sha256": "5f364bd42269e111df1d421fa2b45f0b2f0cc99a873ceae2d55b34898ad0d779",
+      "file_sha256": "806f17b88376bbbde91aa6280cec9b7d0c1dc63c4007714ef1fb25ab8c43d160",
+      "gain": 0.804805
+    },
+    {
+      "weapon": "nova",
+      "pack": "scifi",
+      "source": "explosionCrunch_003.ogg",
+      "file": "weapons/nova.ogg",
+      "description": "星云爆发",
+      "source_sha256": "8c7197bb3a1c504690319c3abe0e62a5423ee246dd70caab57963d0b7aa8144f",
+      "file_sha256": "bdc0e6b303428491e76134764ab4163678f6966f6f27527f85d798289fb16ab4",
+      "gain": 0.805975
+    },
+    {
+      "weapon": "dragon",
+      "pack": "digital",
+      "source": "phaserUp7.ogg",
+      "file": "weapons/dragon.ogg",
+      "description": "纸龙长啸",
+      "source_sha256": "47ff0828ef14d4944689e771a50bc4e991a88067bea1ba46a06c6aeb1e03c2a3",
+      "file_sha256": "f326372c4fb9266619728c935f7f34e9b5dcb63807517c063ce0ee114efec4a9",
+      "gain": 0.904564
+    },
+    {
+      "weapon": "mirror",
+      "pack": "dusty",
+      "source": "DM-CGS-45.wav",
+      "file": "weapons/mirror.ogg",
+      "description": "长镜面铃响",
+      "source_sha256": "91dd9ebdde539e058bda67fb0b150f30c035addc7857e2e620cdf8f901213034",
+      "file_sha256": "6d3f146e2bede6d5ec93b23aec4366d095410c789adf303dc3d71c5570eae0ef",
+      "gain": 0.509117
+    },
+    {
+      "weapon": "paladin",
+      "pack": "digital",
+      "source": "powerUp3.ogg",
+      "file": "weapons/paladin.ogg",
+      "description": "骑士登场",
+      "source_sha256": "59e7591f7a068882767bc1fd61edabf479b78787466d3a70bc49dfa0533777d2",
+      "file_sha256": "467f1d73a9a8929b2441cf38658203cf5fb728273ee5ba4cebc7e3acafb5c605",
+      "gain": 0.920407
+    },
+    {
+      "weapon": "pinball",
+      "pack": "digital",
+      "source": "pepSound5.ogg",
+      "file": "weapons/pinball.ogg",
+      "description": "弹珠台跳音",
+      "source_sha256": "4dc9824b319efd915bac82d8e2767e51d5f6503224d358fda6e2d445f2934bc8",
+      "file_sha256": "828c98e09b4636cded77582bbbb0be8cc426638950d4a67d5dba77626788821e",
+      "gain": 0.804159
+    },
+    {
+      "weapon": "festival",
+      "pack": "dusty",
+      "source": "DM-CGS-08.wav",
+      "file": "weapons/festival.ogg",
+      "description": "烟火连续绽放",
+      "source_sha256": "1a15843a59b3219d9281084e792c046d4c14de718fdcfa24ef2125c03130c7b2",
+      "file_sha256": "76db45582e02293bad63f9fd81cc02f5dde53a4c0b65ac6bd4df5ab56d4002f9",
+      "gain": 0.568892
+    },
+    {
+      "weapon": "rainbowLaser",
+      "pack": "digital",
+      "source": "laser9.ogg",
+      "file": "weapons/rainbowLaser.ogg",
+      "description": "彩虹长光束",
+      "source_sha256": "ae77fe3e3f3488e64b83f0526640af512e5ef452d88e79b4b97404803a047e9f",
+      "file_sha256": "d352b5eb98b051f74b200c3ac952c1787c644fa081859fe258d8412dd5b4e764",
+      "gain": 0.816141
+    },
+    {
+      "weapon": "clockwork",
+      "pack": "digital",
+      "source": "powerUp7.ogg",
+      "file": "weapons/clockwork.ogg",
+      "description": "纸城齿轮乐句",
+      "source_sha256": "9048d651b51f528099c384566b0d4c6c597bee8b56c48f3adab7a901feba0fa5",
+      "file_sha256": "96ccf9144fab5d7619e048e7b263394341b3418bf85e50c7865f07b0a6c35cd7",
+      "gain": 0.75568
+    },
+    {
+      "weapon": "printingPress",
+      "pack": "rpg",
+      "source": "bookClose.ogg",
+      "file": "weapons/printingPress.ogg",
+      "description": "印刷机压合",
+      "source_sha256": "81e976532565f4372abd14e83d2684195fa548d0a28d345de221e56052454f32",
+      "file_sha256": "f66cd37be4862daf240b703f28ebc9c2f9f1d77d40e6aef521a3f1d87a3e47f3",
+      "gain": 0.502812
+    },
+    {
+      "weapon": "loom",
+      "pack": "digital",
+      "source": "phaserUp5.ogg",
+      "file": "weapons/loom.ogg",
+      "description": "织机穿梭",
+      "source_sha256": "704433167121712c456fa7f06af96c975a28f9a022d91feb68196bb073704ea0",
+      "file_sha256": "fb5e7b4dab6272a9b6d2b58a94da3df64ff16e3ec2a9ec38c4483777d116a393",
+      "gain": 0.926002
+    },
+    {
+      "weapon": "livingMural",
+      "pack": "digital",
+      "source": "powerUp10.ogg",
+      "file": "weapons/livingMural.ogg",
+      "description": "壁画生长乐句",
+      "source_sha256": "e4d2c7707655361678ccd358048b7956753e4f333e99545b4ae25e07a9b2ef9b",
+      "file_sha256": "ed1fa146bb71cf9ca904fe6c232eaafbb898fcbf513d67a8ab4ccf9aa6bec86f",
+      "gain": 0.815469
+    },
+    {
+      "weapon": "spotlight",
+      "pack": "digital",
+      "source": "powerUp4.ogg",
+      "file": "weapons/spotlight.ogg",
+      "description": "剧场亮灯",
+      "source_sha256": "df6992456056af760815460b66d2ca1c3a07c200cca26325db5820b90104d177",
+      "file_sha256": "397f0442853e509601596036ff9fc533654bb28b4c289bc21b9736ab8079017d",
+      "gain": 0.885824
+    },
+    {
+      "weapon": "orrery",
+      "pack": "digital",
+      "source": "threeTone2.ogg",
+      "file": "weapons/orrery.ogg",
+      "description": "星系钟音",
+      "source_sha256": "124198c80ff2e1826230be606aa3dcdd90262272bb545f621a9eb91dccfd5c9d",
+      "file_sha256": "e2da1b1221f4b982155509d8f611355bbc61fb90780ba51b06e1ed65855dedac",
+      "gain": 0.842012
+    },
+    {
+      "weapon": "scrapColossus",
+      "pack": "rpg",
+      "source": "metalPot3.ogg",
+      "file": "weapons/scrapColossus.ogg",
+      "description": "巨人厚重金属共鸣",
+      "source_sha256": "d306e5b848f6843332d0ca19f8f7dfe5796aeb56d8273902b085df463273f1dc",
+      "file_sha256": "afc71f57767479cbf65ce5961855d5cb850cbfe7e9360ded24c7e24afacaad79",
+      "gain": 0.415604
+    },
+    {
+      "weapon": "skyWhale",
+      "pack": "scifi",
+      "source": "spaceEngineLow_002.ogg",
+      "file": "weapons/skyWhale.ogg",
+      "description": "云鲸低吟",
+      "source_sha256": "3b1adf8645a40c35fcad25eee224c82c9836dc443102a9af5586eb22cbedabcc",
+      "file_sha256": "6da9577360eaf035b2bcce2e2b2fff749116cca0f491d0201f9ac4014a90ebd7",
+      "gain": 0.797487
+    },
+    {
+      "weapon": "autumnGuardian",
+      "pack": "digital",
+      "source": "powerUp9.ogg",
+      "file": "weapons/autumnGuardian.ogg",
+      "description": "秋叶护卫和音",
+      "source_sha256": "7dfa3198ab951f09bee096bcd08db6faafcdb57a6bf416c91e1fa9a8321076e5",
+      "file_sha256": "b42143da38d9962a9daa5be627862c0b780fbb73d40fee393501b3c332a0e9fa",
+      "gain": 0.815736
+    },
+    {
+      "weapon": "paperCosmos",
+      "pack": "scifi",
+      "source": "forceField_004.ogg",
+      "file": "weapons/paperCosmos.ogg",
+      "description": "宇宙展开长音",
+      "source_sha256": "05609bb296cbc287ae95ac8924c89809d69c89d7bb357cc6a117ec1b1ef65e09",
+      "file_sha256": "100f5d6fc87599563774d7546ec838a6ccc50c55c76a4aff1a861ae357521a26",
+      "gain": 0.799611
+    },
+    {
+      "weapon": "book",
+      "pack": "rpg",
+      "source": "bookFlip2.ogg",
+      "file": "weapons/book2.ogg",
+      "source_sha256": "3409042acbfaebc24c1a6327dc073e36f9250841712e96c5040da566a97df73c",
+      "file_sha256": "4b8c5984f6a2622ec5aaaa4f5dd86450a7e3bede48f2b1974736b21bb6b29431",
+      "gain": 1.565117
+    },
+    {
+      "weapon": "book",
+      "pack": "rpg",
+      "source": "bookFlip3.ogg",
+      "file": "weapons/book3.ogg",
+      "source_sha256": "c85db5dceb3f1df073e960630277eaa88a5afda0477c1ddd68dad707621767be",
+      "file_sha256": "c34dbc5dc9f1f5d333db1c88ffdfec21d448cc6e33fa330e275007212bcd0b7f",
+      "gain": 1.022568
+    },
+    {
+      "cue": "slotTick",
+      "pack": "dusty",
+      "source": "DM-CGS-40.wav",
+      "file": "slotTick.ogg",
+      "source_sha256": "68a94a613b6d693e7e73435c44405463da5d1789d66cf5a226a6b054c947a8c1",
+      "file_sha256": "31c216e48c7df38d71f9e346a72e3230d4964bb5e1c0b9773059d3b34470bc5b",
+      "gain": 0.940171
+    },
+    {
+      "cue": "slotStop",
+      "pack": "dusty",
+      "source": "DM-CGS-44.wav",
+      "file": "slotStop.ogg",
+      "source_sha256": "b1dbcf73ea50246a3f0791660064c167d0c891411d4fd4270bbc5546c8e4621d",
+      "file_sha256": "13120c2ef0a34b96422c02e91de5cfecc6fff995f61973fda70004cf3b6f375f",
+      "gain": 0.509117
+    },
+    {
+      "cue": "slotRise",
+      "pack": "digital",
+      "source": "highUp.ogg",
+      "file": "slotRise.ogg",
+      "source_sha256": "cbc1c3c7ccf5d7903818144a4c3f5b2ed2385095792f29d8d7c76360ba4fa559",
+      "file_sha256": "0c7e3e36d3320ab6d3414e24eedc2c9f3d345163d718e9c6bf406b313de8ce43",
+      "gain": 0.725236
+    },
+    {
+      "cue": "slotBurst",
+      "pack": "dusty",
+      "source": "DM-CGS-27.wav",
+      "file": "slotBurst.ogg",
+      "source_sha256": "44daa6ee6747cec7707450e300731f80fbe9015386db37391efc182f2e778a82",
+      "file_sha256": "7120ef60ecd2309ffc6bd610ba6b9acd84c1dea318c6c4d99adf70caec3902ef",
+      "gain": 0.516585
+    },
+    {
+      "cue": "slotReveal",
+      "pack": "dusty",
+      "source": "DM-CGS-28.wav",
+      "file": "slotReveal.ogg",
+      "source_sha256": "1ac30cf024c6bcab13c492406dda241b94ada0ee8804736eabc3c93dbdb8ae39",
+      "file_sha256": "ceccaccb123d4219662dda42d0f0bbc5b475799242a111522d674d69186e5c62",
+      "gain": 0.516182
+    },
+    {
+      "cue": "slotJackpot",
+      "pack": "jingles",
+      "source": "jingles_PIZZI01.ogg",
+      "file": "slotJackpot.ogg",
+      "source_sha256": "3f8f2534a297d19386c233a7ee4fa8737cc40870dd206010263760e1983dde46",
+      "file_sha256": "49baea3e0fcf403af0ce60082b36bc361ddb5ff69e5cc0b50e8dc8db9ab43868",
+      "gain": 0.915052
+    }
+  ]
+}
