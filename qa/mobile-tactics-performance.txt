@@ -1,0 +1,22 @@
+PASS: all weapon target IDs, reservations, exclusions, stable ties and expired claims
+PASS: mixed passive clashes, guard strengths, inactive constructs, pulse expiry and next-tick geometry
+PASS: 90 complete update ticks, exact state and random stream
+Reference geometry calls/tick: 9360
+Optimized geometry calls/tick: 72
+{
+  "note": "CPU-only Node VM. Same 220 enemies, 72 constructs, 130 shots. Not mobile FPS.",
+  "benchmarks": [
+    {
+      "name": "passive clashes",
+      "referenceMsPerTick": 15.706,
+      "optimizedMsPerTick": 6.012,
+      "reductionPercent": 61.7
+    },
+    {
+      "name": "full update",
+      "referenceMsPerTick": 18.226,
+      "optimizedMsPerTick": 8.479,
+      "reductionPercent": 53.5
+    }
+  ]
+}

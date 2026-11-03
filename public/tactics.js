@@ -5,13 +5,17 @@ function initTactics(){game.aimClaims=new Map();game.mineSerial=0;game.enemyShot
 function selectWeaponTarget(key,x,y,max=700,exclude,estimated=30,weapon=key.split(':')[0]){
  const claims=game.aimClaims,loads=new Map();
  for(let [k,c]of claims){if(c.until<game.t){claims.delete(k);continue;}if(k!==key){let l=loads.get(c.id)||{damage:0,n:0};l.damage+=c.damage;l.n++;loads.set(c.id,l);}}
- const area=AREA_TARGET_WEAPONS.has(weapon),line=LINE_TARGET_WEAPONS.has(weapon),candidates=[];
+ const area=AREA_TARGET_WEAPONS.has(weapon),line=LINE_TARGET_WEAPONS.has(weapon),candidates=[];let nearestCandidate=null;
  for(let e of game.enemies){if(e.hp<=0||exclude?.has(e.id))continue;let dist=Math.hypot(e.x-x,e.y-y);if(dist>max+e.r)continue;let load=loads.get(e.id)||{damage:0,n:0},urgent=Math.hypot(e.x-game.hero.x,e.y-game.hero.y)<85;
   let score=dist+load.n*155+Math.min(3,load.damage/Math.max(1,e.hp))*230-(urgent?95:0)-(weapon==='compass'&&e.boss?250:0);
-  candidates.push({e,score,dist});
+  if(area||line)candidates.push({e,score,dist});
+  else if(!nearestCandidate||score<nearestCandidate.score)nearestCandidate={e,score,dist};
  }
- candidates.sort((a,b)=>a.score-b.score);let best=null,bestScore=Infinity;
- for(let c of candidates.slice(0,area||line?12:1)){let score=c.score;if(area||line){let count=0;for(let n of game.enemies){if(n.hp<=0)continue;if(area?distance(n,c.e)<115:lineDistance(n,x,y,c.e.x,c.e.y)<28&&distance(n,{x,y})<c.dist+65)count++;}score-=Math.min(8,count)*65;}if(score<bestScore){bestScore=score;best=c.e;}}
+// Single-target weapons need only the stable minimum, not a sorted horde.
+ if(area||line)candidates.sort((a,b)=>a.score-b.score);
+ else if(nearestCandidate)candidates.push(nearestCandidate);
+ let best=null,bestScore=Infinity;
+ for(let c of (area||line?candidates.slice(0,12):candidates)){let score=c.score;if(area||line){let count=0;for(let n of game.enemies){if(n.hp<=0)continue;if(area?distance(n,c.e)<115:lineDistance(n,x,y,c.e.x,c.e.y)<28&&distance(n,{x,y})<c.dist+65)count++;}score-=Math.min(8,count)*65;}if(score<bestScore){bestScore=score;best=c.e;}}
  if(best){claims.set(key,{id:best.id,damage:estimated,until:game.t+.65+Math.min(.6,Math.hypot(best.x-x,best.y-y)/650)});if(claims.size>320)claims.delete(claims.keys().next().value);}
  return best;
 }
@@ -52,6 +56,8 @@ function breakEnemyBullet(b,power=1,key='pulse'){
  Sound.play('parry',.22,1.1,.075);return true;
 }
 function resolvePassiveClashes(dt){
+ // Geometry is immutable during this call; never carry it into another tick.
+ const geometryCache=new Map();
  for(let e of game.enemyBullets){if(e.life<=0)continue;if(!e.id)e.id=game.enemyShotSerial++;
   for(let b of game.orbit)if(distance(e,b)<21+e.r){breakEnemyBullet(e,1,'book:'+Math.floor(game.t*6));break;}
   if(e.life<=0)continue;
@@ -59,7 +65,7 @@ function resolvePassiveClashes(dt){
   if(e.life<=0)continue;
   for(let pulse of game.parryPulses)if(distance(e,pulse)<pulse.r+e.r){breakEnemyBullet(e,3,'pulse');break;}
   if(e.life<=0)continue;
-  for(let o of game.constructs){if(o.life<=0||o.age<o.delay)continue;let g=attackGeometry(o),contact=false;
+  for(let o of game.constructs){if(o.life<=0||o.age<o.delay)continue;let g;if(geometryCache.has(o))g=geometryCache.get(o);else{g=attackGeometry(o);geometryCache.set(o,g);}let contact=false;
    if(g?.type==='line')contact=lineDistance(e,g.x,g.y,g.x2,g.y2)<=g.width+e.r;
    else if(g?.type==='swing')contact=swingContains(e,o,g,Math.max(g.start,g.head-.85));
    else if(['bounce','rocket','notes','leaf','yoyo','gear','planet','whale','dragonSpirit'].includes(o.mode))contact=lineDistance(e,o.px??o.x,o.py??o.y,o.x,o.y)<=o.r+e.r;

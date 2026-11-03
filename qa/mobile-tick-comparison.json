@@ -1,0 +1,59 @@
+{
+  "note": "CPU-only VM, canvas/audio stubbed. Exact full-game-state hashes must match. Not phone FPS.",
+  "rounds": [
+    {
+      "baseline": {
+        "meanMs": 3.0055013700000006,
+        "medianMs": 2.7873030000000085,
+        "p95Ms": 4.151246000000015,
+        "hash": "0b339985a58da7843db9b1a9b6eee8bae424ae71f365042804ee26ec2a496651",
+        "enemies": 221,
+        "ticks": 300
+      },
+      "optimized": {
+        "meanMs": 2.186660333333341,
+        "medianMs": 1.9625720000001365,
+        "p95Ms": 3.507336000000123,
+        "hash": "0b339985a58da7843db9b1a9b6eee8bae424ae71f365042804ee26ec2a496651",
+        "enemies": 221,
+        "ticks": 300
+      }
+    },
+    {
+      "baseline": {
+        "meanMs": 2.4798796700000016,
+        "medianMs": 2.3167530000000625,
+        "p95Ms": 3.8000419999998485,
+        "hash": "0b339985a58da7843db9b1a9b6eee8bae424ae71f365042804ee26ec2a496651",
+        "enemies": 221,
+        "ticks": 300
+      },
+      "optimized": {
+        "meanMs": 2.620799416666648,
+        "medianMs": 2.4210219999999936,
+        "p95Ms": 3.896652000000131,
+        "hash": "0b339985a58da7843db9b1a9b6eee8bae424ae71f365042804ee26ec2a496651",
+        "enemies": 221,
+        "ticks": 300
+      }
+    },
+    {
+      "baseline": {
+        "meanMs": 2.4325351800000075,
+        "medianMs": 2.219115999999758,
+        "p95Ms": 3.7643389999998362,
+        "hash": "0b339985a58da7843db9b1a9b6eee8bae424ae71f365042804ee26ec2a496651",
+        "enemies": 221,
+        "ticks": 300
+      },
+      "optimized": {
+        "meanMs": 2.2136865033333195,
+        "medianMs": 2.115700999999717,
+        "p95Ms": 3.3208009999998467,
+        "hash": "0b339985a58da7843db9b1a9b6eee8bae424ae71f365042804ee26ec2a496651",
+        "enemies": 221,
+        "ticks": 300
+      }
+    }
+  ]
+}
