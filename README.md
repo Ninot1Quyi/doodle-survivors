@@ -6,14 +6,14 @@ Source: https://github.com/Ninot1Quyi/doodle-survivors
 
 Game source and original procedural artwork are MIT-licensed; bundled music, sound recordings and fonts retain their separate licenses. See [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-Original Canvas 2D artwork, vanilla JavaScript, sampled Foley and licensed instrumental music. No build step or application dependencies.
+Original Canvas 2D artwork, vanilla JavaScript, sampled Foley and licensed instrumental music. The Canvas game runs without a build; shared play statistics use a Vinext Worker and Cloudflare D1.
 
-## Play locally
+## Play locally (game only; shared statistics unavailable)
 
 ```sh
 git clone https://github.com/Ninot1Quyi/doodle-survivors.git
 cd doodle-survivors
-python3 -m http.server 4174 --bind 127.0.0.1 --directory dist
+python3 -m http.server 4174 --bind 127.0.0.1 --directory public
 ```
 
 - Adventure edition: `http://localhost:4174/?edition=adventure`
@@ -33,25 +33,25 @@ Six authored regions have distinct large landmarks, plants and passive fantasy a
 
 ## Source layout
 
-- `dist/art.js`: original sprites, animation frames, scenery, textures.
-- `dist/game.js`: game loop, collisions, combat, particles and controls.
-- `dist/expansion.js`: weapons/fusions, bosses, infinite chunks, events, journal.
-- `dist/combat.js`, `dist/combat-content.js`: 28 new attack behaviors and 21 evolved patterns.
-- `dist/enemies.js`, `dist/creature-art.js`: differentiated AI, telegraphs, elite traits and original creatures.
-- `dist/biomes.js`: large cached landscape regions and fantasy fauna.
-- `dist/death-art.js`, `dist/impact.js`, `dist/atmosphere.js`, `dist/focus.js`: bounded visual feedback.
-- `dist/economy.js`: run coins and a functional world shop.
-- `dist/more-items.js`, `dist/arsenal-art.js`: extra pickup behaviors and original icons.
-- `dist/fonts/`: offline OFL-licensed PaperHand font subset and reproducible build inputs.
-- `dist/items.js`: collectible effects, timed buffs, supply parcels and item journal.
-- `dist/audio.js`: sampled mixer, browser activation, priority voices, capture diagnostics.
-- `dist/edition.js`, `dist/paper.js`: independent visual edition selector and paper treatment.
-- `dist/style.css`, `dist/index.html`: immersive responsive UI.
-- `dist/audio/CREDITS.txt`: music and sound licenses.
+- `public/art.js`: original sprites, animation frames, scenery, textures.
+- `public/game.js`: game loop, collisions, combat, particles and controls.
+- `public/expansion.js`: weapons/fusions, bosses, infinite chunks, events, journal.
+- `public/combat.js`, `public/combat-content.js`: 28 new attack behaviors and 21 evolved patterns.
+- `public/enemies.js`, `public/creature-art.js`: differentiated AI, telegraphs, elite traits and original creatures.
+- `public/biomes.js`: large cached landscape regions and fantasy fauna.
+- `public/death-art.js`, `public/impact.js`, `public/atmosphere.js`, `public/focus.js`: bounded visual feedback.
+- `public/economy.js`: run coins and a functional world shop.
+- `public/more-items.js`, `public/arsenal-art.js`: extra pickup behaviors and original icons.
+- `public/fonts/`: offline OFL-licensed PaperHand font subset and reproducible build inputs.
+- `public/items.js`: collectible effects, timed buffs, supply parcels and item journal.
+- `public/audio.js`: sampled mixer, browser activation, priority voices, capture diagnostics.
+- `public/edition.js`, `public/paper.js`: independent visual edition selector and paper treatment.
+- `public/style.css`, `public/index.html`: immersive responsive UI.
+- `public/audio/CREDITS.txt`: music and sound licenses.
 
 ## Git and rollback
 
-The public GitHub repository preserves the original development commits and release tags. Deployment-specific configuration is not needed to run the game locally. The source is served directly from `dist/`; no bundler is required.
+The public GitHub repository preserves the original development commits and release tags. Deployment-specific configuration is not needed to run the game locally. Game-only hosting serves `public/` directly; the full statistics backend requires the build described below. `dist/` contains generated output and is not committed.
 
 Tags: `original-2026-11-03`, `adventure-v1`, `paper-v2`. Use `git log --oneline --decorate` to see checkpoints. To inspect an earlier version without losing current work, create a branch from its tag in a separate checkout. Do not hard-reset active work.
 
@@ -77,6 +77,28 @@ Visual inspiration: the paper-world combat presentation of Rakuworld by SETO, an
 
 ## Development and contributions
 
-Requires a modern browser with Canvas 2D and Web Audio. Python 3 is sufficient for local serving; Node.js runs the simulation checks. Optional font rebuilding requires Python `fonttools` and `brotli` as documented in `dist/fonts/README.md`. Audio reprocessing scripts require their documented source pack and local audio tooling; neither is needed to play the included distribution.
+Requires a modern browser with Canvas 2D and Web Audio. Python 3 is sufficient for game-only serving. Node.js >=22.13.0 and npm are required for the full backend and verification scripts. Optional font rebuilding requires Python `fonttools` and `brotli` as documented in `public/fonts/README.md`. Audio reprocessing scripts require their documented source pack and local audio tooling; neither is needed to play the included distribution.
 
 This project was developed with AI coding assistance. Contributions should preserve third-party notices, keep simulation and presentation checks distinct, and describe any browser testing actually performed. Do not commit credentials, deployment account configuration, reference footage or captured gameplay recordings.
+
+## Full local game with shared statistics
+
+The included `.openai/hosting.json` contains only generic bindings (`DB`, no R2); it has no owner project ID or credentials. Use Node.js >=22.13.0:
+
+```sh
+npm ci
+npm run build
+node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_public_stepford_cuckoos.sql
+npm start
+```
+
+Open the local URL printed by Wrangler (normally `http://127.0.0.1:8787`). Apply the migration once to a fresh local database. Reusing `.wrangler/state` retains local counts; it does not connect to the public game's production database. Build output and database state are ignored by Git.
+
+`public/global-stats.js` reports anonymous run IDs and cumulative active play time to `/api/stats`. `app/stats-service.mjs`, `db/schema.ts` and `drizzle/` implement the shared D1 totals. Paused or hidden-page time is excluded. Retries and out-of-order reports are deduplicated. Anonymous totals are usage indicators, not verified unique-player or anti-cheat statistics. See [docs/GLOBAL_STATS.md](docs/GLOBAL_STATS.md) for counting rules and limitations.
+
+```sh
+node scripts/test-global-stats.mjs
+node scripts/test-impact-audio.cjs
+```
+
+For your own hosted deployment, provision your own Worker and D1 binding and apply the migrations; do not reuse another owner's project identifiers or local database files. The deployment helper and vendored dependency licenses are retained alongside their source files and listed in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

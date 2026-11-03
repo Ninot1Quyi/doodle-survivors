@@ -10,8 +10,8 @@ Pinned source commit: `3bca1fc0a0e00f6627f4c8bee60ef07778ab1820`
 
 Changes:
 
-- Subset to every character in the current `dist/**/*.js`, `dist/**/*.html` and
-  `dist/**/*.css`, printable ASCII, and additional common Chinese punctuation.
+- Subset to every character in the current `public/**/*.js`, `public/**/*.html` and
+  `public/**/*.css`, printable ASCII, and additional common Chinese punctuation.
 - Rename the family, full names, PostScript names and unique IDs to **PaperHand**.
   The upstream Reserved Font Names are not used as the modified primary names.
 - Add six original geometric UI symbol glyphs absent from the upstream font:
@@ -57,7 +57,7 @@ fallback. DOM text can swap as the assets load.
 With Python `fonttools` and `brotli` installed:
 
 ```sh
-python dist/fonts/subset-fonts.py
+python public/fonts/subset-fonts.py
 ```
 
 The script downloads only SHA-256-verified files from the pinned official source,

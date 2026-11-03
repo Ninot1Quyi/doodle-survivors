@@ -1,5 +1,5 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
-const source=fs.readFileSync(__dirname+'/../dist/immersion.js','utf8');
+const source=fs.readFileSync(__dirname+'/../public/immersion.js','utf8');
 const actor=source.slice(source.indexOf('const actorPoseKinds'),source.indexOf('function renderProjectileRibbon'));
 const sandbox={Math,Map,game:{t:1},reducedEffects:false};
 vm.createContext(sandbox);const run=s=>vm.runInContext(s,sandbox);run(actor);
