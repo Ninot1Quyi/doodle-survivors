@@ -1,0 +1,10 @@
+{
+  "source": "https://x.com/Setodev92/status/2117031710537760795",
+  "seconds": 52.0,
+  "note": "Reference gameplay mix, containing both music and effects; not isolated SFX, not a subjective listening assessment. First 52 seconds, excluding end card. High band is energy after a two-pole 4 kHz high-pass, not a strict FFT split.",
+  "rms": 0.16164626079416325,
+  "peak": 0.9663389921188354,
+  "above4kEnergyRatio": 0.12403041448723395,
+  "blockRmsP50": 0.15414890225081287,
+  "blockRmsP95": 0.22125673283759104
+}

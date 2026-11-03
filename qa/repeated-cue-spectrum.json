@@ -1,0 +1,68 @@
+[
+  {
+    "name": "hit",
+    "duration": 0.115125,
+    "rms": 0.2749,
+    "above4kRatio": 0.0
+  },
+  {
+    "name": "hurt",
+    "duration": 0.6490416666666666,
+    "rms": 0.1784,
+    "above4kRatio": 3e-05
+  },
+  {
+    "name": "shoot",
+    "duration": 0.2627083333333333,
+    "rms": 0.109,
+    "above4kRatio": 0.00044
+  },
+  {
+    "name": "pickup",
+    "duration": 0.48883333333333334,
+    "rms": 0.077,
+    "above4kRatio": 0.07711
+  },
+  {
+    "name": "lightning",
+    "duration": 0.4886666666666667,
+    "rms": 0.1043,
+    "above4kRatio": 0.02432
+  },
+  {
+    "name": "wind",
+    "duration": 0.5267916666666667,
+    "rms": 0.1905,
+    "above4kRatio": 0.0
+  },
+  {
+    "name": "explosion",
+    "duration": 0.569125,
+    "rms": 0.1901,
+    "above4kRatio": 0.0
+  },
+  {
+    "name": "warmShot0",
+    "duration": 0.09233333333333334,
+    "rms": 0.0803,
+    "above4kRatio": 0.00056
+  },
+  {
+    "name": "warmHit0",
+    "duration": 0.164,
+    "rms": 0.1184,
+    "above4kRatio": 2e-05
+  },
+  {
+    "name": "warmHeavy0",
+    "duration": 0.21233333333333335,
+    "rms": 0.1094,
+    "above4kRatio": 1e-05
+  },
+  {
+    "name": "warmParry0",
+    "duration": 0.14733333333333334,
+    "rms": 0.094,
+    "above4kRatio": 1e-05
+  }
+]

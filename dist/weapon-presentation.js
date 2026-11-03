@@ -3,8 +3,8 @@
 const WEAPON_PRESENTATION={
  pencil:'pigment-dart',book:'turning-pages',lightning:'cut-paper-bolt',tornado:'folded-helix',fire:'flame-comet',scissors:'cutting-blades',ink:'bottle-splash',
  rose:'root-and-bloom',star:'star-comet',plane:'folded-flight',bubble:'glass-facets',bell:'bell-resonance',ribbon:'silk-return',frost:'ice-shards',
- saber:'blade-sweep',lance:'spear-extension',marble:'rolling-glass',yoyo:'corded-return',rocket:'rocket-exhaust',firecracker:'fuse-and-burst',ruler:'measuring-beam',prism:'split-spectrum',turret:'aimed-cannon',foxspirit:'running-familiar',mine:'armed-flower',stamp:'falling-seal',whip:'thorn-sweep',thread:'stitched-needles',roller:'wet-paint',chalk:'chalk-barricade',camera:'shutter-cone',music:'musical-flight',meteor:'falling-meteor',compass:'target-dial',magnetArm:'closing-claws',gear:'orbiting-teeth',umbrella:'paper-rain',kite:'bowed-string',leaf:'turning-leaf',shield:'folded-plates',portal:'paired-doors',void:'torn-vortex',
- paladin:'armored-swords',pinball:'bumpers-and-ball',festival:'firework-petals',rainbowLaser:'spectrum-wheel',clockwork:'walking-castle',printingPress:'moving-press',loom:'woven-collapse',livingMural:'living-vines',spotlight:'theatre-focus',orrery:'sun-and-planets',scrapColossus:'clapping-giant',skyWhale:'rain-whale',autumnGuardian:'leaf-guard',paperCosmos:'cosmic-fold',comet:'meteor-procession',garden:'rose-canopy',aurora:'prismatic-nodes',tempest:'airplane-helix',nova:'stellar-collapse',dragon:'ribbon-dragon',mirror:'crystal-arena'
+ saber:'blade-sweep',lance:'spear-extension',marble:'rolling-glass',yoyo:'corded-return',rocket:'rocket-exhaust',firecracker:'fuse-and-burst',ruler:'measuring-beam',prism:'split-spectrum',turret:'aimed-cannon',foxspirit:'running-familiar',mine:'armed-flower',stamp:'falling-seal',whip:'thorn-sweep',thread:'stitched-needles',roller:'wet-paint',chalk:'chalk-barricade',camera:'shutter-cone',music:'musical-flight',meteor:'falling-meteor',compass:'target-dial',magnetArm:'closing-claws',gear:'orbiting-teeth',umbrella:'paper-rain',kite:'bowed-string',leaf:'turning-leaf',shield:'wax-crescents',portal:'paired-doors',void:'torn-vortex',
+ paladin:'armored-swords',pinball:'bumpers-and-ball',festival:'firework-petals',rainbowLaser:'spectrum-wheel',clockwork:'walking-castle',printingPress:'moving-press',loom:'woven-collapse',livingMural:'living-vines',spotlight:'theatre-focus',orrery:'sun-and-planets',scrapColossus:'clapping-giant',skyWhale:'rain-whale',autumnGuardian:'leaf-guard',paperCosmos:'cosmic-fold',comet:'meteor-procession',garden:'living-rose-garden',aurora:'prismatic-nodes',tempest:'airplane-helix',nova:'stellar-collapse',dragon:'ribbon-dragon',mirror:'crystal-arena'
 };
 function paperPolygon(points,fill,stroke='#775a80',width=1.3){ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke();}}
 function paperBand(x,y,a,length,width,color,phase=0){ctx.save();ctx.translate(x,y);ctx.rotate(a);let top=[],bottom=[];for(let i=0;i<=8;i++){let u=i/8,w=width*(.28+.72*Math.sin(u*Math.PI/2)),ripple=Math.sin(u*8+phase)*width*.15;top.push([u*length,-w+ripple]);bottom.unshift([u*length,w+ripple]);}paperPolygon([...top,...bottom],color,'#85688e',1);ctx.globalAlpha*=.55;paperPolygon([[0,0],[length*.25,-width*.22],[length,width*.2],[length,0]],'#fff4cf',null);ctx.restore();}
@@ -14,7 +14,48 @@ function battleCutout(name,x,y,scale=1,angle=0,alpha=1){drawCenteredSprite(name,
 function fieldWash(x,y,r,col,alpha=.12){ctx.save();ctx.globalAlpha*=alpha;Art.ellipse(ctx,x,y,Math.max(.1,r),Math.max(.1,r),col,null);ctx.restore();}
 function paintTrail(x,y,a,length,width,col,phase=0){paperBand(x,y,a,length,width,col,phase);ctx.save();ctx.translate(x,y);ctx.rotate(a);for(let i=1;i<6;i++){let xx=length*i/6;Art.ellipse(ctx,xx,Math.sin(i*12+phase)*width*.7,3+i%3,2,'#fff0c555',null);}ctx.restore();}
 function crystal(x,y,r,a,col='#b9d5df'){ctx.save();ctx.translate(x,y);ctx.rotate(a);paperPolygon([[0,-r],[r*.55,-r*.3],[r*.4,r*.7],[0,r],[-r*.5,r*.3],[-r*.35,-r*.6]],col);paperPolygon([[0,-r],[r*.55,-r*.3],[0,r]],'#fff3d9',null);Art.line(ctx,[[0,-r],[0,r]],'#a18bb7',1);ctx.restore();}
-function roseVines(x,y,r,age,fade=1,mural=false){ctx.save();ctx.globalAlpha*=fade;fieldWash(x,y,r,'#a6b58c',.12);let growth=clamp(age*2,0,1),n=reducedEffects?7:12;for(let i=0;i<n;i++){let a=i*TAU/n,rr=r*(.52+(i%3)*.2)*growth,px=x+Math.cos(a)*rr,py=y+Math.sin(a)*rr;ctx.save();ctx.translate(x,y);ctx.rotate(a);ctx.fillStyle='#95a982';ctx.beginPath();ctx.moveTo(0,-3);ctx.quadraticCurveTo(rr*.45,-17,rr,0);ctx.quadraticCurveTo(rr*.5,-9,0,4);ctx.closePath();ctx.fill();ctx.restore();for(let j=1;j<3;j++)battleCutout('leaf',x+Math.cos(a)*rr*j/3,y+Math.sin(a)*rr*j/3,.24,a+j*.7);battleCutout(mural&&i%3===0?'plane':'rose',px,py,.36+growth*.13,Math.sin(age*2+i)*.15);}ctx.restore();}
+// Small original botanical sprites are painted once; the animation only moves paper pieces.
+let botanicalArt;
+const gardenCurves=Array.from({length:9},(_,i)=>Array.from({length:21},(_,j)=>{
+ const u=j/20,a=i*2.399+u*(1.35+(i%3)*.23),r=(.27+i*.079)*(.87+.09*Math.sin(u*Math.PI));
+ return {x:Math.cos(a)*r,y:Math.sin(a)*r,angle:a+Math.PI/2};
+}));
+function initBotanicalArt(){
+ if(botanicalArt)return botanicalArt;
+ const flowers=[];
+ for(let variant=0;variant<4;variant++){
+  const c=Art.canvas(80,80),g=c.getContext('2d');g.translate(40,40);
+  for(let i=0;i<6;i++){g.save();g.rotate(i*TAU/6+variant*.31);Art.pencil(g,'M-2 7C-19 3 -22 -12 -11 -22C-1 -30 14 -19 11 -8Q9 2 -2 7Z',['#dfa1b4','#edbbc5','#d59db8','#ebc2a9'][variant],[-22,-28,38,38],45,'#a98099');g.restore();}
+  Art.ellipse(g,0,0,10,9,'#e6b1bc','#b3859e',1);Art.line(g,[[-5,1],[-4,-5],[3,-6],[7,-1],[4,5],[-2,4]],'#ba879c',1.3);Art.line(g,[[-4,-15],[1,-18],[6,-16]],'#fff1da',1.2);flowers.push(c);
+ }
+ const leaf=Art.canvas(46,30),g=leaf.getContext('2d');Art.pencil(g,'M3 23Q9 2 39 5Q35 25 3 23Z','#b6c19a',[3,3,38,23],55,'#85977d');Art.line(g,[[5,22],[18,14],[35,7]],'#899c80',1);Art.line(g,[[16,15],[15,8]],'#94a987',.7);
+ const moon=Art.canvas(88,112),m=moon.getContext('2d');Art.pencil(m,'M66 12C18 12 9 84 62 101C43 81 46 37 66 12Z','#c4ccdf',[17,11,52,93],260,'#8e88ab');Art.path(m,'M58 19C26 28 24 71 51 91',null,'#f7edd8',2.1);Art.line(m,[[35,37],[31,51],[32,66]],'#a4abc4',1.1);Art.ellipse(m,33,52,2,2,'#f8edcc',null);
+ botanicalArt={flowers,leaf,moon};return botanicalArt;
+}
+function drawGardenFlower(x,y,size,angle,bloom,variant){
+ const art=initBotanicalArt(),u=clamp(bloom,0,1),pop=1+Math.sin(u*Math.PI)*.1;
+ ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.scale(.3+.7*u,Math.max(.25,u)*pop);ctx.drawImage(art.flowers[variant%4],-size/2,-size/2,size,size);ctx.restore();
+}
+function roseVines(x,y,r,age,fade=1,mural=false){
+ const art=initBotanicalArt();ctx.save();ctx.translate(x,y);ctx.globalAlpha*=fade;
+ fieldWash(0,0,r,mural?'#b4bb99':'#c4b6ad',.045);
+ const density=reducedEffects?5:9;
+ for(let i=0;i<density;i++){
+  const curve=gardenCurves[i],grow=clamp((age-i*.045)*2.6,0,1),end=grow*20,last=Math.floor(end);if(last<1)continue;
+  // Fine curved pencil stems, never wedges radiating from the hero.
+  ctx.beginPath();ctx.moveTo(curve[0].x*r,curve[0].y*r);
+  for(let j=1;j<=last;j++)ctx.lineTo(curve[j].x*r,curve[j].y*r);
+  if(last<20){const a=curve[last],b=curve[last+1],v=end-last;ctx.lineTo((a.x+(b.x-a.x)*v)*r,(a.y+(b.y-a.y)*v)*r);}
+  ctx.strokeStyle=i%2?'#95a58a':'#a4b18d';ctx.lineWidth=1.6;ctx.lineCap='round';ctx.stroke();
+  ctx.save();ctx.translate(.8,-.7);ctx.strokeStyle='#e3ddbb';ctx.lineWidth=.55;ctx.stroke();ctx.restore();
+  for(let j=5;j<=last;j+=8){const q=curve[j];ctx.save();ctx.translate(q.x*r,q.y*r);ctx.rotate(q.angle+(j%2?-.8:.8));ctx.globalAlpha*=.8;ctx.drawImage(art.leaf,-8,-5,21,14);ctx.restore();}
+  for(const j of [10,19])if(last>=j){const q=curve[j],u=clamp((age-i*.045-j*.018)*3,0,1),size=Math.min(38,r*.24)*(j===10?.68:1)*(i%3===0?1.12:.88);drawGardenFlower(q.x*r,q.y*r,size,q.angle+Math.sin(age*1.7+i)*.045,u,i+j);}
+ }
+ // The clear centre leaves the traveler visible. A few petals breathe across the boundary.
+ if(!reducedEffects)for(let i=0;i<7;i++){const a=i*2.4+age*.13,rr=r*(.48+.062*i),life=(age*.42+i*.147)%1;ctx.save();ctx.globalAlpha*=Math.sin(life*Math.PI)*.5;ctx.translate(Math.cos(a)*rr+Math.sin(age+i)*3,Math.sin(a)*rr-life*10);ctx.rotate(a+life);Art.ellipse(ctx,0,0,3.5,1.8,['#d9a5b9','#ead0c1','#cbb7d1'][i%3],null);ctx.restore();}
+ ctx.restore();
+}
+
 function renderBattleBullet(b){
  if(b.kind==='pencil'){renderPigmentPencil(b);return;}
  let a=Math.atan2(b.vy,b.vx),speed=Math.hypot(b.vx,b.vy),col=weaponData[b.kind]?.color||'#b9c2db',tail=Math.min(85,speed*.17),age=(b.max||2.2)-b.life;
@@ -67,8 +108,20 @@ function renderMovingConstruct(o){let dx=o.x-(o.px??o.x),dy=o.y-(o.py??o.y),a=Ma
 }
 function renderThread(o){let pts=o.points;for(let i=1;i<pts.length;i++){let p=pts[i-1],q=pts[i],a=Math.atan2(q.y-p.y,q.x-p.x),len=distance(p,q);paperBand(p.x,p.y,a,len,o.collapse?9:3,o.collapse?'#c6a3c5':'#d8bc8c',o.age*6);ctx.save();ctx.translate(p.x,p.y);ctx.rotate(a);for(let x=8;x<len;x+=20)Art.line(ctx,[[x,-5],[x+6,5]],'#fff0c6',1.6);ctx.restore();crystal(q.x,q.y,o.collapse?14:9,a+Math.PI/2,o.color);}if(o.collapse)battleCutout('battle_loom',o.x,o.y-25,.55,Math.sin(o.age*10)*.012);}
 function renderRain(o){fieldWash(o.x,o.y,o.r,'#a5c2d5',.12);if(o.kind==='umbrella')battleCutout('battle_umbrella',o.x,o.y-90,.48,Math.sin(o.age*3)*.06);for(let i=0;i<(reducedEffects?8:18);i++){let a=i*2.39996,rr=Math.sqrt((i+.5)/18)*o.r,x=o.x+Math.cos(a)*rr,y=o.y+Math.sin(a)*rr;let t=(o.age*1.4+i*.27)%1,yy=y-75*(1-t);paperPolygon([[x,yy-9],[x+4,yy],[x,yy+4],[x-4,yy]],i%3?'#a8c7dc':'#d0b9de',null);if(t>.7)Art.ellipse(ctx,x,y,8*(t-.7)/.3,4,null,'#bbd1df',1.4);}}
-function renderGarden(o){let age=o.age,r=o.mode==='mural'?o.r*clamp(age/o.max,0,1):o.r;roseVines(o.x,o.y,r,age,Math.min(1,o.life),o.mode==='mural');if(o.mode==='garden'){battleCutout('garden',o.x,o.y-25,.8,Math.sin(age)*.025);for(let i=0;i<5;i++){let a=i*TAU/5+age*.35;battleCutout('rose',o.x+Math.cos(a)*r*.7,o.y+Math.sin(a)*r*.7,.65,Math.sin(age*2+i)*.1);}}}
-function renderBarrier(o){let leaf=o.kind==='autumnGuardian',n=leaf?10:o.mode==='mirrorArena'?8:6;fieldWash(o.x,o.y,o.r,leaf?'#c9bc94':'#bdb9d8',.09);for(let i=0;i<n;i++){let a=i*TAU/n+(leaf?o.age*.6:0),x=o.x+Math.cos(a)*o.r,y=o.y+Math.sin(a)*o.r;if(leaf)battleCutout('leaf',x,y,.75,a+Math.PI/2);else{ctx.save();ctx.translate(x,y);ctx.rotate(a+Math.PI/2);paperPolygon([[-24,-14],[-19,-40],[17,-40],[25,-14],[18,23],[-18,23]],i%2?'#b8c5dd':'#d2c1df');paperPolygon([[-15,-33],[10,-33],[-10,15]],'#fff2d688',null);ctx.restore();}}if(leaf)battleCutout('shield',o.x,o.y-25,.85,Math.sin(o.age*2)*.06);}
+function renderGarden(o){const r=o.mode==='mural'?o.r*clamp(o.age/o.max,0,1):o.r;roseVines(o.x,o.y,r,o.age,Math.min(1,o.life),o.mode==='mural');}
+function renderBarrier(o){
+ if(o.kind==='shield'){
+  const moon=initBotanicalArt().moon,fade=clamp(o.life*3,0,1),grow=.85+.15*clamp(o.age*5,0,1),n=4;
+  ctx.save();ctx.globalAlpha*=fade;
+  // A fine circle tells the truth about the collision area; four small moons leave breathing room.
+  ctx.strokeStyle='#b5bdd3';ctx.globalAlpha*=.32;ctx.lineWidth=1;ctx.setLineDash([4,13]);ctx.beginPath();ctx.arc(o.x,o.y,o.r,0,TAU);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha/= .32;
+  for(let i=0;i<n;i++){const a=i*TAU/n+o.age*.18,px=o.x+Math.cos(a)*o.r,py=o.y+Math.sin(a)*o.r;let react=0;if(o.guardFlash>0){const gap=Math.atan2(Math.sin(a-o.guardAngle),Math.cos(a-o.guardAngle));react=Math.max(0,1-Math.abs(gap)/1.2)*o.guardFlash/.16;}
+   ctx.save();ctx.translate(px,py);ctx.rotate(a+Math.PI);const size=(58+react*8)*grow;ctx.drawImage(moon,-size*.39,-size*.5,size*.78,size);ctx.restore();}
+  ctx.restore();return;
+ }
+ const leaf=o.kind==='autumnGuardian',n=leaf?8:6;fieldWash(o.x,o.y,o.r,leaf?'#c9bc94':'#bdb9d8',.035);
+ for(let i=0;i<n;i++){const a=i*TAU/n+(leaf?o.age*.3:0),x=o.x+Math.cos(a)*o.r,y=o.y+Math.sin(a)*o.r;if(leaf)battleCutout('leaf',x,y,.48,a+Math.PI/2);else crystal(x,y,24,a,'#c2c9df');}
+}
 function renderPortal(o){for(let [x,y,side]of [[o.x,o.y,1],[o.outX,o.outY,-1]]){fieldWash(x,y,o.r,'#a596bf',.2);ctx.save();ctx.translate(x,y);ctx.rotate(o.age*.35*side);for(let j=0;j<3;j++){let r=o.r*(1-j*.18);paperPolygon([[-r,-r*.65],[r*.7,-r],[r,r*.7],[-r*.75,r]],j%2?'#e0d1df':'#b4a4cb','#88779f',2);}ctx.restore();fieldWash(x,y,o.r*.64,'#716180',.8);battleCutout('battle_gate',x,y-o.r*.2,o.cosmos?.66:.38,0,.95);for(let j=0;j<4;j++){let a=j*TAU/4+o.age*2;battleCutout('star',x+Math.cos(a)*o.r*.7,y+Math.sin(a)*o.r*.7,.2,a);}}}
 function renderPull(o){fieldWash(o.x,o.y,o.r,o.color,.1);if(o.giant)battleCutout('battle_colossus',o.x,o.y-65,.9,Math.sin(o.age*6)*.02);let closure=1-clamp(o.age/o.max,0,1);for(let side of [-1,1]){let x=o.x+side*(30+o.r*.55*closure),y=o.y;ctx.save();ctx.translate(x,y);ctx.scale(side,1);paperPolygon([[-20,-27],[13,-30],[27,-15],[10,-9],[7,-18],[-4,-12],[-4,13],[8,20],[12,8],[29,16],[15,33],[-18,28]],o.giant?'#c5b4cc':'#c7a6c1');ctx.restore();}for(let i=0;i<9;i++){let a=i*2.4+o.age,r=o.r*(1-((o.age*.7+i*.13)%1));crystal(o.x+Math.cos(a)*r,o.y+Math.sin(a)*r,4,a,o.color);}}
 function renderVoid(o){ctx.save();let r=o.r*(.55+.12*Math.sin(o.age*2));fieldWash(o.x,o.y,o.r,'#9a8bad',.1);paperPetals(o.x,o.y,r,11,'#b6a3c5',o.age*.3,.45);Art.ellipse(ctx,o.x,o.y,r*.6,r*.6,'#6e5b7b','#d6bbda',4);for(let i=0;i<12;i++){let t=(o.age*.6+i*.13)%1,a=i*2.4+o.age*2,rr=o.r*(1-t);crystal(o.x+Math.cos(a)*rr,o.y+Math.sin(a)*rr,3+t*3,a,PALETTE[i%5]);}ctx.restore();}

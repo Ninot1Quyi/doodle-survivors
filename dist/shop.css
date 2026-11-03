@@ -1,0 +1,27 @@
+/* A little roadside paper stall, using the same original pencil marks as the world. */
+#shop-modal{padding:24px 18px;background:#342e485e;backdrop-filter:blur(2px);overflow:auto}
+#shop-modal .shop-paper{width:min(1000px,96vw);max-height:94dvh;overflow:auto;padding:20px 28px 24px;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;transform:none;text-align:center;scrollbar-width:thin}
+.shop-sign{width:fit-content;max-width:100%;margin:0 auto 24px;padding:10px 38px 12px;position:relative;isolation:isolate;transform:rotate(-1.2deg);color:#745971}
+.shop-sign:before{content:'';position:absolute;inset:0;z-index:-1;background:#f8ebd3;clip-path:polygon(1% 5%,20% 2%,39% 5%,60% 0,83% 4%,99% 1%,98% 33%,100% 70%,97% 96%,75% 99%,50% 96%,27% 100%,0 96%,2% 67%,0 34%)}
+.shop-sign:after{content:'';position:absolute;top:-5px;left:40%;width:60px;height:13px;background:#d5bdc7b5;transform:rotate(7deg);border-inline:2px dashed #b69daa}
+.shop-sign>span{font-size:11px;letter-spacing:3px;color:#9a7d81}.shop-sign h2{font-size:38px!important;font-weight:500;margin:5px 0!important;letter-spacing:5px!important;color:#765a7c!important;text-shadow:1px 1px #fff8e9}
+#shop-balance{margin:0;font-size:14px;letter-spacing:1px;color:#936d4e}
+#shop-offers{grid-template-columns:repeat(4,minmax(0,1fr));gap:21px;margin:8px 0 15px;align-items:start;padding:8px}
+#shop-modal .shop-offer{--item-angle:-2deg;position:relative;padding:0 8px 13px;border:0;border-radius:0;background:none;color:#f7ecd8;transform:rotate(var(--item-angle));min-width:0;transition:translate .16s;opacity:1;outline-offset:4px}
+#shop-modal .shop-offer:nth-child(2){--item-angle:1.8deg;margin-top:17px}#shop-modal .shop-offer:nth-child(3){--item-angle:-1deg;margin-top:3px}#shop-modal .shop-offer:nth-child(4){--item-angle:2.1deg;margin-top:14px}
+.shop-item-art{display:grid;place-items:center;width:100%;aspect-ratio:1.14;background:var(--shop-swatch) center/100% 100% no-repeat;filter:drop-shadow(3px 6px 1px #352c3e35)}
+#shop-modal .shop-offer img{width:77%;height:86%;object-fit:contain;filter:drop-shadow(2px 3px 0 #fff6e488);transform:rotate(calc(var(--item-angle) * -1))}
+#shop-modal .shop-offer strong{font-size:20px;font-weight:500;margin-top:1px;line-height:1.5;letter-spacing:1px;color:#fff0d2;text-shadow:1px 2px #5d4869}
+#shop-modal .shop-offer p{font-size:12px;line-height:1.7;min-height:42px;margin:9px 0 13px;color:#eee0d5;text-shadow:0 1px #594c60}
+.shop-price{display:block;position:relative;isolation:isolate;min-width:116px;padding:7px 17px 8px;color:#8b654c;font-size:12px;transform:rotate(-2deg)}
+.shop-price:before{content:'';position:absolute;inset:0;z-index:-1;background:#f4deb0;clip-path:polygon(6% 0,97% 5%,100% 33%,97% 96%,60% 100%,4% 92%,0 50%)}
+#shop-modal .shop-price b{font-size:24px;font-weight:500;color:#895c42}.shop-offer-state{display:block;margin-top:8px;font-size:10px;letter-spacing:1px;color:#e9d5be;min-height:16px}
+#shop-modal .shop-offer:not(:disabled):hover,#shop-modal .shop-offer:focus-visible{translate:0 -7px;filter:none}
+#shop-modal .shop-offer:focus-visible{outline:2px dashed #ffe3a8}
+#shop-modal .shop-offer:disabled{cursor:default;filter:none}#shop-modal .shop-offer:disabled .shop-item-art{filter:saturate(.5) drop-shadow(2px 4px 1px #352c3e25)}#shop-modal .shop-offer:disabled .shop-price:before{background:#dbceba}
+#shop-message{font-size:12px;color:#f0dfcc;min-height:20px;margin:15px 0 12px;line-height:1.6;text-shadow:0 1px #58475e}
+#shop-modal #shop-close{display:flex;width:fit-content;min-width:190px;margin:0 auto;padding:11px 26px;gap:25px;font-size:17px;font-weight:500;border:0!important;box-shadow:none!important;border-radius:0!important;background:#f2e3c8;clip-path:polygon(2% 5%,48% 0,98% 5%,100% 90%,64% 100%,1% 94%,0 48%);transform:rotate(-1deg);color:#795b76}
+#shop-modal #shop-close span{font-size:27px;line-height:1}#shop-modal #shop-close:focus-visible{background:#ffe5a9}
+@media(max-width:700px){#shop-modal{padding:12px 8px}#shop-modal .shop-paper{padding:14px 7px 20px;max-height:96dvh}.shop-sign{padding:10px 23px;margin-bottom:13px}.shop-sign h2{font-size:29px!important}.shop-sign>span{font-size:9px;letter-spacing:2px}#shop-balance{font-size:12px}#shop-offers{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 14px;padding:3px;margin-top:0}#shop-modal .shop-offer{padding:0 4px 8px}#shop-modal .shop-offer:nth-child(n){margin-top:0}.shop-item-art{max-width:180px;margin:auto}#shop-modal .shop-offer strong{font-size:17px}#shop-modal .shop-offer p{font-size:11px;min-height:38px;margin:5px 0 8px}.shop-price{padding:5px 13px;min-width:104px}#shop-modal .shop-price b{font-size:21px}.shop-offer-state{font-size:10px;margin-top:5px}#shop-message{margin:10px 0}}
+@media(max-height:580px) and (min-width:701px){.shop-sign{margin-bottom:4px;padding-block:5px}.shop-sign h2{font-size:28px!important}.shop-item-art{max-width:135px;margin:auto}#shop-modal .shop-paper{padding-block:7px}#shop-modal .shop-offer p{min-height:34px;margin:4px 0}#shop-offers{margin-bottom:0}#shop-message{margin:6px 0}}
+@media(prefers-reduced-motion:reduce){#shop-modal .shop-offer{transition:none;translate:none!important}}

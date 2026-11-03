@@ -36,3 +36,10 @@ onset trim, small resampling pitch change, 65 Hz high-pass, broad 2.7 kHz cut,
 WARM-IMPACT-PROVENANCE.json records sources, checksums, mix gains and metrics.
 Normal, critical and defeat impacts are mutually exclusive, with a 14 ms
 collection window and shared 105 ms pacing. Original BGM is unchanged.
+
+REPEATED CAST AND COLLECTION ROUTING (2026-11-03)
+The same warm CC0 palette now supplies repeated spell-cast and collection cues.
+Old pickup/lightning clips no longer serve star, marble, bell or lightning casts.
+Repeated casts share a 120 ms pacing budget; collection uses 180 ms; individual
+combat groups have voice caps and a 4.2 kHz low-pass. Recorded BGM and one-off
+chest celebration cues are unchanged. No reference-game audio is redistributed.

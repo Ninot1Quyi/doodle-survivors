@@ -4,22 +4,37 @@ let rewardSession=null;
 function experienceForLevel(level){return 2*(level===1?26:Math.round((16+level*6.5+level**1.33)*1.9));}
 const REWARD_AUTO_SECONDS=3;
 const REWARD_ROLES={
- pencil:'ranged',star:'ranged',plane:'ranged',marble:'ranged',rocket:'ranged',music:'ranged',leaf:'ranged',compass:'ranged',
+ pencil:'ranged',ribbon:'ranged',star:'ranged',plane:'ranged',marble:'ranged',rocket:'ranged',music:'ranged',leaf:'ranged',compass:'control',
  book:'guard',scissors:'melee',saber:'melee',lance:'melee',whip:'melee',yoyo:'melee',gear:'melee',shield:'guard',
  tornado:'area',fire:'area',ink:'area',rose:'area',firecracker:'area',stamp:'area',mine:'area',roller:'area',meteor:'area',umbrella:'area',
  lightning:'chain',thread:'chain',kite:'chain',ruler:'beam',prism:'beam',camera:'control',bubble:'control',bell:'control',frost:'control',chalk:'control',magnetArm:'control',portal:'control',void:'control',turret:'summon',foxspirit:'summon'
 };
-function rewardRecommendation(choices){
- const hp=game.hero.hp/game.hero.maxHp,active=Object.keys(game.weapons).filter(k=>game.weapons[k]>0&&!weaponData[k].passive),roles=new Set(active.map(k=>REWARD_ROLES[k]||'evolved'));
- const early=game.t<90&&active.length<4;
+function rewardRoles(key){
+ if(REWARD_ROLES[key])return [REWARD_ROLES[key]];
+ const recipe=RECIPES.find(r=>r[2]===key);
+ return recipe?[...new Set(recipe.slice(0,2).flatMap(k=>rewardRoles(k)))]:[];
+}
+function rewardBuildContext(){
+ const active=Object.keys(game.weapons).filter(k=>game.weapons[k]>0&&!weaponData[k].passive);
+ const roles=new Set(active.flatMap(k=>rewardRoles(k)));
+ return {active,roles,early:game.t<90&&active.length<4&&!game.fusions.length};
+}
+function rewardNewCandidates(fresh){
+ const {early,roles}=rewardBuildContext();
+ if(early){const novel=fresh.filter(k=>rewardRoles(k).some(role=>!roles.has(role)));return novel.length?novel:fresh;}
+ const partners=fresh.filter(k=>RECIPES.some(([a,b,c])=>!game.fusions.includes(c)&&((a===k&&game.weapons[b]>0)||(b===k&&game.weapons[a]>0))));
+ return partners.length&&Math.random()<.75?partners:fresh;
+}
+function rewardRecommendation(choices,rarities=upgradeRarity){
+ const hp=game.hero.hp/game.hero.maxHp,{active,roles,early}=rewardBuildContext();
  let best={index:0,score:-Infinity,reason:'强化当前火力',stage:early?'diversify':'build'};
  choices.forEach((key,index)=>{
-  let score=0,reason='强化现有构筑',d=weaponData[key],lv=game.weapons[key]||0,gain=d?Math.min(upgradeRarity[index]||1,d.max-lv):0;
+  let score=0,reason='强化现有构筑',d=weaponData[key],lv=game.weapons[key]||0,gain=d?Math.min(rarities[index]||1,d.max-lv):0;
   if(key.startsWith('fusion:')){score=150;reason='材料已齐 · 进化并释放一个武器槽';}
   else if(key==='restore'){score=hp<.3?180:hp<.6?100:5;reason='恢复生命，继续战斗';}
   else if(d){
    const partner=RECIPES.filter(([a,b,c])=>!game.fusions.includes(c)&&(a===key||b===key)).map(([a,b])=>a===key?b:a).filter(k=>!game.consumed.has(k)).sort((a,b)=>game.weapons[b]-game.weapons[a])[0];
-   const partnerLevel=partner?game.weapons[partner]||0:0,newRole=!roles.has(REWARD_ROLES[key]||'evolved');
+   const partnerLevel=partner?game.weapons[partner]||0:0,newRole=rewardRoles(key).some(role=>!roles.has(role));
    if(d.passive){score=35;if(['crown','candle'].includes(key)){score=early?38:55+active.length*4;reason='后期构筑 · 增益覆盖已装备武器';}else if(key==='heart'&&hp<.6){score=hp<.3?180:hp<.45?125:80;reason='生命偏低 · 增加上限并立即回血';}else if(['regen','armor'].includes(key)&&hp<.55){score=hp<.3?105:70;reason='生存补强 · 支持持续战斗';}else reason='补充随身护符';}
    else if(early){
     score=lv?42+Math.min(lv,5)*3+gain*2:(newRole?100:73)+gain*2;
@@ -31,7 +46,7 @@ function rewardRecommendation(choices){
     if(d.evolved&&lv){score+=24;reason='后期构筑 · 强化已进化武器';}
     if(partnerLevel>0){
      if(lv){score+=10+partnerLevel*3;if(lv+gain>=d.max){score+=20;reason=partnerLevel>=weaponData[partner].max?'本次满级 · 下一次即可合成':'合成准备 · 将现有材料升至满级';}else reason='后期构筑 · 推进已有合成路线';}
-     else if(partnerLevel>=3&&game.t<300){score=70+partnerLevel*4+gain*2;reason='后期构筑 · 补齐主力的合成搭档';}
+     else if(partnerLevel>=3){score=80+partnerLevel*4+gain*2;reason='后期构筑 · 补齐主力的合成搭档';}
     }
     if(!lv&&active.length<2&&newRole){score=95;reason='补足攻击覆盖 · 当前武器数量仍少';}
    }
@@ -53,7 +68,7 @@ function prepareRewardChoices(){
  const rec=rewardRecommendation(upgradeChoices);rewardSession.recommended=rec.index;rewardSession.remaining=REWARD_AUTO_SECONDS;rewardSession.lastSecond=-1;
  const cards=document.querySelectorAll('#choices .choice');
  cards.forEach((card,i)=>{card.querySelectorAll('.recommend-badge,.recommend-reason,.fusion-materials').forEach(n=>n.remove());card.style.setProperty('--reveal-delay',`${i*.14}s`);card.classList.toggle('recommended',i===rec.index);card.disabled=rewardSession.locked;card.setAttribute('aria-label',`${i===rec.index?'推荐：':''}${card.textContent}`);
-  if(i===rec.index){const badge=document.createElement('span');badge.className='recommend-badge';badge.textContent=rec.stage==='diversify'?'✦ 多元灵感':'✦ 构筑推荐';card.append(badge);const why=document.createElement('span');why.className='recommend-reason';why.textContent=rec.reason;card.append(why);}
+  if(i===rec.index){const badge=document.createElement('span');badge.className='recommend-badge';badge.textContent=rec.reason.startsWith('生命偏低')||rec.reason.startsWith('恢复生命')?'✦ 先照顾自己':rec.stage==='diversify'?'✦ 多元灵感':'✦ 构筑推荐';card.append(badge);const why=document.createElement('span');why.className='recommend-reason';why.textContent=rec.reason;card.append(why);}
   const key=upgradeChoices[i];if(key.startsWith('fusion:')){const recipe=RECIPES.find(r=>r[2]===key.slice(7));if(recipe){const row=document.createElement('div');row.className='fusion-materials';row.innerHTML=`<span class="consume-label">消耗材料</span><span><img src="${icon(recipe[0])}" alt="${weaponData[recipe[0]].name}"><small>${weaponData[recipe[0]].name}</small></span><b>＋</b><span><img src="${icon(recipe[1])}" alt="${weaponData[recipe[1]].name}"><small>${weaponData[recipe[1]].name}</small></span><b>→</b><img src="${icon(recipe[2])}" alt="${weaponData[recipe[2]].name}">`;card.append(row);}}
  });
  $('reroll').disabled=rewardSession.locked||game.rerolls<=0;
@@ -83,7 +98,7 @@ function updateRewardSession(dt){
   if(s.age>=(reducedEffects?1.05:3.65)){s.locked=false;$('upgrades').classList.remove('opening-chest');$('reward-subtitle').textContent='带上一份灵感，继续你的旅程';prepareRewardChoices();Sound.play('chestReveal',.55,1,.1);}
  }
  else {s.remaining=Math.max(0,s.remaining-dt);const sec=Math.ceil(s.remaining);if(sec!==s.lastSecond){s.lastSecond=sec;$('reward-status').textContent=`${sec} 秒后自动选择推荐 · 1 / 2 / 3 可立即选择`;}$('reward-time-fill').style.transform=`scaleX(${s.remaining/REWARD_AUTO_SECONDS})`;if(s.remaining<=0){chooseUpgrade(s.recommended);return;}}
- if(s.chest){drawChestCinema();drawRewardConfetti(dt);}
+ if(s.chest){if(s.locked)drawChestCinema();drawRewardConfetti(dt);}
 }
 
 let bossCrayonReady=false;

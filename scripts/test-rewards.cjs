@@ -11,3 +11,21 @@ console.log('PASS: increased XP, health/fusion recommendation, single automatic 
 run("start();game.t=20;upgradeChoices=['pencil','tornado','saber'];upgradeRarity=[1,1,1];");assert.equal(run('rewardRecommendation(upgradeChoices).index'),1);assert.equal(run('rewardRecommendation(upgradeChoices).stage'),'diversify');
 run("game.t=180;game.weapons.pencil=4;game.weapons.star=4;upgradeChoices=['saber','pencil','crown'];upgradeRarity=[1,1,1];");assert.equal(run('rewardRecommendation(upgradeChoices).index'),1);assert.equal(run('rewardRecommendation(upgradeChoices).stage'),'build');
 run("game.hero.hp=20;upgradeChoices=['fusion:comet','heart','saber'];");assert.equal(run('rewardRecommendation(upgradeChoices).index'),1);console.log('PASS: early attack diversity, late existing fusion route, emergency health override.');
+
+// The offered cards must make the promised recommendation possible.
+run("start();game.t=20;game.weapons.star=1;");
+assert.deepEqual(Array.from(run("rewardNewCandidates(['plane','rose','ribbon'])")),['rose'],'early draft must offer a missing attack role, not another ranged partner');
+assert(run("Object.keys(weaponData).filter(k=>!weaponData[k].passive).every(k=>rewardRoles(k).length>0)"),'all base and evolved weapons have a role');
+run("game.weapons.pencil=5;game.weapons.star=5;fuseWeapon('comet');");
+assert.equal(run('rewardBuildContext().early'),false,'fusion must not send a mature build back to the early phase');
+assert(run("rewardBuildContext().roles.has('ranged')"),'evolution retains coverage of consumed ingredients');
+run("start();game.t=340;game.weapons.pencil=5;upgradeChoices=['star','saber','armor'];upgradeRarity=[1,1,1]");
+assert.equal(run('rewardRecommendation(upgradeChoices).index'),0,'a max-level weapon must retain access to its recommended fusion partner after five minutes');
+run("game.hero.hp=20;rollChoices()");assert(run("upgradeChoices.includes('heart')"),'severe health needs recovery in actual offered choices');
+run("start();game.t=160;game.weapons.pencil=4;game.weapons.star=4;game.weapons.saber=1;rollChoices()");
+assert(run("upgradeChoices.includes('pencil')||upgradeChoices.includes('star')"),'late reserved upgrade should advance the established fusion route');
+// Dense normal hits keep local feedback without repeatedly stopping the world.
+run("start();game.enemies=[];spawnEnemy('snail',0,70);game.hitStop=0;game.shake=0;game.impactCooldown=0;hitFeedback(game.enemies[0],false,90,'confetti',0,0,150)");
+assert.equal(run('game.hitStop'),0);assert.equal(run('game.shake'),0);assert(run('game.enemies[0].hitPulse>0'));
+run("hitFeedback(game.enemies[0],true,150,'confetti',0,0,150)");assert(run('game.hitStop<=.018&&game.shake<=1.6'));assert.equal(run('game.impactCooldown'),.55);
+console.log('PASS: actual draft diversity, all weapon roles, mature fusion stage, late partners, emergency recovery, and local-only ordinary impacts.');

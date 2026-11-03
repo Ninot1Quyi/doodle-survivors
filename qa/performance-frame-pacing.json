@@ -1,0 +1,61 @@
+{
+  "note": "Deterministic synthetic rAF timestamp replay; not measured browser/device FPS.",
+  "rows": [
+    {
+      "inputHz": 60,
+      "jitterMs": 1.2,
+      "before": {
+        "rendered": 481,
+        "gapsAbove25ms": 118,
+        "maxGapMs": 33.795
+      },
+      "after": {
+        "rendered": 600,
+        "gapsAbove25ms": 0,
+        "maxGapMs": 18.524
+      }
+    },
+    {
+      "inputHz": 90,
+      "jitterMs": 1.2,
+      "before": {
+        "rendered": 651,
+        "gapsAbove25ms": 0,
+        "maxGapMs": 24.226
+      },
+      "after": {
+        "rendered": 600,
+        "gapsAbove25ms": 0,
+        "maxGapMs": 24.575
+      }
+    },
+    {
+      "inputHz": 120,
+      "jitterMs": 1.2,
+      "before": {
+        "rendered": 699,
+        "gapsAbove25ms": 14,
+        "maxGapMs": 25.175
+      },
+      "after": {
+        "rendered": 600,
+        "gapsAbove25ms": 0,
+        "maxGapMs": 19.019
+      }
+    },
+    {
+      "inputHz": 144,
+      "jitterMs": 1.2,
+      "before": {
+        "rendered": 651,
+        "gapsAbove25ms": 0,
+        "maxGapMs": 21.925
+      },
+      "after": {
+        "rendered": 600,
+        "gapsAbove25ms": 0,
+        "maxGapMs": 21.955
+      }
+    }
+  ]
+}

@@ -4,7 +4,7 @@ const TAU=Math.PI*2,clamp=(n,a,b)=>Math.max(a,Math.min(b,n)),rnd=(a,b)=>a+Math.r
 const PALETTE=['#e7b561','#a78cca','#d88aab','#7eadd8','#d1bf89'];
 const hudValues=new Map();
 function hudText(id,value){value=String(value);if(hudValues.get(id)!==value){hudValues.set(id,value);$(id).textContent=value;}}
-let renderScale=1.5,renderDirty=true,lastRenderedState='',lastRenderAt=0;
+let renderScale=1.5,renderDirty=true,lastRenderedState='';
 const perfStats={frames:0,workMs:0,frameMs:16.7,resolution:1.5};
 const clockNow=()=>typeof performance!=='undefined'?performance.now():Date.now();
 let W=1200,H=800,DPR=1,zoom=1,viewW=1200,viewH=800,state='menu',runMode='growth',game,cam={x:0,y:0},keys=new Set(),mouse={x:0,y:0,active:false},joy={x:0,y:0},last=0,realTime=0,bannerTimer,settingsReturn='menu',hudClock=0;
@@ -106,7 +106,7 @@ hudClock+=dt;if(hudClock>.08){hudClock=0;updateHUD();updateExplorationHUD();upda
 function openUpgrade(chest=false){state='upgrade';keys.clear();joy={x:0,y:0};$('joystick').firstElementChild.style.transform='';game.treasure=chest;Sound.duck(true);beginRewardSession(chest);updateHUD();$('upgrades').classList.remove('hidden');$('upgrade-level').textContent=chest?'宝箱奖励':`LV. ${game.level}`;document.querySelector('.up-top h2').textContent=chest?'拾到一盒星光':'新的灵感';rollChoices();}
 function rollChoices(){rollExpandedChoices();prepareRewardChoices();}
 function chooseUpgrade(i){if(rewardSession?.locked)return;chooseExpandedUpgrade(i);if(state!=='upgrade')closeRewardSession();}
-function finish(win){if(state==='ended')return;state='ended';document.body.classList.remove('playing');$('end').classList.remove('hidden');$('end-title').textContent=win?'VICTORY!':'GAME OVER';$('end-desc').textContent=win?'三位守页者已倒下。你可以继续无限远行。':'带上新灵感，再一次奔向星星。';$('continue-endless').classList.toggle('hidden',!win);saveRunRecord(win);$('result-kills').textContent=game.kills;$('result-level').textContent=game.level;$('result-time').textContent=timeText(game.t);keys.clear();Sound.duck(true);Sound.play(win?'victory':'hurt',.65,win?1:.65);updateHUD();}
+function finish(win){if(state==='ended')return;state='ended';document.body.classList.remove('playing');$('end').classList.remove('hidden');$('end-title').textContent=win?'旅途大捷':'下次再出发';$('end-desc').textContent=win?'三位守页者已倒下。你可以继续无限远行。':'带上新灵感，再一次奔向星星。';$('continue-endless').classList.toggle('hidden',!win);saveRunRecord(win);$('result-kills').textContent=game.kills;$('result-level').textContent=game.level;$('result-time').textContent=timeText(game.t);keys.clear();Sound.duck(true);Sound.play(win?'victory':'hurt',.65,win?1:.65);updateHUD();}
 const shadowImages={},flashImages={};for(let [name,s]of Object.entries(Art.sprites)){let c=document.createElement('canvas');c.width=s.img.width;c.height=s.img.height;let g=c.getContext('2d');g.drawImage(s.img,0,0);g.globalCompositeOperation='source-in';g.fillStyle='#454051';g.fillRect(0,0,c.width,c.height);shadowImages[name]=c;let f=document.createElement('canvas');f.width=c.width;f.height=c.height;let fg=f.getContext('2d');fg.drawImage(s.img,0,0);fg.globalCompositeOperation='source-in';fg.fillStyle='#fffae7';fg.fillRect(0,0,f.width,f.height);flashImages[name]=f;}
 const confettiImages=new Map();
 function confettiImage(color){let image=confettiImages.get(color);if(image)return image;image=document.createElement('canvas');image.width=32;image.height=26;let g=image.getContext('2d');g.beginPath();g.moveTo(0,16);g.lineTo(16,0);g.lineTo(32,16);g.lineTo(16,26);g.closePath();g.fillStyle=color;g.fill();g.strokeStyle='#8d739344';g.lineWidth=2;g.stroke();confettiImages.set(color,image);return image;}
@@ -149,7 +149,18 @@ ctx.textAlign='center';for(let n of game.numbers){if(!visible(n.x,n.y))continue;
 for(let i=0;i<5;i++){let x=320+Math.sin(realTime*.4+i*2)*340,y=-200+Math.cos(realTime*.27+i)*210;if(visible(x,y)){ctx.save();ctx.translate(x,y);ctx.scale(.65+Math.sin(realTime*13+i)*.16,1);Art.image(ctx,'butterfly',0,0,.6,1,Math.sin(realTime+i)*.3,.7);ctx.restore();}}
 ctx.restore();renderAtmosphere();if(game?.flash>0&&!reducedEffects){ctx.fillStyle=`rgba(255,247,218,${Math.min(.25,game.flash)})`;ctx.fillRect(0,0,W,H);}if(game?.fx.some(f=>f.type==='hurt')){let f=game.fx.find(f=>f.type==='hurt');ctx.save();ctx.globalAlpha=f.life/f.max*.25;ctx.strokeStyle='#b86485';ctx.lineWidth=32;ctx.strokeRect(0,0,W,H);ctx.restore();}
 }
-function frame(now){requestAnimationFrame(frame);if(document.hidden){last=now;return;}if(state==='upgrade')updateRewardSession(Math.min(.05,(now-last)/1000||.016));let active=state==='playing'||state==='menu';if(!active){last=now;if(renderDirty||lastRenderedState!==state){render();renderDirty=false;lastRenderedState=state;}return;}const interval=state==='menu'?1000/30:1000/60;if(now-lastRenderAt<interval-.6)return;let elapsed=now-last;lastRenderAt=now-((now-lastRenderAt)%interval);let dt=Math.min(.05,(now-last)/1000||.016);last=now;realTime+=dt;const begin=clockNow();if(game.hitStop>0){game.hitStop=Math.max(0,game.hitStop-dt);update(dt*.2);}else update(dt);render();const work=clockNow()-begin;perfStats.frames++;perfStats.workMs=perfStats.workMs*.95+work*.05;perfStats.frameMs=perfStats.frameMs*.95+Math.min(100,elapsed)*.05;renderDirty=false;lastRenderedState=state;
+// A rendered frame always advances the deadline, including an early rAF callback.
+// This avoids modulo-phase double renders and missed 60 Hz frames under small jitter.
+const frameSchedule={mode:'',nextAt:0};
+function resetFrameSchedule(){frameSchedule.mode='';frameSchedule.nextAt=0;}
+function frameReady(now,mode){
+ const interval=1000/(mode==='menu'?30:60);
+ if(frameSchedule.mode!==mode){frameSchedule.mode=mode;frameSchedule.nextAt=now;}
+ if(now+2<frameSchedule.nextAt)return false;
+ frameSchedule.nextAt=now-frameSchedule.nextAt>=interval?now+interval:frameSchedule.nextAt+interval;
+ return true;
+}
+function frame(now){requestAnimationFrame(frame);if(document.hidden){last=now;resetFrameSchedule();return;}if(state==='upgrade')updateRewardSession(Math.min(.05,(now-last)/1000||.016));let active=state==='playing'||state==='menu';if(!active){last=now;resetFrameSchedule();if(renderDirty||lastRenderedState!==state){render();renderDirty=false;lastRenderedState=state;}return;}if(!frameReady(now,state))return;let elapsed=now-last;let dt=Math.min(.05,(now-last)/1000||.016);last=now;realTime+=dt;const begin=clockNow();if(game.hitStop>0){game.hitStop=Math.max(0,game.hitStop-dt);update(dt*.2);}else update(dt);render();const work=clockNow()-begin;perfStats.frames++;perfStats.workMs=perfStats.workMs*.95+work*.05;perfStats.frameMs=perfStats.frameMs*.95+Math.min(100,elapsed)*.05;renderDirty=false;lastRenderedState=state;
 // Resolution responds to sustained load, never changing simulation counts or hit detection.
 if(state==='playing'&&perfStats.frames%180===0){let next=renderScale;if(perfStats.frameMs>22)next=Math.max(1,renderScale-.25);else if(perfStats.frameMs<17.5&&perfStats.workMs<5)next=Math.min(1.5,renderScale+.25);if(next!==renderScale){renderScale=next;resize();}}
 }

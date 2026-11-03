@@ -1,0 +1,19 @@
+/* Travel notes and paint-stroke controls share the world's original pencil assets. */
+#pause-menu,#settings,#end{background:#352d465c;backdrop-filter:blur(2px);padding:18px;overflow:auto}
+#pause-menu .field-note,#settings .field-note,#end .field-note{position:relative;isolation:isolate;background:var(--note-paper) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:drop-shadow(5px 8px 2px #382c4938);width:min(410px,94vw);max-height:94dvh;overflow:auto;padding:35px 36px 30px;transform:rotate(-1deg);color:#755c76}
+.field-note:before{content:'';position:absolute;top:8px;left:39%;width:78px;height:19px;transform:rotate(4deg);background:#c8b3ce8c;border-inline:2px dashed #b09ab8;pointer-events:none}
+.field-note .note-sticker{display:block;width:84px;height:83px;object-fit:contain;margin:3px auto 4px;transform:rotate(6deg);filter:drop-shadow(2px 3px 0 #cfbac469)}
+.field-note .note-caption{display:block;font-size:10px;color:#a1878e;letter-spacing:2px;margin:10px 0 9px}
+.field-note h2{font-size:33px;font-weight:500;color:#806180;letter-spacing:3px;margin:9px 0 13px;transform:rotate(-1.5deg);text-shadow:1px 2px #fff8e7}
+.field-note>p{font-size:12px;line-height:1.85;color:#97808e;margin-bottom:19px}
+#pause-menu .primary,#settings .primary,#end .primary{min-height:57px;padding:15px 24px;background:var(--note-stroke) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#785970;font-weight:500;font-size:17px;letter-spacing:2px;transform:rotate(-1deg);transition:translate .15s}
+#pause-menu .primary:hover,#settings .primary:hover,#end .primary:hover{translate:0 -2px;filter:brightness(1.04)}
+#pause-menu .secondary,#settings .secondary,#end .secondary{background:none;border:0;border-bottom:1px dashed #bba1b6;border-radius:0;box-shadow:none;margin:12px auto 0;width:85%;padding:11px 8px;color:#8b7490;font-size:14px;transform:rotate(.5deg)}
+.field-note .text-button{font-size:11px;text-decoration-style:dashed;text-decoration-thickness:1px;margin-top:18px;color:#a08794}
+.field-note button:focus-visible{outline:2px dashed #906d99;outline-offset:3px}
+#settings .field-note{width:min(460px,94vw);transform:rotate(.5deg);padding-top:41px}
+#settings .field-note h2{font-size:28px;letter-spacing:2px}.field-note.settings label{font-size:13px;margin:18px 0;gap:7px}.field-note.settings input[type=range]{width:52%;accent-color:#a388ad}.field-note.settings output{font-size:11px}.field-note.settings details{border-top:1px dashed #bfa6b4;padding-top:10px;line-height:1.8}
+.field-note .result-stats{border:0;gap:8px;padding:10px 0;margin:14px 0 21px}.field-note .result-stats>div{flex:1;padding:8px 2px;background:#e9d7bb66;transform:rotate(-2deg);clip-path:polygon(2% 0,97% 3%,100% 95%,5% 100%,0 50%)}.field-note .result-stats>div:nth-child(2){transform:rotate(2deg)}.field-note .result-stats b{font-size:25px;font-weight:500;color:#9c774d}.field-note .result-stats span{font-size:10px}
+@media(max-width:480px){#pause-menu .field-note,#settings .field-note,#end .field-note{padding:29px 25px 25px;width:94vw}.field-note h2{font-size:29px}.field-note .note-sticker{width:72px;height:72px}#settings .field-note{padding-top:34px}#settings .field-note h2{font-size:24px}.field-note.settings label{font-size:12px}}
+@media(max-height:580px){#pause-menu .field-note,#settings .field-note,#end .field-note{padding-block:24px;max-height:94dvh}.field-note .note-sticker{width:48px;height:48px}.field-note h2{font-size:27px;margin-block:7px}.field-note .note-caption{margin:4px 0;font-size:9px}.field-note>p{margin-bottom:10px}#pause-menu .primary,#settings .primary,#end .primary{min-height:46px;padding:10px 22px}.field-note .text-button{margin-top:11px}}
+@media(prefers-reduced-motion:reduce){.field-note button{transition:none!important;translate:none!important}}
